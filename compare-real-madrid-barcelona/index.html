@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Madrid vs FC Barcelona - The Ultimate Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 50%, #7e22ce 100%);
+        }
+        
+        .real-madrid-bg {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+        }
+        
+        .barcelona-bg {
+            background: linear-gradient(135deg, #a50044 0%, #004d98 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .trophy-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .team-logo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+        
+        .team-logo:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .vs-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(238, 90, 111, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .comparison-bar {
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-weight: 600;
+            color: white;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .bar-real {
+            background: linear-gradient(90deg, #ffffff, #c0c0c0);
+            color: #000;
+        }
+        
+        .bar-barca {
+            background: linear-gradient(90deg, #a50044, #004d98);
+        }
+        
+        .bar-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            border-radius: 20px;
+            transition: width 1s ease;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 9px;
+            top: 20px;
+            width: 2px;
+            height: calc(100% - 20px);
+            background: #e0e0e0;
+        }
+        
+        .timeline-item:last-child::after {
+            display: none;
+        }
+        
+        .player-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .stadium-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .team-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .player-card:hover .player-image {
+            transform: scale(1.1);
+        }
+        
+        .stadium-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .stadium-card:hover .stadium-image {
+            transform: scale(1.05);
+        }
+        
+        .image-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            cursor: pointer;
+            aspect-ratio: 16/9;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.15);
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        .gallery-item .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            color: white;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 300px;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+            border: 3px dashed rgba(255,255,255,0.3);
+        }
+        
+        .image-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                45deg,
+                transparent,
+                transparent 10px,
+                rgba(255,255,255,0.1) 10px,
+                rgba(255,255,255,0.1) 20px
+            );
+            animation: slide 20s linear infinite;
+        }
+        
+        @keyframes slide {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .match-predictor {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .predict-button {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .predict-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .predict-button:active {
+            transform: translateY(0);
+        }
+        
+        .result-display {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            display: none;
+        }
+        
+        .result-display.show {
+            display: block;
+            animation: slideUp 0.5s ease-out;
+        }
+        
+        .flip-card {
+            background-color: transparent;
+            perspective: 1000px;
+        }
+        
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+        }
+        
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(90deg, #a50044, #004d98);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            }
+            50% { 
+                transform: scale(1.02); 
+                box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+            }
+        }
+        
+        .chart-container {
+            animation: slideUp 0.8s ease-out;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .chart-container:nth-child(2) {
+            animation-delay: 0.2s;
+            animation-fill-mode: both;
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+        
+        .chart-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.98) 100%);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .chart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .chart-card:hover::before {
+            left: 100%;
+        }
+        
+        .chart-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+        
+        .chart-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .section-divider {
+            position: relative;
+            height: 1px;
+            margin: 4rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .section-divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(102, 126, 234, 0.3) 20%,
+                rgba(102, 126, 234, 0.6) 40%,
+                rgba(118, 75, 162, 0.8) 50%,
+                rgba(102, 126, 234, 0.6) 60%,
+                rgba(102, 126, 234, 0.3) 80%,
+                transparent 100%);
+        }
+        
+        .section-divider::after {
+            content: '⚽';
+            position: relative;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            z-index: 1;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-8 fade-in">
+                <i class="fas fa-trophy mr-4"></i>
+                El Clásico
+            </h1>
+            <p class="text-2xl md:text-3xl mb-12 opacity-90">The Ultimate Rivalry</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 mb-12">
+                <!-- Real Madrid -->
+                <div class="text-center">
+                    <div class="team-logo mx-auto mb-4">
+                        <!-- Replace with: <img src="real-madrid-logo.png" alt="Real Madrid Logo"> -->
+                        <div class="image-placeholder" style="width: 150px; height: 150px; border-radius: 50%; min-height: auto;">
+                            <i class="fas fa-crown text-4xl text-white"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">Real Madrid</h2>
+                    <p class="text-lg opacity-80">Founded 1902</p>
+                </div>
+                
+                <!-- VS Badge -->
+                <div class="vs-badge">
+                    VS
+                </div>
+                
+                <!-- FC Barcelona -->
+                <div class="text-center">
+                    <div class="team-logo mx-auto mb-4">
+                        <!-- Replace with: <img src="barcelona-logo.png" alt="FC Barcelona Logo"> -->
+                        <div class="image-placeholder" style="width: 150px; height: 150px; border-radius: 50%; min-height: auto;">
+                            <i class="fas fa-shield-alt text-4xl text-white"></i>
+                        </div>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-2">FC Barcelona</h2>
+                    <p class="text-lg opacity-80">Founded 1899</p>
+                </div>
+            </div>
+            
+            <div class="flex justify-center gap-4 mt-8">
+                <button onclick="scrollToSection('stats')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all">
+                    <i class="fas fa-chart-bar mr-2"></i>View Statistics
+                </button>
+                <button onclick="scrollToSection('trophies')" class="bg-white text-purple-600 px-8 py-3 rounded-full font-semibold hover:bg-purple-100 transition-all">
+                    <i class="fas fa-trophy mr-2"></i>Trophy Cabinet
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Match Predictor -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-black">
+                <i class="fas fa-crystal-ball mr-3 text-purple-600"></i>
+                Match Predictor
+            </h2>
+            <p class="text-center text-gray-600 mb-8">Predict the outcome of the next El Clásico!</p>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="match-predictor">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-6">Who will win the next El Clásico?</h3>
+                        <div class="flex flex-col md:flex-row gap-4 justify-center mb-6">
+                            <button onclick="predictMatch('realMadrid')" class="predict-button">
+                                <i class="fas fa-crown mr-2"></i>Real Madrid
+                            </button>
+                            <button onclick="predictMatch('draw')" class="predict-button">
+                                <i class="fas fa-equals mr-2"></i>Draw
+                            </button>
+                            <button onclick="predictMatch('barcelona')" class="predict-button">
+                                <i class="fas fa-shield-alt mr-2"></i>FC Barcelona
+                            </button>
+                        </div>
+                        <div id="predictionResult" class="result-display">
+                            <h4 class="text-xl font-bold mb-2" id="predictionTitle"></h4>
+                            <p id="predictionText"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Image Gallery Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-4 text-black">
+                <i class="fas fa-images mr-3 text-purple-600"></i>
+                El Clásico Moments
+            </h2>
+            <p class="text-center text-gray-600 mb-8">Iconic moments from the greatest rivalry</p>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="image-gallery">
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-1.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Historic Match</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-2.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Legendary Goal</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-3.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Stadium Atmosphere</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-4.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Trophy Celebration</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-5.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Player Rivalry</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <!-- Replace with: <img src="el-clasico-6.jpg" alt="El Clásico Moment"> -->
+                        <div class="image-placeholder" style="min-height: 200px;">
+                            <i class="fas fa-image text-4xl text-white opacity-50"></i>
+                        </div>
+                        <div class="gallery-caption">
+                            <p class="font-semibold">Fans Celebration</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 text-center">
+                    <p class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Replace placeholder divs with actual images. Recommended size: 800x450px
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Quick Stats Overview -->
+    <section id="stats" class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-chart-line mr-3 text-purple-600"></i>
+                Head-to-Head Statistics
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <div class="stat-card text-center">
+                    <i class="fas fa-futbol text-5xl text-green-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Total Matches</h3>
+                    <p class="text-4xl font-bold text-purple-600">262</p>
+                    <p class="text-gray-600 mt-2">Competitive matches</p>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <i class="fas fa-trophy text-5xl text-yellow-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Real Madrid Wins</h3>
+                    <p class="text-4xl font-bold text-gray-800">106</p>
+                    <p class="text-gray-600 mt-2">40.5% win rate</p>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <i class="fas fa-trophy text-5xl text-blue-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Barcelona Wins</h3>
+                    <p class="text-4xl font-bold text-blue-600">104</p>
+                    <p class="text-gray-600 mt-2">39.7% win rate</p>
+                </div>
+                
+                <div class="stat-card text-center">
+                    <i class="fas fa-equals text-5xl text-purple-500 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-2">Draws</h3>
+                    <p class="text-4xl font-bold text-purple-600">52</p>
+                    <p class="text-gray-600 mt-2">19.8% draw rate</p>
+                </div>
+            </div>
+            
+            <!-- Interactive Comparison Bars -->
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold mb-6 text-center">Detailed Comparison</h3>
+                
+                <div class="space-y-6">
+                    <!-- La Liga Titles -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold">La Liga Titles</span>
+                            <span class="text-gray-600">Real Madrid: 35 | Barcelona: 27</span>
+                        </div>
+                        <div class="comparison-bar bar-real">
+                            <div class="bar-fill bar-real" style="width: 56.5%"></div>
+                            <span class="relative z-10">35</span>
+                        </div>
+                        <div class="comparison-bar bar-barca">
+                            <div class="bar-fill bar-barca" style="width: 43.5%"></div>
+                            <span class="relative z-10">27</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Champions League -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold">UEFA Champions League</span>
+                            <span class="text-gray-600">Real Madrid: 14 | Barcelona: 5</span>
+                        </div>
+                        <div class="comparison-bar bar-real">
+                            <div class="bar-fill bar-real" style="width: 73.7%"></div>
+                            <span class="relative z-10">14</span>
+                        </div>
+                        <div class="comparison-bar bar-barca">
+                            <div class="bar-fill bar-barca" style="width: 26.3%"></div>
+                            <span class="relative z-10">5</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Copa del Rey -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold">Copa del Rey</span>
+                            <span class="text-gray-600">Real Madrid: 20 | Barcelona: 31</span>
+                        </div>
+                        <div class="comparison-bar bar-real">
+                            <div class="bar-fill bar-real" style="width: 39.2%"></div>
+                            <span class="relative z-10">20</span>
+                        </div>
+                        <div class="comparison-bar bar-barca">
+                            <div class="bar-fill bar-barca" style="width: 60.8%"></div>
+                            <span class="relative z-10">31</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Ballon d'Or Winners -->
+                    <div>
+                        <div class="flex justify-between mb-2">
+                            <span class="font-semibold">Ballon d'Or Winners</span>
+                            <span class="text-gray-600">Real Madrid: 12 | Barcelona: 12</span>
+                        </div>
+                        <div class="comparison-bar bar-real">
+                            <div class="bar-fill bar-real" style="width: 50%"></div>
+                            <span class="relative z-10">12</span>
+                        </div>
+                        <div class="comparison-bar bar-barca">
+                            <div class="bar-fill bar-barca" style="width: 50%"></div>
+                            <span class="relative z-10">12</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Competition Breakdown Table -->
+            <div class="max-w-5xl mx-auto mt-12">
+                <h3 class="text-2xl font-bold mb-6 text-center">Competition Breakdown</h3>
+                <div class="stat-card overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="border-b-2 border-gray-300">
+                                <th class="text-left p-4 font-bold text-gray-800">Competition</th>
+                                <th class="text-center p-4 font-bold text-gray-800">Matches</th>
+                                <th class="text-center p-4 font-bold text-gray-800">Real Madrid</th>
+                                <th class="text-center p-4 font-bold text-gray-800">Barcelona</th>
+                                <th class="text-center p-4 font-bold text-gray-800">Draws</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-4 font-semibold"><i class="fas fa-medal text-yellow-500 mr-2"></i>La Liga</td>
+                                <td class="p-4 text-center">191</td>
+                                <td class="p-4 text-center font-bold text-gray-800">80</td>
+                                <td class="p-4 text-center font-bold text-blue-600">76</td>
+                                <td class="p-4 text-center">35</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-4 font-semibold"><i class="fas fa-crown text-purple-500 mr-2"></i>Copa del Rey</td>
+                                <td class="p-4 text-center">38</td>
+                                <td class="p-4 text-center font-bold text-gray-800">13</td>
+                                <td class="p-4 text-center font-bold text-blue-600">17</td>
+                                <td class="p-4 text-center">8</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-4 font-semibold"><i class="fas fa-trophy text-orange-500 mr-2"></i>Supercopa de España</td>
+                                <td class="p-4 text-center">18</td>
+                                <td class="p-4 text-center font-bold text-gray-800">10</td>
+                                <td class="p-4 text-center font-bold text-blue-600">6</td>
+                                <td class="p-4 text-center">2</td>
+                            </tr>
+                            <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                <td class="p-4 font-semibold"><i class="fas fa-globe text-blue-500 mr-2"></i>Champions League</td>
+                                <td class="p-4 text-center">8</td>
+                                <td class="p-4 text-center font-bold text-gray-800">3</td>
+                                <td class="p-4 text-center font-bold text-blue-600">2</td>
+                                <td class="p-4 text-center">3</td>
+                            </tr>
+                            <tr class="bg-gradient-to-r from-purple-100 to-blue-100 font-bold">
+                                <td class="p-4">Total</td>
+                                <td class="p-4 text-center">262</td>
+                                <td class="p-4 text-center text-gray-800">106</td>
+                                <td class="p-4 text-center text-blue-600">104</td>
+                                <td class="p-4 text-center">52</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Top Goalscorer & Records Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-black">
+                <i class="fas fa-star mr-3 text-yellow-500"></i>
+                Records & Top Performers
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto mb-12">
+                <!-- Top Goalscorer -->
+                <div class="stat-card">
+                    <h3 class="text-2xl font-bold mb-6 text-center">
+                        <i class="fas fa-futbol text-green-500 mr-2"></i>
+                        Top El Clásico Goalscorer
+                    </h3>
+                    <div class="text-center">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 p-8 rounded-lg mb-6 text-white">
+                            <i class="fas fa-user-circle text-6xl mb-4"></i>
+                            <h4 class="text-3xl font-bold mb-2">Lionel Messi</h4>
+                            <p class="text-lg opacity-90">FC Barcelona</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
+                                <span class="font-semibold">Goals in El Clásico:</span>
+                                <span class="text-2xl font-bold text-purple-600">26</span>
+                            </div>
+                            <div class="flex justify-between items-center p-3 bg-gray-100 rounded-lg">
+                                <span class="font-semibold">Appearances:</span>
+                                <span class="text-xl font-bold">45</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Biggest Wins -->
+                <div class="stat-card">
+                    <h3 class="text-2xl font-bold mb-6 text-center">
+                        <i class="fas fa-trophy text-yellow-500 mr-2"></i>
+                        Biggest El Clásico Wins
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-gray-100 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-gray-800">Real Madrid</span>
+                                <span class="text-2xl font-bold text-gray-800">11-1</span>
+                            </div>
+                            <p class="text-sm text-gray-600">Copa del Rey, 1943</p>
+                        </div>
+                        <div class="p-4 bg-gradient-to-r from-blue-100 to-red-100 rounded-lg">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-bold text-blue-600">FC Barcelona</span>
+                                <span class="text-2xl font-bold text-blue-600">7-2</span>
+                            </div>
+                            <p class="text-sm text-gray-600">La Liga, 1950</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Goals Scored Comparison -->
+            <div class="max-w-4xl mx-auto">
+                <div class="stat-card">
+                    <h3 class="text-2xl font-bold mb-6 text-center">
+                        <i class="fas fa-chart-line text-purple-600 mr-2"></i>
+                        Total Goals Scored in El Clásico
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="text-center p-6 bg-gray-100 rounded-lg">
+                            <i class="fas fa-futbol text-5xl text-gray-700 mb-4"></i>
+                            <h4 class="text-xl font-bold mb-2">Real Madrid</h4>
+                            <p class="text-4xl font-bold text-gray-800">~442</p>
+                            <p class="text-sm text-gray-600 mt-2">Goals scored</p>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-br from-blue-100 to-red-100 rounded-lg">
+                            <i class="fas fa-futbol text-5xl text-blue-600 mb-4"></i>
+                            <h4 class="text-xl font-bold mb-2">FC Barcelona</h4>
+                            <p class="text-4xl font-bold text-blue-600">~436</p>
+                            <p class="text-sm text-gray-600 mt-2">Goals scored</p>
+                        </div>
+                    </div>
+                    <p class="text-center text-gray-600 mt-4 text-sm">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        The rivalry is extremely close even in total goals scored!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Recent Results Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-black">
+                <i class="fas fa-calendar-alt mr-3 text-purple-600"></i>
+                Recent El Clásico Results
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="space-y-4">
+                    <div class="stat-card">
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="flex-1 text-center md:text-left mb-4 md:mb-0">
+                                <p class="text-sm text-gray-600 mb-1">October 26, 2025 • La Liga</p>
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <span class="text-2xl font-bold text-gray-800">Real Madrid</span>
+                                    <span class="text-3xl font-bold text-purple-600">2-1</span>
+                                    <span class="text-2xl font-bold text-blue-600">Barcelona</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Santiago Bernabéu • Mbappé, Bellingham (RM) | Fermin Lopez (BAR)</p>
+                            </div>
+                            <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
+                                Real Madrid Win
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="flex-1 text-center md:text-left mb-4 md:mb-0">
+                                <p class="text-sm text-gray-600 mb-1">May 11, 2025 • La Liga</p>
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <span class="text-2xl font-bold text-blue-600">Barcelona</span>
+                                    <span class="text-3xl font-bold text-purple-600">4-3</span>
+                                    <span class="text-2xl font-bold text-gray-800">Real Madrid</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Estadi Olimpic Lluis Companys • Thrilling match with Mbappé hat-trick</p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold">
+                                Barcelona Win
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="flex-1 text-center md:text-left mb-4 md:mb-0">
+                                <p class="text-sm text-gray-600 mb-1">April 26, 2025 • Copa del Rey Final</p>
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <span class="text-2xl font-bold text-blue-600">Barcelona</span>
+                                    <span class="text-3xl font-bold text-purple-600">3-2</span>
+                                    <span class="text-2xl font-bold text-gray-800">Real Madrid</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">After Extra Time • Koundé decisive goal</p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold">
+                                Barcelona Win
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="flex flex-col md:flex-row items-center justify-between">
+                            <div class="flex-1 text-center md:text-left mb-4 md:mb-0">
+                                <p class="text-sm text-gray-600 mb-1">January 2025 • Supercopa de España</p>
+                                <div class="flex items-center justify-center md:justify-start gap-4">
+                                    <span class="text-2xl font-bold text-gray-800">Real Madrid</span>
+                                    <span class="text-3xl font-bold text-purple-600">2-5</span>
+                                    <span class="text-2xl font-bold text-blue-600">Barcelona</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mt-2">Barcelona dominant victory</p>
+                            </div>
+                            <div class="bg-blue-100 text-blue-800 px-4 py-2 rounded-full font-semibold">
+                                Barcelona Win
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Trophy Cabinet -->
+    <section id="trophies" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-black">
+                <i class="fas fa-trophy mr-3 text-yellow-500"></i>
+                Trophy Cabinet Comparison
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Real Madrid Trophies -->
+                <div class="stat-card real-madrid-bg">
+                    <div class="text-center mb-6">
+                        <h3 class="text-3xl font-bold mb-4">Real Madrid</h3>
+                        <div class="trophy-icon">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-medal text-yellow-500 mr-2"></i>La Liga</span>
+                            <span class="text-2xl font-bold text-gray-800">35</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-globe text-blue-500 mr-2"></i>Champions League</span>
+                            <span class="text-2xl font-bold text-gray-800">14</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-crown text-purple-500 mr-2"></i>Copa del Rey</span>
+                            <span class="text-2xl font-bold text-gray-800">20</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-trophy text-orange-500 mr-2"></i>Supercopa de España</span>
+                            <span class="text-2xl font-bold text-gray-800">12</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-star text-green-500 mr-2"></i>FIFA Club World Cup</span>
+                            <span class="text-2xl font-bold text-gray-800">5</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold"><i class="fas fa-award text-red-500 mr-2"></i>UEFA Super Cup</span>
+                            <span class="text-2xl font-bold text-gray-800">5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-gray-800 text-white rounded-lg text-center">
+                        <p class="text-sm opacity-80">Total Major Trophies</p>
+                        <p class="text-3xl font-bold">91</p>
+                    </div>
+                </div>
+                
+                <!-- Barcelona Trophies -->
+                <div class="stat-card barcelona-bg">
+                    <div class="text-center mb-6">
+                        <h3 class="text-3xl font-bold mb-4">FC Barcelona</h3>
+                        <div class="trophy-icon">
+                            <i class="fas fa-trophy text-yellow-400"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-medal text-yellow-500 mr-2"></i>La Liga</span>
+                            <span class="text-2xl font-bold text-gray-800">27</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-globe text-blue-500 mr-2"></i>Champions League</span>
+                            <span class="text-2xl font-bold text-gray-800">5</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-crown text-purple-500 mr-2"></i>Copa del Rey</span>
+                            <span class="text-2xl font-bold text-gray-800">31</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-trophy text-orange-500 mr-2"></i>Supercopa de España</span>
+                            <span class="text-2xl font-bold text-gray-800">14</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-star text-green-500 mr-2"></i>FIFA Club World Cup</span>
+                            <span class="text-2xl font-bold text-gray-800">3</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-white rounded-lg shadow-md">
+                            <span class="font-semibold text-gray-800"><i class="fas fa-award text-red-500 mr-2"></i>UEFA Super Cup</span>
+                            <span class="text-2xl font-bold text-gray-800">5</span>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-white rounded-lg text-center shadow-md">
+                        <p class="text-sm text-gray-600">Total Major Trophies</p>
+                        <p class="text-3xl font-bold text-gray-800">85</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Interactive Chart Section -->
+    <section class="py-16 bg-gradient-to-br from-gray-50 via-purple-50 to-blue-50 relative overflow-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-5">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl animate-pulse"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-black">
+                    <i class="fas fa-chart-pie mr-3 text-purple-600 animate-pulse"></i>
+                    Visual Statistics
+                </h2>
+                <p class="text-gray-600 text-lg">Interactive data visualization</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="chart-container">
+                    <div class="chart-card">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-3 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full mb-4">
+                                <i class="fas fa-trophy text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold chart-title">Trophy Distribution</h3>
+                            <p class="text-sm text-gray-600 mt-2">Total Major Trophies</p>
+                        </div>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="trophyChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="inline-flex gap-4 text-sm">
+                                <span class="px-3 py-1 bg-gray-200 rounded-full font-semibold">Real Madrid: 91</span>
+                                <span class="px-3 py-1 bg-gradient-to-r from-blue-500 to-red-500 text-white rounded-full font-semibold">Barcelona: 85</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-card">
+                        <div class="text-center mb-6">
+                            <div class="inline-block p-3 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full mb-4">
+                                <i class="fas fa-chart-bar text-3xl text-white"></i>
+                            </div>
+                            <h3 class="text-2xl font-bold chart-title">Head-to-Head Results</h3>
+                            <p class="text-sm text-gray-600 mt-2">All Competitive Matches</p>
+                        </div>
+                        <div style="position: relative; height: 300px;">
+                            <canvas id="h2hChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <div class="grid grid-cols-3 gap-2 text-xs">
+                                <div class="px-2 py-1 bg-gray-200 rounded font-semibold">RM: 106</div>
+                                <div class="px-2 py-1 bg-purple-200 rounded font-semibold">Draw: 52</div>
+                                <div class="px-2 py-1 bg-gradient-to-r from-blue-500 to-red-500 text-white rounded font-semibold">BAR: 104</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Historical Timeline -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-history mr-3 text-purple-600"></i>
+                Historical Milestones
+            </h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Real Madrid Timeline -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-center">Real Madrid</h3>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1902 - Foundation</h4>
+                            <p class="text-gray-600">Club founded as Madrid Football Club</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1955-1960 - European Dominance</h4>
+                            <p class="text-gray-600">Won 5 consecutive European Cups</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2000s - Galácticos Era</h4>
+                            <p class="text-gray-600">Signed world's best players (Zidane, Ronaldo, Beckham)</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2014-2018 - Champions League Dynasty</h4>
+                            <p class="text-gray-600">Won 4 Champions League titles in 5 years</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Barcelona Timeline -->
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6 text-center">FC Barcelona</h3>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1899 - Foundation</h4>
+                            <p class="text-gray-600">Founded by Swiss businessman Joan Gamper</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">1990s - Dream Team</h4>
+                            <p class="text-gray-600">Johan Cruyff's revolutionary team</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2008-2012 - Tiki-Taka Era</h4>
+                            <p class="text-gray-600">Pep Guardiola's dominant team with Messi, Xavi, Iniesta</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="font-bold text-lg mb-2">2015 - Treble Winners</h4>
+                            <p class="text-gray-600">Won La Liga, Copa del Rey, and Champions League</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Legendary Players -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-star mr-3 text-yellow-500"></i>
+                Legendary Players
+            </h2>
+            
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-8">
+                    <label class="flex items-center justify-center gap-4">
+                        <span class="font-semibold">Real Madrid</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="playerToggle" onchange="togglePlayers()">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="font-semibold">FC Barcelona</span>
+                    </label>
+                </div>
+                
+                <!-- Real Madrid Players -->
+                <div id="realMadridPlayers" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="di-stefano.jpg" alt="Alfredo Di Stéfano" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Alfredo Di Stéfano</h4>
+                                <p class="text-sm opacity-80">1953-1964</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-600"><strong>Goals:</strong> 308</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 8 La Liga, 5 European Cups</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="ronaldo.jpg" alt="Cristiano Ronaldo" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Cristiano Ronaldo</h4>
+                                <p class="text-sm opacity-80">2009-2018</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-600"><strong>Goals:</strong> 450</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 2 La Liga, 4 Champions League</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-gray-800 to-gray-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="raul.jpg" alt="Raúl" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Raúl</h4>
+                                <p class="text-sm opacity-80">1994-2010</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-600"><strong>Goals:</strong> 323</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 6 La Liga, 3 Champions League</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Barcelona Players -->
+                <div id="barcelonaPlayers" class="grid grid-cols-1 md:grid-cols-3 gap-6 hidden">
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="messi.jpg" alt="Lionel Messi" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Lionel Messi</h4>
+                                <p class="text-sm opacity-80">2004-2021</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Forward</p>
+                            <p class="text-sm text-gray-600"><strong>Goals:</strong> 672</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 10 La Liga, 4 Champions League</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="xavi.jpg" alt="Xavi Hernández" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Xavi Hernández</h4>
+                                <p class="text-sm opacity-80">1998-2015</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Midfielder</p>
+                            <p class="text-sm text-gray-600"><strong>Appearances:</strong> 767</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 8 La Liga, 4 Champions League</p>
+                        </div>
+                    </div>
+                    
+                    <div class="player-card">
+                        <div class="bg-gradient-to-br from-blue-600 to-red-600 text-white text-center relative overflow-hidden">
+                            <!-- Replace with: <img src="iniesta.jpg" alt="Andrés Iniesta" class="player-image"> -->
+                            <div class="image-placeholder player-image" style="min-height: 250px; border-radius: 0;">
+                                <i class="fas fa-user-circle text-6xl text-white opacity-50"></i>
+                            </div>
+                            <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black to-transparent">
+                                <h4 class="text-xl font-bold">Andrés Iniesta</h4>
+                                <p class="text-sm opacity-80">2002-2018</p>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <p class="text-sm text-gray-600"><strong>Position:</strong> Midfielder</p>
+                            <p class="text-sm text-gray-600"><strong>Appearances:</strong> 674</p>
+                            <p class="text-sm text-gray-600"><strong>Trophies:</strong> 9 La Liga, 4 Champions League</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Stadiums Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12">
+                <i class="fas fa-building mr-3 text-purple-600"></i>
+                Iconic Stadiums
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Santiago Bernabéu -->
+                <div class="stadium-card">
+                    <div class="real-madrid-bg text-center relative overflow-hidden">
+                        <!-- Replace with: <img src="bernabeu.jpg" alt="Santiago Bernabéu" class="stadium-image"> -->
+                        <div class="image-placeholder stadium-image" style="min-height: 300px; border-radius: 0;">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-gray-700">
+                                <i class="fas fa-monument text-6xl mb-4"></i>
+                                <h3 class="text-3xl font-bold mb-2">Santiago Bernabéu</h3>
+                                <p class="text-gray-600">Real Madrid</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-users mr-2 text-purple-600"></i>Capacity:</span>
+                                <span>81,044</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-calendar mr-2 text-purple-600"></i>Opened:</span>
+                                <span>1947</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-map-marker-alt mr-2 text-purple-600"></i>Location:</span>
+                                <span>Madrid, Spain</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-star mr-2 text-purple-600"></i>UEFA Rating:</span>
+                                <span>5 Stars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Camp Nou -->
+                <div class="stadium-card">
+                    <div class="barcelona-bg text-center text-white relative overflow-hidden">
+                        <!-- Replace with: <img src="camp-nou.jpg" alt="Camp Nou" class="stadium-image"> -->
+                        <div class="image-placeholder stadium-image" style="min-height: 300px; border-radius: 0;">
+                            <div class="absolute inset-0 flex flex-col items-center justify-center text-white">
+                                <i class="fas fa-monument text-6xl mb-4"></i>
+                                <h3 class="text-3xl font-bold mb-2">Camp Nou</h3>
+                                <p class="opacity-90">FC Barcelona</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-users mr-2 text-purple-600"></i>Capacity:</span>
+                                <span>99,354</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-calendar mr-2 text-purple-600"></i>Opened:</span>
+                                <span>1957</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-map-marker-alt mr-2 text-purple-600"></i>Location:</span>
+                                <span>Barcelona, Spain</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="font-semibold"><i class="fas fa-star mr-2 text-purple-600"></i>UEFA Rating:</span>
+                                <span>5 Stars</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-4">El Clásico</h3>
+            <p class="text-gray-400 mb-6">The greatest rivalry in football history</p>
+            <div class="flex justify-center gap-6">
+                <a href="#" class="text-2xl hover:text-purple-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-2xl hover:text-purple-400 transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-2xl hover:text-purple-400 transition"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="text-gray-500 mt-8 text-sm">© 2024 El Clásico Comparison. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll function
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Toggle players function
+        function togglePlayers() {
+            const toggle = document.getElementById('playerToggle');
+            const realMadrid = document.getElementById('realMadridPlayers');
+            const barcelona = document.getElementById('barcelonaPlayers');
+            
+            if (toggle.checked) {
+                realMadrid.classList.add('hidden');
+                barcelona.classList.remove('hidden');
+            } else {
+                realMadrid.classList.remove('hidden');
+                barcelona.classList.add('hidden');
+            }
+        }
+        
+        // Match Predictor Function
+        function predictMatch(team) {
+            const resultDiv = document.getElementById('predictionResult');
+            const titleEl = document.getElementById('predictionTitle');
+            const textEl = document.getElementById('predictionText');
+            
+            const predictions = {
+                realMadrid: {
+                    title: '⚽ Real Madrid Prediction',
+                    text: 'Based on historical data, Real Madrid has a slight edge with 106 wins. The next El Clásico could go either way, but Real Madrid\'s recent form suggests they might have the advantage!'
+                },
+                barcelona: {
+                    title: '⚽ FC Barcelona Prediction',
+                    text: 'Barcelona is extremely close with 104 wins. With their passionate fanbase and recent victories, they could definitely pull off a win in the next El Clásico!'
+                },
+                draw: {
+                    title: '⚽ Draw Prediction',
+                    text: 'With 52 draws in history, a draw is always a possibility! Both teams are so evenly matched that a thrilling draw could be on the cards.'
+                }
+            };
+            
+            const prediction = predictions[team];
+            titleEl.textContent = prediction.title;
+            textEl.textContent = prediction.text;
+            
+            resultDiv.classList.add('show');
+            
+            // Scroll to result
+            setTimeout(() => {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+        
+        // Initialize charts when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            // Trophy Distribution Chart
+            const trophyCtx = document.getElementById('trophyChart').getContext('2d');
+            new Chart(trophyCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Real Madrid', 'FC Barcelona'],
+                    datasets: [{
+                        data: [91, 85],
+                        backgroundColor: [
+                            'rgba(75, 85, 99, 0.9)',
+                            'rgba(165, 0, 68, 0.9)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 255, 255, 1)',
+                            'rgba(255, 255, 255, 1)'
+                        ],
+                        borderWidth: 4,
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                        duration: 2000,
+                        easing: 'easeOutQuart'
+                    },
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20,
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                usePointStyle: true,
+                                pointStyle: 'circle'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 15,
+                            titleFont: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            cornerRadius: 10
+                        }
+                    }
+                }
+            });
+            
+            // Head-to-Head Chart
+            const h2hCtx = document.getElementById('h2hChart').getContext('2d');
+            new Chart(h2hCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Real Madrid Wins', 'Draws', 'Barcelona Wins'],
+                    datasets: [{
+                        label: 'Matches',
+                        data: [106, 52, 104],
+                        backgroundColor: [
+                            'rgba(75, 85, 99, 0.9)',
+                            'rgba(102, 126, 234, 0.9)',
+                            'rgba(165, 0, 68, 0.9)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 255, 255, 1)',
+                            'rgba(255, 255, 255, 1)',
+                            'rgba(255, 255, 255, 1)'
+                        ],
+                        borderWidth: 3,
+                        borderRadius: 10,
+                        borderSkipped: false
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 2000,
+                        easing: 'easeOutQuart',
+                        delay: (context) => {
+                            return context.dataIndex * 200;
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.05)',
+                                lineWidth: 1
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                },
+                                color: '#666'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 11,
+                                    weight: 'bold'
+                                },
+                                color: '#666'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            padding: 15,
+                            titleFont: {
+                                size: 16,
+                                weight: 'bold'
+                            },
+                            bodyFont: {
+                                size: 14
+                            },
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
+                            borderWidth: 1,
+                            cornerRadius: 10,
+                            displayColors: true
+                        }
+                    }
+                }
+            });
+            
+            // Animate comparison bars on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bars = entry.target.querySelectorAll('.bar-fill');
+                        bars.forEach(bar => {
+                            const width = bar.style.width;
+                            bar.style.width = '0%';
+                            setTimeout(() => {
+                                bar.style.width = width;
+                            }, 100);
+                        });
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            const statsSection = document.getElementById('stats');
+            if (statsSection) {
+                observer.observe(statsSection);
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Is 897 Prime? | Prime Number Explorer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+        
+        .number-display {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .factor-box {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .factor-box:nth-child(1) { animation-delay: 0.1s; }
+        .factor-box:nth-child(2) { animation-delay: 0.2s; }
+        .factor-box:nth-child(3) { animation-delay: 0.3s; }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        
+        .result-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            animation: scaleIn 0.5s ease;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+        
+        .prime-badge {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+        
+        .composite-badge {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+        
+        .input-glow:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.3);
+        }
+        
+        .math-formula {
+            font-family: 'Courier New', monospace;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #667eea, transparent);
+            margin: 4rem 0;
+        }
+        
+        .factor-card {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .factor-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+        
+        .factor-card:hover::before {
+            opacity: 1;
+        }
+        
+        .factor-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+        }
+        
+        .factor-number {
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1;
+        }
+        
+        .factor-tree {
+            position: relative;
+        }
+        
+        .factor-tree::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, #667eea, transparent);
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .banner-placeholder {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 3px dashed #667eea;
+            border-radius: 1rem;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-weight: 600;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .multiplication-arrow {
+            font-size: 2rem;
+            color: #667eea;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .factor-card:nth-child(1) { animation-delay: 0.1s; }
+        .factor-card:nth-child(2) { animation-delay: 0.3s; }
+        .factor-card:nth-child(3) { animation-delay: 0.5s; }
+        
+        .faq-item {
+            background: white;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+        
+        .faq-item:hover {
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+        
+        .faq-item.active {
+            border-color: #667eea;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            background: linear-gradient(135deg, #f8f9ff 0%, #ffffff 100%);
+            padding: 1.5rem 2rem;
+        }
+        
+        .faq-item.active .faq-question {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .faq-question:hover {
+            background: linear-gradient(135deg, #f0f2ff 0%, #f8f9ff 100%);
+        }
+        
+        .faq-item.active .faq-question:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a3f92 100%);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease;
+            padding: 0 2rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 1000px;
+            padding: 1.5rem 2rem 2rem 2rem;
+        }
+        
+        .faq-icon {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease, color 0.3s ease;
+            flex-shrink: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 50%;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+            background: rgba(255, 255, 255, 0.2);
+            color: white !important;
+        }
+        
+        .faq-question h3 {
+            transition: color 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question h3 {
+            color: white;
+        }
+        
+        .faq-item.active .faq-question h3 span {
+            color: white;
+        }
+        
+        .faq-item.active .faq-question i.fa-question {
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20 px-4">
+        <div class="container mx-auto max-w-6xl text-center">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-pulse">
+                Is 897 Prime?
+            </h1>
+            <div class="mt-8 mb-6">
+                <span id="answer-badge" class="result-badge composite-badge text-2xl max-md:text-xl">
+                    <i class="fas fa-times-circle mr-2"></i> NO, 897 is NOT Prime
+                </span>
+            </div>
+            <p class="text-xl md:text-2xl mt-6 opacity-90">
+                897 is a <strong>composite number</strong> with multiple factors
+            </p>
+        </div>
+    </section>
+
+    <!-- Divisibility Check Section -->
+    <section class="py-12 px-4 bg-gradient-to-r from-green-50 to-emerald-50">
+        <div class="container mx-auto max-w-6xl">
+            <div class="bg-white rounded-2xl p-8 md:p-10 shadow-xl border-2 border-green-200">
+                <h2 class="text-2xl md:text-3xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-lightbulb mr-3 text-green-600"></i>
+                    Quick Divisibility Check
+                </h2>
+                <div class="max-w-3xl mx-auto">
+                    <p class="text-lg md:text-xl text-gray-700 mb-6 text-center leading-relaxed">
+                        A simple way to check if 897 is divisible by 3 is to add its digits:
+                    </p>
+                    <div class="flex flex-wrap justify-center items-center gap-3 mb-6">
+                        <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl px-6 py-4 shadow-md">
+                            <span class="text-3xl md:text-4xl font-bold text-green-700">8</span>
+                        </div>
+                        <span class="text-3xl text-gray-500 font-bold">+</span>
+                        <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl px-6 py-4 shadow-md">
+                            <span class="text-3xl md:text-4xl font-bold text-green-700">9</span>
+                        </div>
+                        <span class="text-3xl text-gray-500 font-bold">+</span>
+                        <div class="bg-gradient-to-br from-green-100 to-emerald-100 rounded-xl px-6 py-4 shadow-md">
+                            <span class="text-3xl md:text-4xl font-bold text-green-700">7</span>
+                        </div>
+                        <span class="text-3xl text-gray-500 font-bold">=</span>
+                        <div class="bg-gradient-to-br from-green-200 to-emerald-200 rounded-xl px-6 py-4 shadow-lg">
+                            <span class="text-3xl md:text-4xl font-bold text-green-800">24</span>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-lg p-6 border-l-4 border-green-500">
+                        <p class="text-lg md:text-xl text-gray-800 leading-relaxed">
+                            <i class="fas fa-check-circle text-green-600 mr-2"></i>
+                            Since <strong class="text-green-700">24 is divisible by 3</strong>, the number <strong class="text-green-700">897 is also divisible by 3</strong>. This means 897 cannot be a prime number.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prime Factorization Section -->
+    <section class="py-20 px-4 bg-gradient-to-b from-white via-purple-50/30 to-white relative overflow-hidden">
+        <!-- Decorative background elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-5">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full blur-3xl"></div>
+            <div class="absolute bottom-20 right-10 w-96 h-96 bg-blue-500 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <!-- Banner Image -->
+            <div class="mb-12">
+                <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-purple-100">
+                    <img 
+                        src="banner-image.jpeg" 
+                        alt="Prime Factorization of 897 - Mathematical Visualization"
+                        class="w-full h-auto object-cover"
+                        loading="eager"
+                    >
+                </div>
+            </div>
+            
+            <!-- Main Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-calculator mr-4 text-purple-600"></i>
+                    Prime Factorization of 897
+                </h2>
+                <p class="text-xl text-gray-600">Breaking down 897 into its prime building blocks</p>
+            </div>
+
+            <!-- Large Number Display -->
+            <div class="text-center mb-12">
+                <div class="inline-block relative">
+                    <div class="factor-number float-animation">897</div>
+                    <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
+                </div>
+            </div>
+
+            <!-- Factorization Visualization -->
+            <div class="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-purple-100 mb-12">
+                <div class="text-center mb-8">
+                    <div class="text-3xl text-gray-400 mb-6">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="text-xl text-gray-600 font-semibold mb-8">Decomposed into prime factors:</div>
+                </div>
+                
+                <!-- Factor Cards -->
+                <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-8">
+                    <!-- Factor 3 -->
+                    <div class="factor-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                        <div class="text-center">
+                            <div class="text-6xl md:text-7xl font-black text-purple-700 mb-3">3</div>
+                            <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
+                                <span class="text-sm font-semibold text-purple-600 uppercase tracking-wide">Prime Factor</span>
+                            </div>
+                            <div class="mt-3 text-xs text-purple-500">
+                                <i class="fas fa-check-circle mr-1"></i>Prime
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="multiplication-arrow">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    
+                    <!-- Factor 13 -->
+                    <div class="factor-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                        <div class="text-center">
+                            <div class="text-6xl md:text-7xl font-black text-blue-700 mb-3">13</div>
+                            <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
+                                <span class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Prime Factor</span>
+                            </div>
+                            <div class="mt-3 text-xs text-blue-500">
+                                <i class="fas fa-check-circle mr-1"></i>Prime
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="multiplication-arrow">
+                        <i class="fas fa-times"></i>
+                    </div>
+                    
+                    <!-- Factor 23 -->
+                    <div class="factor-card bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                        <div class="text-center">
+                            <div class="text-6xl md:text-7xl font-black text-indigo-700 mb-3">23</div>
+                            <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
+                                <span class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">Prime Factor</span>
+                            </div>
+                            <div class="mt-3 text-xs text-indigo-500">
+                                <i class="fas fa-check-circle mr-1"></i>Prime
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formula Display -->
+                <div class="text-center mt-10">
+                    <div class="inline-block bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200">
+                        <div class="math-formula text-2xl md:text-3xl font-bold text-gray-800">
+                            897 = 3 × 13 × 23
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="stat-card rounded-2xl p-8 text-center shadow-lg">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-layer-group text-purple-600"></i>
+                    </div>
+                    <div class="text-5xl font-black text-purple-600 mb-3">3</div>
+                    <div class="text-gray-600 font-semibold mb-2">Prime Factors</div>
+                    <div class="text-sm text-gray-500">Unique prime numbers</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-8 text-center shadow-lg">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-divide text-blue-600"></i>
+                    </div>
+                    <div class="text-5xl font-black text-blue-600 mb-3">8</div>
+                    <div class="text-gray-600 font-semibold mb-2">Total Divisors</div>
+                    <div class="text-sm text-gray-500">All positive divisors</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-8 text-center shadow-lg">
+                    <div class="text-5xl mb-4">
+                        <i class="fas fa-list-ol text-indigo-600"></i>
+                    </div>
+                    <div class="text-lg font-bold text-indigo-600 mb-3 leading-tight">1, 3, 13, 23<br>39, 69, 299, 897</div>
+                    <div class="text-gray-600 font-semibold mb-2">All Divisors</div>
+                    <div class="text-sm text-gray-500">Complete list</div>
+                </div>
+            </div>
+
+            <!-- Step-by-step breakdown -->
+            <div class="bg-gradient-to-r from-purple-50 to-indigo-50 rounded-2xl p-8 md:p-10 shadow-xl border border-purple-200">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-sitemap mr-2 text-purple-600"></i>
+                    Factorization Steps
+                </h3>
+                <div class="space-y-4 max-w-3xl mx-auto">
+                    <div class="flex items-center gap-4 bg-white rounded-lg p-4 shadow-md">
+                        <div class="bg-purple-100 rounded-full w-12 h-12 flex items-center justify-center font-bold text-purple-700">1</div>
+                        <div class="flex-1">
+                            <p class="text-gray-800"><strong>897 ÷ 3 = 299</strong></p>
+                            <p class="text-sm text-gray-600">897 is divisible by 3 (sum of digits: 8+9+7=24, divisible by 3)</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-white rounded-lg p-4 shadow-md">
+                        <div class="bg-blue-100 rounded-full w-12 h-12 flex items-center justify-center font-bold text-blue-700">2</div>
+                        <div class="flex-1">
+                            <p class="text-gray-800"><strong>299 ÷ 13 = 23</strong></p>
+                            <p class="text-sm text-gray-600">299 is divisible by 13</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 bg-white rounded-lg p-4 shadow-md">
+                        <div class="bg-indigo-100 rounded-full w-12 h-12 flex items-center justify-center font-bold text-indigo-700">3</div>
+                        <div class="flex-1">
+                            <p class="text-gray-800"><strong>23 is prime</strong></p>
+                            <p class="text-sm text-gray-600">Final result: 897 = 3 × 13 × 23</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Prime Checker -->
+    <section class="py-16 px-4 bg-gray-100">
+        <div class="container mx-auto max-w-4xl">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 text-center">
+                    <i class="fas fa-search mr-3 text-purple-600"></i>
+                    Prime Number Checker
+                </h2>
+                <p class="text-center text-gray-600 mb-8">
+                    Check if any number is prime or composite
+                </p>
+                <div class="max-w-md mx-auto">
+                    <div class="flex flex-col md:flex-row gap-4 mb-6">
+                        <input 
+                            type="number" 
+                            id="prime-input" 
+                            placeholder="Enter a number..."
+                            class="flex-1 px-6 py-4 text-xl border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 input-glow transition-all"
+                            min="1"
+                        >
+                        <button 
+                            onclick="checkPrime()" 
+                            class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xl font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg"
+                        >
+                            <i class="fas fa-check mr-2"></i>Check
+                        </button>
+                    </div>
+                    <div id="prime-result" class="mt-6"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Educational Content -->
+    <section class="py-16 px-4 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">
+                <i class="fas fa-book-open mr-3 text-purple-600"></i>
+                Understanding Prime Numbers
+            </h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-blue-50 rounded-xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">
+                        <i class="fas fa-key text-purple-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">What is a Prime Number?</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself. Examples include 2, 3, 5, 7, 11, 13, 17, 19, and 23.
+                    </p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">
+                        <i class="fas fa-puzzle-piece text-blue-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">What is a Composite Number?</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        A composite number is a positive integer that has at least one divisor other than 1 and itself. Since 897 can be divided by 3, 13, and 23, it is a composite number.
+                    </p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">
+                        <i class="fas fa-cogs text-indigo-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Prime Factorization</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Prime factorization is the process of expressing a composite number as a product of its prime factors. For 897, the prime factorization is 3 × 13 × 23.
+                    </p>
+                </div>
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-8 shadow-lg">
+                    <div class="text-4xl mb-4">
+                        <i class="fas fa-chart-line text-pink-600"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">Why It Matters</h3>
+                    <p class="text-gray-700 leading-relaxed">
+                        Prime numbers are fundamental in mathematics, cryptography, computer science, and number theory. They form the building blocks of all natural numbers.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Number Properties -->
+    <section class="py-16 px-4 bg-gray-100">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-12 text-center">
+                <i class="fas fa-info-circle mr-3 text-purple-600"></i>
+                Properties of 897
+            </h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center card-hover">
+                    <div class="text-3xl mb-3">
+                        <i class="fas fa-sort-numeric-up text-purple-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-800 mb-2">897</div>
+                    <div class="text-gray-600">The Number</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center card-hover">
+                    <div class="text-3xl mb-3">
+                        <i class="fas fa-tag text-blue-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-800 mb-2">Composite</div>
+                    <div class="text-gray-600">Number Type</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center card-hover">
+                    <div class="text-3xl mb-3">
+                        <i class="fas fa-divide text-indigo-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-800 mb-2">8</div>
+                    <div class="text-gray-600">Total Divisors</div>
+                </div>
+                <div class="bg-white rounded-xl p-6 shadow-lg text-center card-hover">
+                    <div class="text-3xl mb-3">
+                        <i class="fas fa-calculator text-pink-600"></i>
+                    </div>
+                    <div class="text-2xl font-bold text-gray-800 mb-2">3</div>
+                    <div class="text-gray-600">Prime Factors</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 px-4 bg-gradient-to-b from-gray-50 via-white to-gray-50">
+        <div class="container mx-auto max-w-4xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+                    <i class="fas fa-question-circle mr-4 text-purple-600"></i>
+                    Frequently Asked Questions
+                </h2>
+                <p class="text-xl text-gray-600">Common questions about 897 and prime numbers</p>
+            </div>
+
+            <div>
+                <!-- FAQ Item 1 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-purple-600"></i>
+                            <span>Is 897 a prime number?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-purple-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            <strong>No, 897 is not a prime number.</strong> It is a composite number because it has divisors other than 1 and itself. The prime factorization of 897 is <strong>3 × 13 × 23</strong>. You can quickly verify this by adding its digits (8+9+7=24), and since 24 is divisible by 3, 897 is also divisible by 3.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-blue-600"></i>
+                            <span>What are the factors of 897?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed mb-3">
+                            The number 897 has <strong>8 total divisors</strong>:
+                        </p>
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+                            <p class="text-lg font-semibold text-gray-800">
+                                1, 3, 13, 23, 39, 69, 299, 897
+                            </p>
+                        </div>
+                        <p class="text-gray-700 text-lg leading-relaxed mt-3">
+                            The prime factors are <strong>3, 13, and 23</strong>, which multiply together to give 897.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            <span>How can I quickly check if a number is divisible by 3?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed mb-3">
+                            A simple divisibility rule for 3: <strong>Add all the digits of the number together.</strong> If the sum is divisible by 3, then the original number is also divisible by 3.
+                        </p>
+                        <div class="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 my-3">
+                            <p class="text-gray-800">
+                                <strong>Example with 897:</strong><br>
+                                8 + 9 + 7 = 24<br>
+                                Since 24 ÷ 3 = 8, then 897 is divisible by 3.
+                            </p>
+                        </div>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            This rule works for any number and is a quick way to determine divisibility without performing long division.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-purple-600"></i>
+                            <span>What is the difference between prime and composite numbers?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-purple-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed mb-4">
+                            <strong>Prime numbers</strong> are natural numbers greater than 1 that have exactly two positive divisors: 1 and themselves. Examples include 2, 3, 5, 7, 11, 13, 17, 19, and 23.
+                        </p>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            <strong>Composite numbers</strong> are positive integers that have at least one divisor other than 1 and themselves. Since 897 can be divided by 3, 13, and 23 (in addition to 1 and 897), it is a composite number.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-blue-600"></i>
+                            <span>Why is prime factorization important?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-blue-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            Prime factorization is fundamental in mathematics because:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 text-lg leading-relaxed mt-3 space-y-2 ml-4">
+                            <li><strong>Number Theory:</strong> It helps understand the structure of numbers</li>
+                            <li><strong>Cryptography:</strong> Prime numbers are essential for encryption algorithms (RSA)</li>
+                            <li><strong>Finding GCD/LCM:</strong> Simplifies finding greatest common divisors and least common multiples</li>
+                            <li><strong>Mathematical Proofs:</strong> Used in various mathematical proofs and theorems</li>
+                            <li><strong>Computer Science:</strong> Important in algorithms and data structures</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 6 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-indigo-600"></i>
+                            <span>Can I use the prime checker for any number?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-indigo-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                            <strong>Yes!</strong> The interactive prime number checker on this page works for any positive integer. Simply enter a number and click "Check" to see if it's prime or composite. For composite numbers, you'll also see the prime factorization and all divisors. This tool uses efficient algorithms to determine primality and find factors.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 7 -->
+                <div class="faq-item">
+                    <div class="faq-question flex items-center justify-between">
+                        <h3 class="text-lg md:text-xl font-bold flex items-center gap-3">
+                            <i class="fas fa-question text-purple-600"></i>
+                            <span>What are some interesting facts about the number 897?</span>
+                        </h3>
+                        <i class="fas fa-chevron-down faq-icon text-purple-600"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-700 text-lg leading-relaxed mb-3">
+                            Here are some interesting properties of 897:
+                        </p>
+                        <ul class="list-disc list-inside text-gray-700 text-lg leading-relaxed space-y-2 ml-4">
+                            <li>It's an <strong>odd composite number</strong></li>
+                            <li>It has <strong>3 distinct prime factors</strong> (3, 13, 23)</li>
+                            <li>The sum of its digits (8+9+7) equals <strong>24</strong>, which is divisible by 3</li>
+                            <li>It's the product of three consecutive odd primes: <strong>3 × 13 × 23</strong></li>
+                            <li>It has <strong>8 total divisors</strong>, making it a highly composite number</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8 px-4">
+        <div class="container mx-auto max-w-6xl text-center">
+            <p class="text-gray-400">
+                <i class="fas fa-calculator mr-2"></i>
+                Prime Number Explorer | Is 897 Prime? - No, it's a composite number (3 × 13 × 23)
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Prime checking function
+        function isPrime(n) {
+            if (n < 2) return false;
+            if (n === 2) return true;
+            if (n % 2 === 0) return false;
+            
+            const sqrt = Math.sqrt(n);
+            for (let i = 3; i <= sqrt; i += 2) {
+                if (n % i === 0) return false;
+            }
+            return true;
+        }
+
+        // Get prime factors
+        function getPrimeFactors(n) {
+            const factors = [];
+            let d = 2;
+            while (d * d <= n) {
+                while (n % d === 0) {
+                    factors.push(d);
+                    n /= d;
+                }
+                d++;
+            }
+            if (n > 1) factors.push(n);
+            return factors;
+        }
+
+        // Get all divisors
+        function getDivisors(n) {
+            const divisors = [];
+            for (let i = 1; i <= Math.sqrt(n); i++) {
+                if (n % i === 0) {
+                    divisors.push(i);
+                    if (i !== n / i) {
+                        divisors.push(n / i);
+                    }
+                }
+            }
+            return divisors.sort((a, b) => a - b);
+        }
+
+        // Check prime and display result
+        function checkPrime() {
+            const input = document.getElementById('prime-input');
+            const resultDiv = document.getElementById('prime-result');
+            const num = parseInt(input.value);
+
+            if (!num || num < 1) {
+                resultDiv.innerHTML = `
+                    <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-center">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-3xl mb-3"></i>
+                        <p class="text-red-700 font-semibold">Please enter a valid positive number</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const prime = isPrime(num);
+            const factors = getPrimeFactors(num);
+            const divisors = getDivisors(num);
+
+            let resultHTML = '';
+            
+            if (prime) {
+                resultHTML = `
+                    <div class="bg-gradient-to-r from-pink-50 to-red-50 border-2 border-pink-300 rounded-lg p-8">
+                        <div class="text-center mb-4">
+                            <span class="result-badge prime-badge text-xl">
+                                <i class="fas fa-check-circle mr-2"></i>${num} IS PRIME
+                            </span>
+                        </div>
+                        <div class="text-center mt-6">
+                            <p class="text-gray-700 text-lg">
+                                <i class="fas fa-info-circle text-pink-600 mr-2"></i>
+                                ${num} has no divisors other than 1 and itself.
+                            </p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                const factorsDisplay = factors.map(f => `<span class="bg-white px-4 py-2 rounded-lg shadow-md font-bold text-purple-600">${f}</span>`).join(' × ');
+                const divisorsDisplay = divisors.join(', ');
+                
+                resultHTML = `
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-lg p-8">
+                        <div class="text-center mb-4">
+                            <span class="result-badge composite-badge text-xl">
+                                <i class="fas fa-times-circle mr-2"></i>${num} is NOT PRIME (Composite)
+                            </span>
+                        </div>
+                        <div class="mt-6 space-y-4">
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">
+                                    <i class="fas fa-calculator text-blue-600 mr-2"></i>Prime Factorization:
+                                </h4>
+                                <div class="flex flex-wrap items-center justify-center gap-2 text-xl">
+                                    ${factorsDisplay}
+                                </div>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 mb-2">
+                                    <i class="fas fa-list text-indigo-600 mr-2"></i>All Divisors (${divisors.length}):
+                                </h4>
+                                <p class="text-gray-700 text-sm break-words">${divisorsDisplay}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            resultDiv.innerHTML = resultHTML;
+        }
+
+        // Allow Enter key to trigger check
+        document.getElementById('prime-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkPrime();
+            }
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // FAQ Accordion functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const faqItem = this.closest('.faq-item');
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't already active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

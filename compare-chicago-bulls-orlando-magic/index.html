@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chicago Bulls vs Orlando Magic - NBA Team Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        
+        .stat-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #ef4444, #3b82f6);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 19px;
+            height: 19px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        
+        .comparison-toggle {
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-toggle.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-basketball-ball text-2xl text-orange-500"></i>
+                    <span class="text-xl font-bold text-gray-800">NBA Team Comparison</span>
+                </div>
+                <div class="hidden md:flex space-x-6">
+                    <a href="#overview" class="text-gray-600 hover:text-red-600 transition">Overview</a>
+                    <a href="#stats" class="text-gray-600 hover:text-red-600 transition">Statistics</a>
+                    <a href="#history" class="text-gray-600 hover:text-red-600 transition">History</a>
+                    <a href="#legends" class="text-gray-600 hover:text-red-600 transition">Legends</a>
+                    <a href="#championships" class="text-gray-600 hover:text-red-600 transition">Championships</a>
+                    <a href="#arenas" class="text-gray-600 hover:text-red-600 transition">Arenas</a>
+                    <a href="#head-to-head" class="text-gray-600 hover:text-red-600 transition">Head-to-Head</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="overview" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-20 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=1920&q=80" alt="Basketball Court" class="w-full h-full object-cover" onerror="this.style.display='none';">
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-12 fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4">Chicago Bulls vs Orlando Magic</h1>
+                <p class="text-xl text-gray-300">A Comprehensive NBA Team Comparison</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <!-- Chicago Bulls Card -->
+                <div class="team-card bg-gradient-to-br from-red-600 to-red-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold">Chicago Bulls</h2>
+                            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1612874742237-652622b8b378?w=160&q=80" alt="Bulls Logo" class="w-16 h-16 rounded-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/CE1141/FFFFFF?text=CHI';">
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Founded</span>
+                                <span class="font-bold">1966 (58 years)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Conference</span>
+                                <span class="font-bold">Eastern</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Division</span>
+                                <span class="font-bold">Central</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Championships</span>
+                                <span class="font-bold text-yellow-300">6 (1991-93, 1996-98)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Home Arena</span>
+                                <span class="font-bold">United Center (20,917)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">All-Time Record</span>
+                                <span class="font-bold">2,310-1,810 (.561)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Orlando Magic Card -->
+                <div class="team-card bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center justify-between mb-6">
+                            <h2 class="text-3xl font-bold">Orlando Magic</h2>
+                            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                <img src="https://images.unsplash.com/photo-1612874742237-652622b8b378?w=160&q=80" alt="Magic Logo" class="w-16 h-16 rounded-full object-cover" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/0077C0/FFFFFF?text=ORL';">
+                            </div>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Founded</span>
+                                <span class="font-bold">1989 (35 years)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Conference</span>
+                                <span class="font-bold">Eastern</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Division</span>
+                                <span class="font-bold">Southeast</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Championships</span>
+                                <span class="font-bold text-yellow-300">0 (2 Finals appearances)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">Home Arena</span>
+                                <span class="font-bold">Amway Center (18,846)</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-200">All-Time Record</span>
+                                <span class="font-bold">1,285-1,425 (.474)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Comparison Section -->
+    <section id="stats" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Statistical Comparison</h2>
+            
+            <!-- All-Time Stats -->
+            <div id="all-time-stats" class="stats-section">
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <!-- Win-Loss Records -->
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">All-Time Win-Loss Record</h3>
+                        <div class="chart-container">
+                            <canvas id="winLossChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Championships -->
+                    <div class="bg-gray-50 rounded-xl p-6 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Championships & Finals</h3>
+                        <div class="chart-container">
+                            <canvas id="championshipsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Detailed Stats Grid -->
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gradient-to-r from-red-50 to-red-100 rounded-xl p-6">
+                        <h3 class="text-xl font-bold mb-4 text-red-800">Chicago Bulls</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">All-Time Wins</span>
+                                    <span class="font-bold">2,310</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-red-600 h-3 rounded-full" style="width: 56%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Playoff Appearances</span>
+                                    <span class="font-bold">35</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-red-600 h-3 rounded-full" style="width: 85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Conference Titles</span>
+                                    <span class="font-bold">6</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-red-600 h-3 rounded-full" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Division Titles</span>
+                                    <span class="font-bold">9</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-red-600 h-3 rounded-full" style="width: 90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Hall of Famers</span>
+                                    <span class="font-bold">12</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-red-600 h-3 rounded-full" style="width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6">
+                        <h3 class="text-xl font-bold mb-4 text-blue-800">Orlando Magic</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">All-Time Wins</span>
+                                    <span class="font-bold">1,285</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-blue-600 h-3 rounded-full" style="width: 31%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Playoff Appearances</span>
+                                    <span class="font-bold">16</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-blue-600 h-3 rounded-full" style="width: 39%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Conference Titles</span>
+                                    <span class="font-bold">2</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-blue-600 h-3 rounded-full" style="width: 33%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Division Titles</span>
+                                    <span class="font-bold">6</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-blue-600 h-3 rounded-full" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="font-semibold">Hall of Famers</span>
+                                    <span class="font-bold">3</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-3">
+                                    <div class="stat-bar bg-blue-600 h-3 rounded-full" style="width: 25%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Additional Stats Cards -->
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg p-4 shadow-md text-center">
+                        <div class="text-3xl font-bold text-red-600 mb-2">5</div>
+                        <div class="text-sm text-gray-600">MVP Awards</div>
+                        <div class="text-xs text-gray-500 mt-1">(Jordan: 5)</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-md text-center">
+                        <div class="text-3xl font-bold text-red-600 mb-2">45</div>
+                        <div class="text-sm text-gray-600">All-Star Selections</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-md text-center">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">0</div>
+                        <div class="text-sm text-gray-600">MVP Awards</div>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 shadow-md text-center">
+                        <div class="text-3xl font-bold text-blue-600 mb-2">12</div>
+                        <div class="text-sm text-gray-600">All-Star Selections</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- History Timeline Section -->
+    <section id="history" class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Team History & Milestones</h2>
+            
+            <!-- Chicago Bulls History -->
+            <div class="mb-12">
+                <div class="bg-white rounded-xl p-6 md:p-8 shadow-lg mb-6">
+                    <h3 class="text-2xl font-bold mb-6 text-red-600 flex items-center">
+                        <i class="fas fa-bull mr-3"></i>
+                        Chicago Bulls History
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1966</span>
+                                <i class="fas fa-calendar text-red-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">Team Founded</h4>
+                            <p class="text-sm text-gray-700">Established as an expansion team, joining the NBA's Western Division.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1971</span>
+                                <i class="fas fa-trophy text-red-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">First Playoff</h4>
+                            <p class="text-sm text-gray-700">Made first playoff appearance, reaching Western Conference Finals.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1984</span>
+                                <i class="fas fa-star text-red-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">Michael Jordan Drafted</h4>
+                            <p class="text-sm text-gray-700">Selected 3rd overall, beginning the greatest era in franchise history.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1987</span>
+                                <i class="fas fa-users text-red-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">Scottie Pippen</h4>
+                            <p class="text-sm text-gray-700">Acquired via trade, forming the legendary Jordan-Pippen duo.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1991</span>
+                                <i class="fas fa-trophy text-yellow-500"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">First Championship</h4>
+                            <p class="text-sm text-gray-700">Defeated Lakers 4-1 to win first NBA championship. Jordan's first Finals MVP.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1991-93</span>
+                                <i class="fas fa-crown text-yellow-500"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">First Three-Peat</h4>
+                            <p class="text-sm text-gray-700">Won three consecutive NBA championships (Lakers, Trail Blazers, Suns).</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1995-96</span>
+                                <i class="fas fa-fire text-red-500"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">72-10 Season</h4>
+                            <p class="text-sm text-gray-700">Set NBA record with 72 regular-season wins. Won championship.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">1996-98</span>
+                                <i class="fas fa-crown text-yellow-500"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">Second Three-Peat</h4>
+                            <p class="text-sm text-gray-700">Another three consecutive championships, completing the dynasty.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-red-700 bg-red-200 px-2 py-1 rounded">2011</span>
+                                <i class="fas fa-medal text-yellow-500"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-red-800">Derrick Rose MVP</h4>
+                            <p class="text-sm text-gray-700">Rose became youngest MVP in NBA history at age 22 (62-20 record).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orlando Magic History -->
+            <div>
+                <div class="bg-white rounded-xl p-6 md:p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600 flex items-center">
+                        <i class="fas fa-magic mr-3"></i>
+                        Orlando Magic History
+                    </h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">1989</span>
+                                <i class="fas fa-calendar text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Team Founded</h4>
+                            <p class="text-sm text-gray-700">Entered the NBA as an expansion team alongside Minnesota Timberwolves.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">1992</span>
+                                <i class="fas fa-star text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Shaquille O'Neal</h4>
+                            <p class="text-sm text-gray-700">Selected 1st overall, transforming the franchise. Won Rookie of the Year.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">1993</span>
+                                <i class="fas fa-users text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Penny Hardaway</h4>
+                            <p class="text-sm text-gray-700">Acquired via trade, forming dynamic duo with Shaq. All-NBA First Team 1995.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">1995</span>
+                                <i class="fas fa-trophy text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">First NBA Finals</h4>
+                            <p class="text-sm text-gray-700">Reached Finals in just 6th season (fastest in NBA history). Lost to Rockets.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">1996</span>
+                                <i class="fas fa-exchange-alt text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Shaq Departs</h4>
+                            <p class="text-sm text-gray-700">O'Neal signed with Lakers, beginning rebuilding phase.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">2004</span>
+                                <i class="fas fa-star text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Dwight Howard</h4>
+                            <p class="text-sm text-gray-700">Selected 1st overall from high school, becoming franchise centerpiece.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">2009</span>
+                                <i class="fas fa-trophy text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Second NBA Finals</h4>
+                            <p class="text-sm text-gray-700">Led by Dwight Howard, reached Finals but lost to Lakers (1-4).</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">2022</span>
+                                <i class="fas fa-star text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Paolo Banchero</h4>
+                            <p class="text-sm text-gray-700">Selected 1st overall, won Rookie of the Year in 2023.</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition">
+                            <div class="flex items-start justify-between mb-2">
+                                <span class="text-xs font-bold text-blue-700 bg-blue-200 px-2 py-1 rounded">2024</span>
+                                <i class="fas fa-basketball-ball text-blue-400"></i>
+                            </div>
+                            <h4 class="font-bold text-lg mb-2 text-blue-800">Playoff Return</h4>
+                            <p class="text-sm text-gray-700">Young core led by Banchero and Wagner returned to playoffs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legendary Players Section -->
+    <section id="legends" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Legendary Players & Hall of Famers</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Chicago Bulls Legends -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-red-600 flex items-center">
+                        <i class="fas fa-star mr-3"></i>
+                        Chicago Bulls Legends
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('jordan')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Michael Jordan" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-red-800">Michael Jordan</h4>
+                                    <p class="text-xs text-gray-600">SG • #23</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">6× Champion, 5× MVP, 14× All-Star, 10× Scoring Champion</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('pippen')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Scottie Pippen" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-red-800">Scottie Pippen</h4>
+                                    <p class="text-xs text-gray-600">SF • #33</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">6× Champion, 7× All-Star, 8× All-Defensive</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('rodman')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Dennis Rodman" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-red-800">Dennis Rodman</h4>
+                                    <p class="text-xs text-gray-600">PF • #91</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">3× Champion (with Bulls), 7× Rebounding Champion</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('rose')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Derrick Rose" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-red-800">Derrick Rose</h4>
+                                    <p class="text-xs text-gray-600">PG • #1</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">2011 MVP, Youngest MVP in NBA History (22)</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold mb-2 text-gray-800">Other Hall of Famers:</h5>
+                        <p class="text-sm text-gray-600">Artis Gilmore, Chet Walker, Bob Love, Jerry Sloan, Nate Thurmond, George Gervin, Toni Kukoč, Phil Jackson (Coach)</p>
+                    </div>
+                </div>
+                
+                <!-- Orlando Magic Legends -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-blue-600 flex items-center">
+                        <i class="fas fa-star mr-3"></i>
+                        Orlando Magic Legends
+                    </h3>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('shaq')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Shaquille O'Neal" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-blue-800">Shaquille O'Neal</h4>
+                                    <p class="text-xs text-gray-600">C • #32</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">1993 ROY, 4× All-Star (with Magic), Hall of Famer</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('penny')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Penny Hardaway" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-blue-800">Penny Hardaway</h4>
+                                    <p class="text-xs text-gray-600">PG/SG • #1</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">4× All-Star, 2× All-NBA First Team, 1995 Finals</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('howard')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Dwight Howard" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-blue-800">Dwight Howard</h4>
+                                    <p class="text-xs text-gray-600">C • #12</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">3× DPOY, 8× All-Star, 2009 Finals</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 hover:shadow-lg transition cursor-pointer" onclick="showPlayerInfo('tmac')">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Tracy McGrady" class="w-12 h-12 rounded-full object-cover" onerror="this.style.display='none';">
+                                <div>
+                                    <h4 class="font-bold text-blue-800">Tracy McGrady</h4>
+                                    <p class="text-xs text-gray-600">SG/SF • #1</p>
+                                </div>
+                            </div>
+                            <p class="text-sm text-gray-700">7× All-Star, 2× Scoring Champion, Hall of Famer</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 bg-gray-50 rounded-lg p-4">
+                        <h5 class="font-semibold mb-2 text-gray-800">Other Notable Players:</h5>
+                        <p class="text-sm text-gray-600">Nick Anderson, Horace Grant, Rashard Lewis, Hedo Türkoğlu, Jameer Nelson, Grant Hill</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Championships Section -->
+    <section id="championships" class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Championship History</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Bulls Championships -->
+                <div class="bg-white rounded-xl p-8 shadow-xl">
+                    <div class="flex items-center justify-center mb-6">
+                        <i class="fas fa-trophy text-6xl text-yellow-500 mr-4"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold text-red-600">6 Championships</h3>
+                            <p class="text-gray-600">1991, 1992, 1993, 1996, 1997, 1998</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1991 - First Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Los Angeles Lakers 4-1</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (31.2 PPG, 11.4 APG, 6.6 RPG)</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1992 - Second Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Portland Trail Blazers 4-2</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (35.8 PPG, 6.5 APG, 4.8 RPG)</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1993 - Third Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Phoenix Suns 4-2</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (41.0 PPG, 8.5 RPG, 6.3 APG)</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1996 - Fourth Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Seattle SuperSonics 4-2</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (27.3 PPG, 5.3 RPG, 4.2 APG)</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1997 - Fifth Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz 4-2</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (32.3 PPG, 7.0 RPG, 6.0 APG)</p>
+                        </div>
+                        <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
+                            <h4 class="font-bold text-lg mb-2">1998 - Sixth Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz 4-2</p>
+                            <p class="text-xs text-gray-600">MVP: Michael Jordan (33.5 PPG, 4.0 RPG, 2.3 APG) - "The Last Shot"</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Magic Finals Appearances -->
+                <div class="bg-white rounded-xl p-8 shadow-xl">
+                    <div class="flex items-center justify-center mb-6">
+                        <i class="fas fa-medal text-6xl text-blue-500 mr-4"></i>
+                        <div>
+                            <h3 class="text-3xl font-bold text-blue-600">2 Finals Appearances</h3>
+                            <p class="text-gray-600">1995, 2009</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-600">
+                            <h4 class="font-bold text-lg mb-2">1995 - First NBA Finals</h4>
+                            <p class="text-sm text-gray-700 mb-2">Lost to Houston Rockets 0-4</p>
+                            <p class="text-xs text-gray-600">Led by Shaq (28.0 PPG) and Penny (25.5 PPG). Swept in Finals.</p>
+                            <p class="text-xs text-gray-500 mt-2">Achievement: Reached Finals in just 6th season as franchise</p>
+                        </div>
+                        <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-600">
+                            <h4 class="font-bold text-lg mb-2">2009 - Second NBA Finals</h4>
+                            <p class="text-sm text-gray-700 mb-2">Lost to Los Angeles Lakers 1-4</p>
+                            <p class="text-xs text-gray-600">Led by Dwight Howard (15.4 PPG, 15.2 RPG). Won Game 3.</p>
+                            <p class="text-xs text-gray-500 mt-2">Achievement: Defeated LeBron's Cavaliers in Conference Finals</p>
+                        </div>
+                        <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-400">
+                            <h4 class="font-bold text-lg mb-2 text-gray-700">Notable Playoff Runs</h4>
+                            <ul class="text-sm text-gray-600 space-y-1 mt-2">
+                                <li>• 1996: Eastern Conference Finals (lost to Bulls)</li>
+                                <li>• 2008: Second Round (lost to Pistons)</li>
+                                <li>• 2010: Eastern Conference Finals (lost to Celtics)</li>
+                                <li>• 2024: First Round (lost to Cavaliers)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Arenas Section -->
+    <section id="arenas" class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Home Arenas</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- United Center -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-red-600 to-red-800 relative">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80" alt="United Center" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none';">
+                        <div class="absolute inset-0 bg-red-600 opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">United Center</h3>
+                            <p class="text-red-100">Chicago, Illinois</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Capacity</span>
+                                <span class="font-bold">20,917</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Opened</span>
+                                <span class="font-bold">1994</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Cost</span>
+                                <span class="font-bold">$175 million</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Also Home To</span>
+                                <span class="font-bold">Chicago Blackhawks (NHL)</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-4">The United Center is the largest arena in the NBA by capacity. It replaced the Chicago Stadium in 1994 and has hosted all 6 Bulls championships. The arena features the famous "Madhouse on Madison" atmosphere.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Amway Center -->
+                <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden shadow-xl">
+                    <div class="h-48 bg-gradient-to-r from-blue-600 to-blue-800 relative">
+                        <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&q=80" alt="Amway Center" class="w-full h-full object-cover opacity-80" onerror="this.style.display='none';">
+                        <div class="absolute inset-0 bg-blue-600 opacity-60"></div>
+                        <div class="absolute bottom-4 left-4 text-white">
+                            <h3 class="text-2xl font-bold">Amway Center</h3>
+                            <p class="text-blue-100">Orlando, Florida</p>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Capacity</span>
+                                <span class="font-bold">18,846</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Opened</span>
+                                <span class="font-bold">2010</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Cost</span>
+                                <span class="font-bold">$480 million</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Also Home To</span>
+                                <span class="font-bold">Orlando Predators (AFL)</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mt-4">The Amway Center replaced the Amway Arena in 2010. It's a state-of-the-art facility featuring advanced technology and fan amenities. The arena has hosted numerous concerts and events in addition to Magic games.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Head-to-Head Section -->
+    <section id="head-to-head" class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Head-to-Head Matchups</h2>
+            
+            <div class="bg-white rounded-xl p-8 shadow-xl">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div class="text-center bg-red-50 rounded-lg p-6">
+                        <div class="text-5xl font-bold text-red-600 mb-2">67</div>
+                        <div class="text-gray-600 font-semibold">Bulls Wins</div>
+                        <div class="text-sm text-gray-500 mt-2">58.8% Win Rate</div>
+                    </div>
+                    <div class="text-center bg-blue-50 rounded-lg p-6">
+                        <div class="text-5xl font-bold text-blue-600 mb-2">47</div>
+                        <div class="text-gray-600 font-semibold">Magic Wins</div>
+                        <div class="text-sm text-gray-500 mt-2">41.2% Win Rate</div>
+                    </div>
+                    <div class="text-center bg-purple-50 rounded-lg p-6">
+                        <div class="text-5xl font-bold text-purple-600 mb-2">114</div>
+                        <div class="text-gray-600 font-semibold">Total Games</div>
+                        <div class="text-sm text-gray-500 mt-2">Regular Season</div>
+                    </div>
+                </div>
+                
+                <div class="mb-8">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800">All-Time Win Percentage</h3>
+                    <div class="w-full bg-gray-200 rounded-full h-8 relative">
+                        <div class="bg-gradient-to-r from-red-600 to-red-500 h-8 rounded-full flex items-center justify-end pr-3" style="width: 58.8%">
+                            <span class="text-white text-sm font-bold">58.8%</span>
+                        </div>
+                        <div class="absolute right-0 top-0 h-8 flex items-center pr-3">
+                            <span class="text-gray-700 text-sm font-bold">41.2%</span>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex justify-between text-sm text-gray-600">
+                        <span class="text-red-600 font-semibold">Bulls Advantage</span>
+                        <span class="text-blue-600 font-semibold">Magic</span>
+                    </div>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-red-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-4 text-red-800 flex items-center">
+                            <i class="fas fa-trophy mr-2"></i>
+                            Notable Playoff Matchups
+                        </h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-star text-yellow-500 mr-2 mt-1"></i>
+                                <div>
+                                    <strong>1995 Eastern Conference Semifinals:</strong> Magic won 4-2
+                                    <p class="text-xs text-gray-600 mt-1">Magic eliminated Bulls, ending Jordan's first comeback. Shaq and Penny led the way.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-basketball-ball text-orange-500 mr-2 mt-1"></i>
+                                <div>
+                                    <strong>1996 Regular Season:</strong> Bulls won 3-0
+                                    <p class="text-xs text-gray-600 mt-1">Bulls swept season series during their historic 72-10 season.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h4 class="font-bold text-lg mb-4 text-blue-800 flex items-center">
+                            <i class="fas fa-star mr-2"></i>
+                            Iconic Individual Performances
+                        </h4>
+                        <ul class="space-y-3 text-gray-700">
+                            <li class="flex items-start">
+                                <i class="fas fa-fire text-red-500 mr-2 mt-1"></i>
+                                <div>
+                                    <strong>Michael Jordan - 64 points (1993):</strong>
+                                    <p class="text-xs text-gray-600 mt-1">One of Jordan's highest scoring games, showcasing his dominance.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bolt text-yellow-500 mr-2 mt-1"></i>
+                                <div>
+                                    <strong>Shaq vs Jordan Battles:</strong>
+                                    <p class="text-xs text-gray-600 mt-1">Epic matchups between two of the game's greatest players.</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-magic text-purple-500 mr-2 mt-1"></i>
+                                <div>
+                                    <strong>Penny Hardaway Highlights:</strong>
+                                    <p class="text-xs text-gray-600 mt-1">Memorable performances from the dynamic point guard.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Season-by-Season Record -->
+                <div class="bg-gray-50 rounded-lg p-6">
+                    <h4 class="font-bold text-lg mb-4 text-gray-800">Recent Head-to-Head (Last 5 Seasons)</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead>
+                                <tr class="border-b-2 border-gray-300">
+                                    <th class="text-left py-2 px-3">Season</th>
+                                    <th class="text-center py-2 px-3">Bulls Wins</th>
+                                    <th class="text-center py-2 px-3">Magic Wins</th>
+                                    <th class="text-center py-2 px-3">Series Winner</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200">
+                                    <td class="py-2 px-3 font-semibold">2023-24</td>
+                                    <td class="text-center py-2 px-3">2</td>
+                                    <td class="text-center py-2 px-3">1</td>
+                                    <td class="text-center py-2 px-3"><span class="text-red-600 font-bold">Bulls</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="py-2 px-3 font-semibold">2022-23</td>
+                                    <td class="text-center py-2 px-3">2</td>
+                                    <td class="text-center py-2 px-3">1</td>
+                                    <td class="text-center py-2 px-3"><span class="text-red-600 font-bold">Bulls</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="py-2 px-3 font-semibold">2021-22</td>
+                                    <td class="text-center py-2 px-3">1</td>
+                                    <td class="text-center py-2 px-3">2</td>
+                                    <td class="text-center py-2 px-3"><span class="text-blue-600 font-bold">Magic</span></td>
+                                </tr>
+                                <tr class="border-b border-gray-200">
+                                    <td class="py-2 px-3 font-semibold">2020-21</td>
+                                    <td class="text-center py-2 px-3">2</td>
+                                    <td class="text-center py-2 px-3">1</td>
+                                    <td class="text-center py-2 px-3"><span class="text-red-600 font-bold">Bulls</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="py-2 px-3 font-semibold">2019-20</td>
+                                    <td class="text-center py-2 px-3">2</td>
+                                    <td class="text-center py-2 px-3">1</td>
+                                    <td class="text-center py-2 px-3"><span class="text-red-600 font-bold">Bulls</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Iconic Moments Section -->
+    <section id="moments" class="py-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12">Iconic Moments & Records</h2>
+            
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Bulls Iconic Moments -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-red-400 flex items-center">
+                        <i class="fas fa-fire mr-3"></i>
+                        Chicago Bulls Iconic Moments
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('jordan-shot')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="The Last Shot" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">"The Last Shot" (1998)</h4>
+                                    <p class="text-gray-300 text-sm">Michael Jordan's game-winning shot in Game 6 of the 1998 Finals, securing the 6th championship and completing the second three-peat.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('72-10')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="72-10 Season" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">72-10 Record Season (1995-96)</h4>
+                                    <p class="text-gray-300 text-sm">Set NBA record for most wins in a season (broken by Warriors in 2016). Won championship with 87-13 overall record.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('flu-game')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Flu Game" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">"The Flu Game" (1997)</h4>
+                                    <p class="text-gray-300 text-sm">Jordan scored 38 points in Game 5 of the 1997 Finals while battling severe illness, leading Bulls to crucial victory.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('rose-mvp')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Rose MVP" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">Derrick Rose MVP (2011)</h4>
+                                    <p class="text-gray-300 text-sm">At 22 years old, became youngest MVP in NBA history, leading Bulls to best record in league (62-20).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Magic Iconic Moments -->
+                <div>
+                    <h3 class="text-2xl font-bold mb-6 text-blue-400 flex items-center">
+                        <i class="fas fa-magic mr-3"></i>
+                        Orlando Magic Iconic Moments
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('shaq-draft')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Shaq Draft" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">Shaq Draft (1992)</h4>
+                                    <p class="text-gray-300 text-sm">Selected Shaquille O'Neal 1st overall, transforming franchise. Won Rookie of the Year and led team to playoffs in first season.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('1995-finals')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="1995 Finals" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">First Finals Appearance (1995)</h4>
+                                    <p class="text-gray-300 text-sm">Reached NBA Finals in just 6th season, fastest in NBA history. Defeated Jordan's Bulls in playoffs.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('penny-shaq')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Penny & Shaq" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">Penny & Shaq Duo (1993-96)</h4>
+                                    <p class="text-gray-300 text-sm">Dynamic duo of Anfernee Hardaway and Shaq created one of most exciting teams in NBA, reaching Finals together.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-5 hover:bg-gray-700 transition cursor-pointer" onclick="showMoment('banchero-rookie')">
+                            <div class="flex items-start space-x-4">
+                                <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop" alt="Banchero ROY" class="w-20 h-20 rounded-lg object-cover" onerror="this.style.display='none';">
+                                <div class="flex-1">
+                                    <h4 class="font-bold text-lg mb-2">Paolo Banchero ROY (2023)</h4>
+                                    <p class="text-gray-300 text-sm">Banchero won Rookie of the Year, becoming third Magic player to win award (after Shaq and Mike Miller).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Comparison Widget -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Interactive Comparison Tool</h2>
+            
+            <div class="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 text-white shadow-2xl">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-6">Compare Any Statistic</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block mb-2 text-gray-300">Select Category</label>
+                                <select id="statCategory" class="w-full bg-gray-700 text-white rounded-lg p-3 border border-gray-600 focus:outline-none focus:border-blue-500">
+                                    <option value="championships">Championships</option>
+                                    <option value="mvp">MVP Awards</option>
+                                    <option value="allstar">All-Star Selections</option>
+                                    <option value="playoffs">Playoff Appearances</option>
+                                    <option value="division">Division Titles</option>
+                                    <option value="hof">Hall of Famers</option>
+                                </select>
+                            </div>
+                            <button onclick="updateComparison()" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-3 px-6 rounded-lg transition transform hover:scale-105 flex items-center justify-center">
+                                <i class="fas fa-chart-bar mr-2"></i>
+                                Compare Now
+                            </button>
+                        </div>
+                        <div class="mt-6 p-4 bg-gray-800 rounded-lg">
+                            <h4 class="font-semibold mb-2 text-gray-300">Quick Facts</h4>
+                            <ul class="text-sm text-gray-400 space-y-1">
+                                <li>• Bulls have 6 championships vs Magic's 0</li>
+                                <li>• Bulls have 5 MVP awards (all Jordan)</li>
+                                <li>• Magic reached Finals in 6th season (record)</li>
+                                <li>• Both teams play in Eastern Conference</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div id="comparisonResult" class="bg-gray-800 rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-4 flex items-center">
+                            <i class="fas fa-balance-scale mr-2"></i>
+                            Comparison Result
+                        </h4>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-red-400 font-semibold flex items-center">
+                                        <i class="fas fa-bull mr-2"></i>
+                                        Chicago Bulls
+                                    </span>
+                                    <span class="text-2xl font-bold" id="bullsStat">6</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-6 relative overflow-hidden">
+                                    <div id="bullsBar" class="bg-gradient-to-r from-red-600 to-red-500 h-6 rounded-full flex items-center justify-end pr-2 transition-all duration-1000" style="width: 75%">
+                                        <span class="text-white text-xs font-bold" id="bullsPercent">75%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between items-center mb-2">
+                                    <span class="text-blue-400 font-semibold flex items-center">
+                                        <i class="fas fa-magic mr-2"></i>
+                                        Orlando Magic
+                                    </span>
+                                    <span class="text-2xl font-bold" id="magicStat">2</span>
+                                </div>
+                                <div class="w-full bg-gray-700 rounded-full h-6 relative overflow-hidden">
+                                    <div id="magicBar" class="bg-gradient-to-r from-blue-600 to-blue-500 h-6 rounded-full flex items-center justify-end pr-2 transition-all duration-1000" style="width: 25%">
+                                        <span class="text-white text-xs font-bold" id="magicPercent">25%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-700">
+                                <div class="text-center">
+                                    <div class="text-sm text-gray-400 mb-1">Total Combined</div>
+                                    <div class="text-2xl font-bold" id="totalStat">8</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-gray-400">© 2024 NBA Team Comparison | Historical data accurate and timeless</p>
+            <p class="text-gray-500 text-sm mt-2">For educational and entertainment purposes | All statistics reflect complete franchise history</p>
+            <div class="mt-4 flex justify-center space-x-4 text-gray-500">
+                <i class="fas fa-basketball-ball"></i>
+                <i class="fas fa-trophy"></i>
+                <i class="fas fa-star"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Chart Configurations
+        let winLossChart, championshipsChart;
+
+        function initCharts() {
+            // Win-Loss Chart
+            const winLossCtx = document.getElementById('winLossChart').getContext('2d');
+            winLossChart = new Chart(winLossCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['Wins', 'Losses'],
+                    datasets: [{
+                        label: 'Chicago Bulls',
+                        data: [2310, 1810],
+                        backgroundColor: '#dc2626',
+                        borderColor: '#b91c1c',
+                        borderWidth: 2
+                    }, {
+                        label: 'Orlando Magic',
+                        data: [1285, 1425],
+                        backgroundColor: '#2563eb',
+                        borderColor: '#1d4ed8',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Championships Chart
+            const championshipsCtx = document.getElementById('championshipsChart').getContext('2d');
+            championshipsChart = new Chart(championshipsCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Chicago Bulls', 'Orlando Magic'],
+                    datasets: [{
+                        data: [6, 0],
+                        backgroundColor: ['#dc2626', '#2563eb'],
+                        borderWidth: 3,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    }
+                }
+            });
+        }
+
+        // Comparison Widget
+        const comparisonData = {
+            championships: { bulls: 6, magic: 0 },
+            mvp: { bulls: 5, magic: 0 },
+            allstar: { bulls: 45, magic: 12 },
+            playoffs: { bulls: 35, magic: 16 },
+            division: { bulls: 9, magic: 6 },
+            hof: { bulls: 12, magic: 3 }
+        };
+
+        function updateComparison() {
+            const category = document.getElementById('statCategory').value;
+            const data = comparisonData[category];
+            const total = data.bulls + data.magic;
+            
+            document.getElementById('bullsStat').textContent = data.bulls;
+            document.getElementById('magicStat').textContent = data.magic;
+            document.getElementById('totalStat').textContent = total;
+            
+            const bullsPercent = total > 0 ? (data.bulls / total) * 100 : 0;
+            const magicPercent = total > 0 ? (data.magic / total) * 100 : 0;
+            
+            // Animate bars
+            setTimeout(() => {
+                document.getElementById('bullsBar').style.width = bullsPercent + '%';
+                document.getElementById('magicBar').style.width = magicPercent + '%';
+                document.getElementById('bullsPercent').textContent = Math.round(bullsPercent) + '%';
+                document.getElementById('magicPercent').textContent = Math.round(magicPercent) + '%';
+            }, 100);
+        }
+
+        // Player Info Modal
+        const playerInfo = {
+            jordan: {
+                name: "Michael Jordan",
+                team: "Chicago Bulls",
+                stats: "30.1 PPG, 6.2 RPG, 5.3 APG (career)",
+                achievements: "6× NBA Champion, 5× MVP, 14× All-Star, 10× Scoring Champion, 6× Finals MVP",
+                years: "1984-1993, 1995-1998"
+            },
+            pippen: {
+                name: "Scottie Pippen",
+                team: "Chicago Bulls",
+                stats: "16.1 PPG, 6.4 RPG, 5.2 APG (with Bulls)",
+                achievements: "6× NBA Champion, 7× All-Star, 8× All-Defensive Team, Hall of Famer",
+                years: "1987-1998, 2003-2004"
+            },
+            rodman: {
+                name: "Dennis Rodman",
+                team: "Chicago Bulls",
+                stats: "5.2 PPG, 15.3 RPG (with Bulls)",
+                achievements: "3× NBA Champion (with Bulls), 7× Rebounding Champion, 8× All-Defensive Team, Hall of Famer",
+                years: "1995-1998"
+            },
+            rose: {
+                name: "Derrick Rose",
+                team: "Chicago Bulls",
+                stats: "19.2 PPG, 5.8 APG, 3.6 RPG (with Bulls)",
+                achievements: "2011 MVP (youngest ever), 3× All-Star, Rookie of the Year 2009",
+                years: "2008-2016"
+            },
+            shaq: {
+                name: "Shaquille O'Neal",
+                team: "Orlando Magic",
+                stats: "27.2 PPG, 12.5 RPG, 2.4 BPG (with Magic)",
+                achievements: "1993 Rookie of the Year, 4× All-Star (with Magic), 1995 Finals appearance, Hall of Famer",
+                years: "1992-1996"
+            },
+            penny: {
+                name: "Anfernee 'Penny' Hardaway",
+                team: "Orlando Magic",
+                stats: "19.0 PPG, 6.3 APG, 4.7 RPG (with Magic)",
+                achievements: "4× All-Star, 2× All-NBA First Team, 1995 Finals appearance",
+                years: "1993-1999"
+            },
+            howard: {
+                name: "Dwight Howard",
+                team: "Orlando Magic",
+                stats: "18.4 PPG, 13.0 RPG, 2.2 BPG (with Magic)",
+                achievements: "3× Defensive Player of the Year, 8× All-Star, 2009 Finals appearance",
+                years: "2004-2012"
+            },
+            tmac: {
+                name: "Tracy McGrady",
+                team: "Orlando Magic",
+                stats: "28.1 PPG, 7.0 RPG, 5.2 APG (with Magic)",
+                achievements: "7× All-Star, 2× Scoring Champion, 2× All-NBA First Team, Hall of Famer",
+                years: "2000-2004"
+            }
+        };
+
+        function showPlayerInfo(player) {
+            const info = playerInfo[player];
+            if (info) {
+                alert(`${info.name}\n\nTeam: ${info.team}\nYears: ${info.years}\n\nStats: ${info.stats}\n\nAchievements: ${info.achievements}`);
+            }
+        }
+
+        function showMoment(moment) {
+            const moments = {
+                'jordan-shot': "The Last Shot (1998): Michael Jordan's game-winning shot in Game 6 of the 1998 NBA Finals against the Utah Jazz. With 5.2 seconds remaining, Jordan made a jump shot to give the Bulls an 87-86 lead, securing their 6th championship and completing the second three-peat.",
+                '72-10': "72-10 Season (1995-96): The Chicago Bulls set an NBA record with 72 regular-season wins, finishing with an 87-13 overall record including playoffs. This record stood until the Golden State Warriors won 73 games in 2015-16.",
+                'flu-game': "The Flu Game (1997): In Game 5 of the 1997 NBA Finals, Michael Jordan scored 38 points despite suffering from severe food poisoning. The Bulls won 90-88, taking a 3-2 series lead.",
+                'rose-mvp': "Derrick Rose MVP (2011): At 22 years and 191 days old, Derrick Rose became the youngest player to win the NBA MVP award, leading the Bulls to a 62-20 record, the best in the league.",
+                'shaq-draft': "Shaq Draft (1992): The Orlando Magic selected Shaquille O'Neal with the 1st overall pick. He won Rookie of the Year and led the Magic to their first playoff appearance in just his first season.",
+                '1995-finals': "1995 NBA Finals: The Orlando Magic reached the NBA Finals in just their 6th season, the fastest in NBA history. They were swept by the Houston Rockets but had eliminated Michael Jordan's Bulls in the playoffs.",
+                'penny-shaq': "Penny & Shaq Duo (1993-96): The dynamic duo of Anfernee Hardaway and Shaquille O'Neal created one of the most exciting and dominant teams in the NBA, reaching the 1995 NBA Finals together.",
+                'banchero-rookie': "Paolo Banchero ROY (2023): Paolo Banchero won the Rookie of the Year award, becoming the third Magic player to win the award (after Shaquille O'Neal in 1993 and Mike Miller in 2001)."
+            };
+            
+            if (moments[moment]) {
+                alert(moments[moment]);
+            }
+        }
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize on load
+        window.addEventListener('load', () => {
+            initCharts();
+            updateComparison();
+            
+            // Animate stat bars
+            setTimeout(() => {
+                document.querySelectorAll('.stat-bar').forEach(bar => {
+                    const width = bar.style.width;
+                    bar.style.width = '0%';
+                    setTimeout(() => {
+                        bar.style.width = width;
+                    }, 100);
+                });
+            }, 500);
+        });
+    </script>
+</body>
+</html>

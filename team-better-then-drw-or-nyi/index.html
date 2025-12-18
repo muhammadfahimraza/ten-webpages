@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Wings vs Islanders - The Ultimate Comparison</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-red {
+            background: linear-gradient(135deg, #C8102E 0%, #A00D25 50%, #8B0000 100%);
+            box-shadow: 0 10px 30px rgba(200, 16, 46, 0.3);
+        }
+        
+        .gradient-blue {
+            background: linear-gradient(135deg, #00539B 0%, #004080 50%, #003366 100%);
+            box-shadow: 0 10px 30px rgba(0, 83, 155, 0.3);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(250, 250, 252, 0.95) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .team-logo-container {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .team-logo-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #C8102E;
+            z-index: 2;
+        }
+        
+        .timeline-item.islanders::before {
+            border-color: #00539B;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 5px;
+            top: 12px;
+            bottom: -12px;
+            width: 2px;
+            background: linear-gradient(to bottom, #C8102E, #00539B);
+        }
+        
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        .player-card {
+            transition: all 0.3s ease;
+        }
+        
+        .player-card:hover {
+            transform: scale(1.05);
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #C8102E, #00539B, transparent);
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #C8102E 0%, #00539B 100%);
+            color: white;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(200, 16, 46, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white">
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950"></div>
+        <div class="absolute inset-0 opacity-30">
+            <div class="absolute top-20 left-10 w-72 h-72 bg-red-600 rounded-full blur-3xl opacity-40"></div>
+            <div class="absolute bottom-20 right-10 w-72 h-72 bg-blue-600 rounded-full blur-3xl opacity-40"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600 rounded-full blur-3xl opacity-20"></div>
+        </div>
+        
+        <div class="relative z-10 container mx-auto px-4 py-20 text-center">
+            <h1 class="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-red-500 via-red-400 to-blue-500 bg-clip-text text-transparent drop-shadow-2xl">
+                THE ULTIMATE SHOWDOWN
+            </h1>
+            <p class="text-2xl md:text-3xl mb-12 text-slate-200 font-medium">Detroit Red Wings vs New York Islanders</p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-8 mb-12">
+                <!-- Red Wings Logo -->
+                <div class="team-logo-container gradient-red rounded-3xl p-8 w-64 h-64 flex items-center justify-center shadow-2xl">
+                    <img src="https://via.placeholder.com/200x200/C8102E/FFFFFF?text=DRW+LOGO" alt="Detroit Red Wings Logo" class="w-full h-full object-contain">
+                </div>
+                
+                <div class="text-4xl font-bold text-amber-400 drop-shadow-lg">VS</div>
+                
+                <!-- Islanders Logo -->
+                <div class="team-logo-container gradient-blue rounded-3xl p-8 w-64 h-64 flex items-center justify-center shadow-2xl">
+                    <img src="https://via.placeholder.com/200x200/00539B/FFFFFF?text=NYI+LOGO" alt="New York Islanders Logo" class="w-full h-full object-contain">
+                </div>
+            </div>
+            
+            <div class="flex flex-wrap justify-center gap-6 text-xl">
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Founded:</span>
+                    <span class="font-bold text-red-600 ml-2">1926</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">1972</span>
+                </div>
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Stanley Cups:</span>
+                    <span class="font-bold text-red-600 ml-2">11</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">4</span>
+                </div>
+                <div class="stat-card rounded-xl px-6 py-3 shadow-lg">
+                    <span class="text-slate-600 font-medium">Conference:</span>
+                    <span class="font-bold text-red-600 ml-2">Atlantic</span> <span class="text-slate-400 mx-2">vs</span> <span class="font-bold text-blue-600">Metropolitan</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down text-3xl text-slate-400"></i>
+        </div>
+    </section>
+
+    <!-- Quick Stats Comparison -->
+    <section class="py-20 bg-gradient-to-b from-slate-900 to-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Quick Stats Comparison</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-red-500 shadow-xl">
+                    <div class="text-4xl font-bold text-red-600 mb-2">11</div>
+                    <div class="text-slate-700 font-semibold mb-4">Stanley Cups</div>
+                    <div class="text-sm text-slate-500">Detroit Red Wings</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-blue-500 shadow-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2">4</div>
+                    <div class="text-slate-700 font-semibold mb-4">Stanley Cups</div>
+                    <div class="text-sm text-slate-500">New York Islanders</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-amber-500 shadow-xl">
+                    <div class="text-4xl font-bold text-amber-600 mb-2">64-57</div>
+                    <div class="text-slate-700 font-semibold mb-4">Head-to-Head</div>
+                    <div class="text-sm text-slate-500">Islanders Lead</div>
+                </div>
+                
+                <div class="stat-card rounded-2xl p-6 card-hover border-l-4 border-purple-500 shadow-xl">
+                    <div class="text-4xl font-bold text-purple-600 mb-2">25</div>
+                    <div class="text-slate-700 font-semibold mb-4">Hall of Famers</div>
+                    <div class="text-sm text-slate-500">Combined Legacy</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Comparison Dashboard -->
+    <section class="py-20 bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Interactive Comparison Dashboard</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <!-- Chart 1: Stanley Cups -->
+                <div class="stat-card rounded-2xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-slate-800">Stanley Cup Championships</h3>
+                    <canvas id="cupsChart"></canvas>
+                </div>
+                
+                <!-- Chart 2: All-Time Wins -->
+                <div class="stat-card rounded-2xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-slate-800">All-Time Regular Season Wins</h3>
+                    <canvas id="winsChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Chart 3: Playoff Appearances -->
+                <div class="stat-card rounded-2xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-slate-800">Playoff Appearances</h3>
+                    <canvas id="playoffsChart"></canvas>
+                </div>
+                
+                <!-- Chart 4: Recent Performance -->
+                <div class="stat-card rounded-2xl p-8 card-hover">
+                    <h3 class="text-2xl font-bold mb-6 text-center text-slate-800">Last 5 Seasons Win %</h3>
+                    <canvas id="recentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Head-to-Head Statistics -->
+    <section class="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Head-to-Head Statistics</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="stat-card rounded-2xl p-8 mb-8 shadow-2xl">
+                    <div class="grid grid-cols-3 gap-4 text-center mb-8">
+                        <div>
+                            <div class="text-3xl font-bold text-red-600">57</div>
+                            <div class="text-slate-600 mt-2 font-medium">Red Wings Wins</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-amber-500">11</div>
+                            <div class="text-slate-600 mt-2 font-medium">Ties/OT</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-blue-600">64</div>
+                            <div class="text-slate-600 mt-2 font-medium">Islanders Wins</div>
+                        </div>
+                    </div>
+                    
+                    <div class="relative h-10 bg-slate-200 rounded-full overflow-hidden shadow-inner">
+                        <div class="absolute left-0 top-0 h-full bg-gradient-to-r from-red-600 to-red-500 rounded-full progress-bar shadow-lg" style="width: 43.2%">
+                            <span class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold drop-shadow">43.2%</span>
+                        </div>
+                        <div class="absolute right-0 top-0 h-full bg-gradient-to-l from-blue-600 to-blue-500 rounded-full progress-bar shadow-lg" style="width: 48.5%">
+                            <span class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold drop-shadow">48.5%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="stat-card rounded-xl p-6 border-l-4 border-red-500 shadow-lg">
+                        <h4 class="text-xl font-bold mb-4 text-red-600">Red Wings Best Streak</h4>
+                        <div class="text-3xl font-bold text-slate-800">5 games</div>
+                        <div class="text-sm text-slate-500 mt-2">2000-2001 season</div>
+                    </div>
+                    
+                    <div class="stat-card rounded-xl p-6 border-l-4 border-blue-500 shadow-lg">
+                        <h4 class="text-xl font-bold mb-4 text-blue-600">Islanders Best Streak</h4>
+                        <div class="text-3xl font-bold text-slate-800">6 games</div>
+                        <div class="text-sm text-slate-500 mt-2">1980-1981 season</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Rosters Comparison -->
+    <section class="py-20 bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Current Roster Comparison</h2>
+            
+            <div class="mb-8 flex justify-center gap-4 flex-wrap">
+                <button onclick="filterPlayers('all')" class="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition filter-btn active shadow-md" data-filter="all">All Players</button>
+                <button onclick="filterPlayers('forwards')" class="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition filter-btn shadow-md" data-filter="forwards">Forwards</button>
+                <button onclick="filterPlayers('defense')" class="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition filter-btn shadow-md" data-filter="defense">Defense</button>
+                <button onclick="filterPlayers('goalies')" class="px-6 py-3 rounded-lg bg-slate-700 hover:bg-slate-600 text-white transition filter-btn shadow-md" data-filter="goalies">Goalies</button>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Red Wings Roster -->
+                <div>
+                    <h3 class="text-3xl font-bold mb-6 text-red-600 text-center">Detroit Red Wings</h3>
+                    <div id="redWingsRoster" class="space-y-4">
+                        <!-- Players will be dynamically added -->
+                    </div>
+                </div>
+                
+                <!-- Islanders Roster -->
+                <div>
+                    <h3 class="text-3xl font-bold mb-6 text-blue-600 text-center">New York Islanders</h3>
+                    <div id="islandersRoster" class="space-y-4">
+                        <!-- Players will be dynamically added -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Achievements Timeline -->
+    <section class="py-20 bg-slate-950">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Historic Achievements Timeline</h2>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <div class="timeline-line"></div>
+                    
+                    <div class="space-y-8">
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">1926</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Detroit Red Wings Founded</h4>
+                                <p class="text-slate-600">Originally named Detroit Cougars, the team was established as one of the Original Six NHL teams.</p>
+                                <img src="https://via.placeholder.com/600x300/C8102E/FFFFFF?text=1926+Red+Wings+Founding" alt="1926 Red Wings" class="mt-4 rounded-lg w-full">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item islanders">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-600 font-bold text-lg">1972</span>
+                                    <span class="text-sm text-slate-500 font-medium">Islanders</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">New York Islanders Founded</h4>
+                                <p class="text-slate-600">The Islanders joined the NHL as an expansion team, quickly becoming a powerhouse in the 1980s.</p>
+                                <img src="https://via.placeholder.com/600x300/00539B/FFFFFF?text=1972+Islanders+Founding" alt="1972 Islanders" class="mt-4 rounded-lg w-full">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item islanders">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-blue-600 font-bold text-lg">1980-1983</span>
+                                    <span class="text-sm text-slate-500 font-medium">Islanders</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Four Consecutive Stanley Cups</h4>
+                                <p class="text-slate-600">The Islanders achieved an incredible dynasty, winning four straight championships from 1980 to 1983.</p>
+                                <img src="https://via.placeholder.com/600x300/00539B/FFFFFF?text=1980-1983+Islanders+Dynasty" alt="Islanders Dynasty" class="mt-4 rounded-lg w-full">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">1997-2008</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">Red Wings Modern Dynasty</h4>
+                                <p class="text-slate-600">Detroit won four Stanley Cups in 12 years, including back-to-back championships in 1997 and 1998.</p>
+                                <img src="https://via.placeholder.com/600x300/C8102E/FFFFFF?text=1997-2008+Red+Wings+Dynasty" alt="Red Wings Dynasty" class="mt-4 rounded-lg w-full">
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="stat-card rounded-xl p-6 ml-4">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-red-600 font-bold text-lg">2008</span>
+                                    <span class="text-sm text-slate-500 font-medium">Red Wings</span>
+                                </div>
+                                <h4 class="text-xl font-bold mb-2 text-slate-800">11th Stanley Cup</h4>
+                                <p class="text-slate-600">Detroit's most recent championship, solidifying their status as one of the most successful franchises in NHL history.</p>
+                                <img src="https://via.placeholder.com/600x300/C8102E/FFFFFF?text=2008+Red+Wings+Championship" alt="2008 Championship" class="mt-4 rounded-lg w-full">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Performance -->
+    <section class="py-20 bg-gradient-to-b from-slate-800 to-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-5xl font-bold text-center mb-16 text-white">Recent Performance Analysis</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl border-l-4 border-red-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-red-600">Red Wings</h3>
+                        <img src="https://via.placeholder.com/80x80/C8102E/FFFFFF?text=DRW" alt="Red Wings" class="w-20 h-20 rounded-full shadow-lg">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">2023-24 Record</span>
+                            <span class="font-bold text-slate-800">41-32-9</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Playoff Appearances (Last 5)</span>
+                            <span class="font-bold text-slate-800">1</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Notable Players</span>
+                            <span class="font-bold text-slate-800 text-sm">Dylan Larkin, Lucas Raymond</span>
+                        </div>
+                    </div>
+                    <img src="https://via.placeholder.com/500x300/C8102E/FFFFFF?text=Red+Wings+Recent+Performance" alt="Red Wings Performance" class="mt-6 rounded-lg w-full shadow-md">
+                </div>
+                
+                <div class="stat-card rounded-2xl p-8 card-hover shadow-xl border-l-4 border-blue-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-2xl font-bold text-blue-600">Islanders</h3>
+                        <img src="https://via.placeholder.com/80x80/00539B/FFFFFF?text=NYI" alt="Islanders" class="w-20 h-20 rounded-full shadow-lg">
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">2023-24 Record</span>
+                            <span class="font-bold text-slate-800">39-27-16</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Playoff Appearances (Last 5)</span>
+                            <span class="font-bold text-slate-800">4</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-600 font-medium">Notable Players</span>
+                            <span class="font-bold text-slate-800 text-sm">Mathew Barzal, Ilya Sorokin</span>
+                        </div>
+                    </div>
+                    <img src="https://via.placeholder.com/500x300/00539B/FFFFFF?text=Islanders+Recent+Performance" alt="Islanders Performance" class="mt-6 rounded-lg w-full shadow-md">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 py-12 border-t border-slate-800">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-slate-400 mb-4">Interactive Comparison Web App</p>
+            <p class="text-slate-500 text-sm">Data compiled from NHL official records and statistics</p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart.js Configurations
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#374151',
+                        font: {
+                            size: 14,
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        };
+
+        // Stanley Cups Chart
+        const cupsCtx = document.getElementById('cupsChart').getContext('2d');
+        new Chart(cupsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Stanley Cups'],
+                datasets: [{
+                    label: 'Detroit Red Wings',
+                    data: [11],
+                    backgroundColor: '#C8102E',
+                    borderColor: '#8B0000',
+                    borderWidth: 2
+                }, {
+                    label: 'New York Islanders',
+                    data: [4],
+                    backgroundColor: '#00539B',
+                    borderColor: '#003366',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#374151' },
+                        grid: { color: '#E5E7EB' }
+                    },
+                    x: {
+                        ticks: { color: '#374151' },
+                        grid: { color: '#E5E7EB' }
+                    }
+                }
+            }
+        });
+
+        // All-Time Wins Chart
+        const winsCtx = document.getElementById('winsChart').getContext('2d');
+        new Chart(winsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Red Wings', 'Islanders'],
+                datasets: [{
+                    data: [2800, 1900],
+                    backgroundColor: ['#C8102E', '#00539B'],
+                    borderWidth: 3,
+                    borderColor: '#fff'
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Playoff Appearances Chart
+        const playoffsCtx = document.getElementById('playoffsChart').getContext('2d');
+        new Chart(playoffsCtx, {
+            type: 'line',
+            data: {
+                labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'Red Wings',
+                    data: [0, 0, 0, 0, 0, 1],
+                    borderColor: '#C8102E',
+                    backgroundColor: 'rgba(200, 16, 46, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }, {
+                    label: 'Islanders',
+                    data: [1, 1, 1, 1, 0, 1],
+                    borderColor: '#00539B',
+                    backgroundColor: 'rgba(0, 83, 155, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: '#374151' },
+                        grid: { color: '#E5E7EB' }
+                    },
+                    x: {
+                        ticks: { color: '#374151' },
+                        grid: { color: '#E5E7EB' }
+                    }
+                }
+            }
+        });
+
+        // Recent Performance Chart
+        const recentCtx = document.getElementById('recentChart').getContext('2d');
+        new Chart(recentCtx, {
+            type: 'radar',
+            data: {
+                labels: ['Wins', 'Goals For', 'Goals Against', 'Power Play %', 'Penalty Kill %'],
+                datasets: [{
+                    label: 'Red Wings',
+                    data: [65, 70, 60, 55, 75],
+                    backgroundColor: 'rgba(200, 16, 46, 0.2)',
+                    borderColor: '#C8102E',
+                    borderWidth: 2
+                }, {
+                    label: 'Islanders',
+                    data: [70, 65, 75, 60, 80],
+                    backgroundColor: 'rgba(0, 83, 155, 0.2)',
+                    borderColor: '#00539B',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                ...chartOptions,
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        ticks: { color: '#374151' },
+                        grid: { color: '#E5E7EB' }
+                    }
+                }
+            }
+        });
+
+        // Player Roster Data
+        const redWingsPlayers = [
+            { name: 'Dylan Larkin', position: 'C', type: 'forwards', points: 69, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=DL' },
+            { name: 'Lucas Raymond', position: 'RW', type: 'forwards', points: 72, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=LR' },
+            { name: 'Alex DeBrincat', position: 'LW', type: 'forwards', points: 67, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=AD' },
+            { name: 'Moritz Seider', position: 'D', type: 'defense', points: 42, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=MS' },
+            { name: 'Shayne Gostisbehere', position: 'D', type: 'defense', points: 56, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=SG' },
+            { name: 'Alex Lyon', position: 'G', type: 'goalies', points: 0, image: 'https://via.placeholder.com/150x150/C8102E/FFFFFF?text=AL' }
+        ];
+
+        const islandersPlayers = [
+            { name: 'Mathew Barzal', position: 'C', type: 'forwards', points: 80, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=MB' },
+            { name: 'Brock Nelson', position: 'C', type: 'forwards', points: 75, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=BN' },
+            { name: 'Bo Horvat', position: 'C', type: 'forwards', points: 64, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=BH' },
+            { name: 'Noah Dobson', position: 'D', type: 'defense', points: 70, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=ND' },
+            { name: 'Ryan Pulock', position: 'D', type: 'defense', points: 25, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=RP' },
+            { name: 'Ilya Sorokin', position: 'G', type: 'goalies', points: 0, image: 'https://via.placeholder.com/150x150/00539B/FFFFFF?text=IS' }
+        ];
+
+        function renderPlayers(players, containerId, teamColor) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = players.map(player => `
+                <div class="player-card stat-card rounded-xl p-4 border-l-4 border-${teamColor}-500 shadow-md" data-type="${player.type}">
+                    <div class="flex items-center gap-4">
+                        <img src="${player.image}" alt="${player.name}" class="w-16 h-16 rounded-full object-cover shadow-md">
+                        <div class="flex-1">
+                            <div class="font-bold text-lg text-slate-800">${player.name}</div>
+                            <div class="text-sm text-slate-500">${player.position}</div>
+                            ${player.points > 0 ? `<div class="text-sm font-semibold text-${teamColor}-600">${player.points} Points</div>` : '<div class="text-sm font-semibold text-slate-600">Goalie</div>'}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterPlayers(type) {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.remove('bg-red-600', 'bg-blue-600');
+                if (!btn.classList.contains('bg-slate-700')) {
+                    btn.classList.add('bg-slate-700');
+                }
+            });
+            
+            const activeBtn = document.querySelector(`[data-filter="${type}"]`);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('bg-slate-700');
+            
+            document.querySelectorAll('.player-card').forEach(card => {
+                if (type === 'all' || card.dataset.type === type) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+
+        renderPlayers(redWingsPlayers, 'redWingsRoster', 'red');
+        renderPlayers(islandersPlayers, 'islandersRoster', 'blue');
+
+        // Smooth scroll on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.progress-bar').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
+

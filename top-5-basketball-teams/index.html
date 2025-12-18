@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 5 Basketball Teams | NBA Power Rankings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .team-card.selected {
+            border: 3px solid #667eea;
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+        
+        .stat-bar {
+            transition: width 1s ease-in-out;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .comparison-table {
+            overflow-x: auto;
+        }
+        
+        .team-logo {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+                        url('https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=1920') center/cover;
+            background-blend-mode: overlay;
+        }
+        
+        .team-action-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+        
+        .team-card:hover .team-action-image {
+            transform: scale(1.05);
+        }
+        
+        .player-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        
+        .highlight-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .highlight-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+        
+        .image-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 10px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+        
+        .faq-item {
+            border-bottom: 1px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question {
+            cursor: pointer;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: #f9fafb;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 1.5rem;
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.5rem 1.5rem 1.5rem;
+        }
+        
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+        
+        .prediction-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 0.5rem;
+        }
+        
+        .prediction-high {
+            background-color: #dc2626;
+            color: white;
+        }
+        
+        .prediction-medium {
+            background-color: #f59e0b;
+            color: white;
+        }
+        
+        .prediction-low {
+            background-color: #10b981;
+            color: white;
+        }
+        
+        @media (max-width: 768px) {
+            .team-logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .team-action-image {
+                height: 150px;
+            }
+            
+            .player-image {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20 px-4 relative">
+        <div class="max-w-7xl mx-auto text-center fade-in relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4">
+                <i class="fas fa-basketball-ball mr-4"></i>
+                Top 5 Basketball Teams
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90">NBA Power Rankings</p>
+            <div class="flex justify-center items-center space-x-4 text-sm md:text-base">
+                <span><i class="fas fa-trophy text-yellow-400"></i> Top Rankings</span>
+                <span>|</span>
+                <span><i class="fas fa-chart-line"></i> Performance Analytics</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top 5 Teams Grid -->
+    <section class="py-16 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">
+                <i class="fas fa-trophy text-yellow-500 mr-3"></i>
+                Elite Teams
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="teamsGrid">
+                <!-- Teams will be dynamically inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Comparison Tool -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-balance-scale mr-3 text-blue-500"></i>
+                Team Comparison Tool
+            </h2>
+            <p class="text-center text-gray-600 mb-8">Click on two teams below to compare their stats</p>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8" id="comparisonSelector">
+                <!-- Comparison buttons will be inserted here -->
+            </div>
+            <div id="comparisonResults" class="hidden">
+                <div class="bg-gray-100 rounded-lg p-6 comparison-table">
+                    <table class="w-full text-center">
+                        <thead>
+                            <tr class="border-b-2 border-gray-300">
+                                <th class="p-4">Stat</th>
+                                <th id="team1Name" class="p-4"></th>
+                                <th id="team2Name" class="p-4"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="comparisonTableBody">
+                            <!-- Comparison data will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Analytics -->
+    <section class="py-16 px-4 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-chart-line mr-3 text-green-500"></i>
+                Performance Analytics
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Comprehensive statistical analysis of team performance</p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Win Percentage</h3>
+                    <canvas id="winChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Points Per Game</h3>
+                    <canvas id="pointsChart"></canvas>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Rebounds Per Game</h3>
+                    <canvas id="reboundsChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Assists Per Game</h3>
+                    <canvas id="assistsChart"></canvas>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <h3 class="text-2xl font-semibold mb-4 text-gray-700">Field Goal %</h3>
+                    <canvas id="fgChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights & Gallery -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-star mr-3 text-red-500"></i>
+                Key Highlights & Action Gallery
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Memorable moments and highlights from the elite teams</p>
+            
+            <!-- Highlights Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12" id="highlightsGrid">
+                <!-- Highlights will be inserted here -->
+            </div>
+            
+            <!-- Gallery Grid -->
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be inserted here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="image-modal" onclick="closeImageModal()">
+        <span class="close-modal">&times;</span>
+        <img id="modalImage" class="modal-content" src="" alt="Enlarged view">
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="py-16 px-4 bg-gradient-to-br from-gray-50 to-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold text-center mb-4 text-gray-800">
+                <i class="fas fa-question-circle mr-3 text-blue-500"></i>
+                Frequently Asked Questions & Predictions
+            </h2>
+            <p class="text-center text-gray-600 mb-12">Explore insights, predictions, and answers about the top teams</p>
+            
+            <div class="bg-white rounded-lg shadow-lg overflow-hidden" id="faqContainer">
+                <!-- FAQ items will be dynamically inserted here -->
+            </div>
+            
+            <!-- Prediction Section -->
+            <div class="mt-12 bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-3xl font-bold mb-6 text-gray-800 text-center">
+                    <i class="fas fa-crystal-ball mr-3 text-purple-500"></i>
+                    Season Predictions & Insights
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="predictionsContainer">
+                    <!-- Predictions will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="mb-4">Top 5 Basketball Teams</p>
+            <div class="flex justify-center space-x-6 text-2xl">
+                <a href="#" class="hover:text-blue-400 transition"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="hover:text-blue-600 transition"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="hover:text-pink-500 transition"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p class="mt-4 text-gray-400 text-sm">Comprehensive team statistics and performance analytics</p>
+            <p class="mt-2 text-gray-500 text-xs">© <span id="currentYear"></span> Top 5 Basketball Teams</p>
+        </div>
+    </footer>
+
+    <script>
+        // Generate random form string (W/L) for dynamic feel
+        function generateRandomForm() {
+            const forms = ['W-W-W-L-W', 'W-L-W-W-W', 'W-W-L-W-W', 'L-W-W-W-L', 'W-W-W-W-L', 'W-L-W-L-W'];
+            return forms[Math.floor(Math.random() * forms.length)];
+        }
+        
+        // Team Data
+        const teams = [
+            {
+                id: 1,
+                name: "Boston Celtics",
+                rank: 1,
+                wins: 64,
+                losses: 18,
+                winPercentage: 78.0,
+                pointsPerGame: 120.6,
+                reboundsPerGame: 46.3,
+                assistsPerGame: 26.9,
+                fieldGoalPercentage: 48.7,
+                threePointPercentage: 38.8,
+                freeThrowPercentage: 81.2,
+                stealsPerGame: 7.4,
+                blocksPerGame: 5.8,
+                logo: "https://via.placeholder.com/150/007A33/FFFFFF?text=BOS",
+                actionImage: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop",
+                playerImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop",
+                color: "#007A33",
+                conference: "Eastern",
+                recentForm: generateRandomForm(),
+                starPlayer: "Jayson Tatum",
+                description: "Dominating the Eastern Conference with exceptional depth and star power."
+            },
+            {
+                id: 2,
+                name: "Denver Nuggets",
+                rank: 2,
+                wins: 57,
+                losses: 25,
+                winPercentage: 69.5,
+                pointsPerGame: 114.9,
+                reboundsPerGame: 44.2,
+                assistsPerGame: 29.3,
+                fieldGoalPercentage: 49.5,
+                threePointPercentage: 37.4,
+                freeThrowPercentage: 79.8,
+                stealsPerGame: 7.1,
+                blocksPerGame: 4.9,
+                logo: "https://via.placeholder.com/150/0E2240/FFC72C?text=DEN",
+                actionImage: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop",
+                playerImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop",
+                color: "#0E2240",
+                conference: "Western",
+                recentForm: generateRandomForm(),
+                starPlayer: "Nikola Jokić",
+                description: "Reigning champions with the best center in the league leading the way."
+            },
+            {
+                id: 3,
+                name: "Oklahoma City Thunder",
+                rank: 3,
+                wins: 57,
+                losses: 25,
+                winPercentage: 69.5,
+                pointsPerGame: 120.1,
+                reboundsPerGame: 42.8,
+                assistsPerGame: 27.2,
+                fieldGoalPercentage: 49.9,
+                threePointPercentage: 38.9,
+                freeThrowPercentage: 83.1,
+                stealsPerGame: 8.2,
+                blocksPerGame: 5.1,
+                logo: "https://via.placeholder.com/150/007AC1/EF3B24?text=OKC",
+                actionImage: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop",
+                playerImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop",
+                color: "#007AC1",
+                conference: "Western",
+                recentForm: generateRandomForm(),
+                starPlayer: "Shai Gilgeous-Alexander",
+                description: "Young, explosive team with incredible offensive firepower."
+            },
+            {
+                id: 4,
+                name: "Minnesota Timberwolves",
+                rank: 4,
+                wins: 56,
+                losses: 26,
+                winPercentage: 68.3,
+                pointsPerGame: 113.0,
+                reboundsPerGame: 43.5,
+                assistsPerGame: 26.8,
+                fieldGoalPercentage: 48.4,
+                threePointPercentage: 36.2,
+                freeThrowPercentage: 78.5,
+                stealsPerGame: 7.8,
+                blocksPerGame: 6.2,
+                logo: "https://via.placeholder.com/150/0C2340/236192?text=MIN",
+                actionImage: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop",
+                playerImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop",
+                color: "#0C2340",
+                conference: "Western",
+                recentForm: generateRandomForm(),
+                starPlayer: "Anthony Edwards",
+                description: "Elite defense combined with rising offensive stars."
+            },
+            {
+                id: 5,
+                name: "Milwaukee Bucks",
+                rank: 5,
+                wins: 49,
+                losses: 33,
+                winPercentage: 59.8,
+                pointsPerGame: 119.0,
+                reboundsPerGame: 44.1,
+                assistsPerGame: 26.6,
+                fieldGoalPercentage: 49.2,
+                threePointPercentage: 37.8,
+                freeThrowPercentage: 77.9,
+                stealsPerGame: 6.9,
+                blocksPerGame: 5.3,
+                logo: "https://via.placeholder.com/150/00471B/EEE1C6?text=MIL",
+                actionImage: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop",
+                playerImage: "https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop",
+                color: "#00471B",
+                conference: "Eastern",
+                recentForm: generateRandomForm(),
+                starPlayer: "Giannis Antetokounmpo",
+                description: "Powerful team with one of the game's most dominant players."
+            }
+        ];
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set dynamic year in footer
+            const yearElement = document.getElementById('currentYear');
+            if (yearElement) {
+                yearElement.textContent = new Date().getFullYear();
+            }
+            
+            renderTeams();
+            renderComparisonSelector();
+            renderHighlights();
+            renderGallery();
+            renderFAQ();
+            renderPredictions();
+            initializeCharts();
+        });
+
+        // Render team cards
+        function renderTeams() {
+            const grid = document.getElementById('teamsGrid');
+            teams.forEach(team => {
+                const card = document.createElement('div');
+                card.className = 'team-card bg-white rounded-lg shadow-lg p-6 fade-in';
+                card.style.borderTop = `4px solid ${team.color}`;
+                card.onclick = () => selectTeam(team.id);
+                
+                card.innerHTML = `
+                    <div class="mb-4 relative">
+                        <img src="${team.actionImage}" alt="${team.name} in action" class="team-action-image" onerror="this.src='https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=800&h=400&fit=crop'">
+                        <div class="absolute top-4 left-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-2xl font-bold">
+                            #${team.rank}
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <img src="${team.logo}" alt="${team.name} Logo" class="team-logo" onerror="this.src='https://via.placeholder.com/150/CCCCCC/666666?text=NBA'">
+                        </div>
+                        <div class="text-right flex-1">
+                            <div class="text-2xl font-bold" style="color: ${team.color}">${team.name}</div>
+                            <div class="text-sm text-gray-500">${team.conference} Conference</div>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-gray-600">Record</span>
+                            <span class="font-bold text-lg">${team.wins}-${team.losses}</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="stat-bar bg-green-500 h-3 rounded-full" style="width: ${team.winPercentage}%"></div>
+                        </div>
+                        <div class="text-sm text-gray-500 mt-1">${team.winPercentage}% Win Rate</div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-4 mb-4 text-center">
+                        <div>
+                            <div class="text-2xl font-bold text-blue-600">${team.pointsPerGame}</div>
+                            <div class="text-xs text-gray-500">PPG</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-green-600">${team.reboundsPerGame}</div>
+                            <div class="text-xs text-gray-500">RPG</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-bold text-purple-600">${team.assistsPerGame}</div>
+                            <div class="text-xs text-gray-500">APG</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mb-4 text-center text-xs">
+                        <div>
+                            <span class="text-gray-500">FG%:</span>
+                            <span class="font-semibold ml-1">${team.fieldGoalPercentage}%</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">3P%:</span>
+                            <span class="font-semibold ml-1">${team.threePointPercentage}%</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500">FT%:</span>
+                            <span class="font-semibold ml-1">${team.freeThrowPercentage}%</span>
+                        </div>
+                    </div>
+                    <div class="border-t pt-4">
+                        <div class="flex items-center space-x-3 mb-3">
+                            <img src="${team.playerImage}" alt="${team.starPlayer}" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1546519638-68e109498ffc?w=100&h=100&fit=crop'">
+                            <div>
+                                <div class="text-sm text-gray-500">Star Player</div>
+                                <div class="font-semibold">${team.starPlayer}</div>
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            <div class="text-gray-500 mb-1">Current Form</div>
+                            <div class="font-mono">${team.recentForm}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Team selection for comparison
+        let selectedTeams = [];
+        
+        function selectTeam(teamId) {
+            const team = teams.find(t => t.id === teamId);
+            const card = event.currentTarget;
+            
+            if (selectedTeams.includes(teamId)) {
+                selectedTeams = selectedTeams.filter(id => id !== teamId);
+                card.classList.remove('selected');
+            } else if (selectedTeams.length < 2) {
+                selectedTeams.push(teamId);
+                card.classList.add('selected');
+            } else {
+                // Replace first selection
+                const oldCard = document.querySelector(`[data-team-id="${selectedTeams[0]}"]`);
+                if (oldCard) oldCard.classList.remove('selected');
+                selectedTeams[0] = teamId;
+                card.classList.add('selected');
+            }
+            
+            if (selectedTeams.length === 2) {
+                showComparison(selectedTeams[0], selectedTeams[1]);
+            } else {
+                document.getElementById('comparisonResults').classList.add('hidden');
+            }
+        }
+
+        // Render comparison selector
+        function renderComparisonSelector() {
+            const selector = document.getElementById('comparisonSelector');
+            teams.forEach(team => {
+                const btn = document.createElement('button');
+                btn.className = 'p-4 rounded-lg border-2 border-gray-300 hover:border-blue-500 transition team-selector';
+                btn.style.borderColor = team.color;
+                btn.dataset.teamId = team.id;
+                btn.innerHTML = `
+                    <img src="${team.logo}" alt="${team.name}" class="w-12 h-12 mx-auto mb-2" onerror="this.src='https://via.placeholder.com/150/CCCCCC/666666?text=NBA'">
+                    <div class="text-sm font-semibold">${team.name}</div>
+                `;
+                btn.onclick = () => {
+                    if (!selectedTeams.includes(team.id)) {
+                        if (selectedTeams.length >= 2) {
+                            selectedTeams = [team.id];
+                            document.querySelectorAll('.team-selector').forEach(b => b.classList.remove('ring-4', 'ring-blue-500'));
+                        } else {
+                            selectedTeams.push(team.id);
+                        }
+                        btn.classList.add('ring-4', 'ring-blue-500');
+                        
+                        if (selectedTeams.length === 2) {
+                            showComparison(selectedTeams[0], selectedTeams[1]);
+                        }
+                    }
+                };
+                selector.appendChild(btn);
+            });
+        }
+
+        // Show comparison
+        function showComparison(team1Id, team2Id) {
+            const team1 = teams.find(t => t.id === team1Id);
+            const team2 = teams.find(t => t.id === team2Id);
+            
+            document.getElementById('team1Name').textContent = team1.name;
+            document.getElementById('team2Name').textContent = team2.name;
+            
+            const stats = [
+                { label: 'Wins', team1: team1.wins, team2: team2.wins },
+                { label: 'Losses', team1: team1.losses, team2: team2.losses },
+                { label: 'Win %', team1: team1.winPercentage + '%', team2: team2.winPercentage + '%' },
+                { label: 'Points/Game', team1: team1.pointsPerGame, team2: team2.pointsPerGame },
+                { label: 'Rebounds/Game', team1: team1.reboundsPerGame, team2: team2.reboundsPerGame },
+                { label: 'Assists/Game', team1: team1.assistsPerGame, team2: team2.assistsPerGame },
+                { label: 'Field Goal %', team1: team1.fieldGoalPercentage + '%', team2: team2.fieldGoalPercentage + '%' },
+                { label: '3-Point %', team1: team1.threePointPercentage + '%', team2: team2.threePointPercentage + '%' },
+                { label: 'Steals/Game', team1: team1.stealsPerGame, team2: team2.stealsPerGame },
+                { label: 'Blocks/Game', team1: team1.blocksPerGame, team2: team2.blocksPerGame },
+                { label: 'Star Player', team1: team1.starPlayer, team2: team2.starPlayer },
+                { label: 'Conference', team1: team1.conference, team2: team2.conference }
+            ];
+            
+            const tbody = document.getElementById('comparisonTableBody');
+            tbody.innerHTML = '';
+            
+            stats.forEach(stat => {
+                const row = document.createElement('tr');
+                row.className = 'border-b border-gray-200';
+                const winner1 = typeof stat.team1 === 'number' && stat.team1 > stat.team2 ? 'text-green-600 font-bold' : '';
+                const winner2 = typeof stat.team2 === 'number' && stat.team2 > stat.team1 ? 'text-green-600 font-bold' : '';
+                
+                row.innerHTML = `
+                    <td class="p-4 font-semibold">${stat.label}</td>
+                    <td class="p-4 ${winner1}">${stat.team1}</td>
+                    <td class="p-4 ${winner2}">${stat.team2}</td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            document.getElementById('comparisonResults').classList.remove('hidden');
+        }
+
+
+        // Render highlights - Dynamic content that doesn't age
+        function renderHighlights() {
+            // Shuffle highlights randomly for variety on each visit
+            const allHighlights = [
+                { team: "Boston Celtics", title: "Elite Offensive Performance", type: "achievement", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Consistent high-scoring games" },
+                { team: "Denver Nuggets", title: "Triple-Double Excellence", type: "performance", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Outstanding all-around play" },
+                { team: "Oklahoma City Thunder", title: "High-Scoring Offense", type: "performance", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Explosive offensive capabilities" },
+                { team: "Minnesota Timberwolves", title: "Defensive Dominance", type: "game", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Elite defensive strategies" },
+                { team: "Milwaukee Bucks", title: "Paint Dominance", type: "performance", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Strong inside presence" },
+                { team: "Boston Celtics", title: "Championship Contender", type: "achievement", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Top-tier team performance" },
+                { team: "Denver Nuggets", title: "Playoff Experience", type: "achievement", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Proven championship pedigree" },
+                { team: "Oklahoma City Thunder", title: "Rising Stars", type: "performance", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Young talent making impact" },
+                { team: "Minnesota Timberwolves", title: "Balanced Attack", type: "game", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Well-rounded team play" },
+                { team: "Milwaukee Bucks", title: "MVP Leadership", type: "performance", image: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop", description: "Star player excellence" }
+            ];
+            
+            // Randomly select 6 highlights to display
+            const shuffled = allHighlights.sort(() => 0.5 - Math.random());
+            const highlights = shuffled.slice(0, 6);
+            
+            const grid = document.getElementById('highlightsGrid');
+            highlights.forEach(highlight => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition';
+                const team = teams.find(t => t.name === highlight.team);
+                card.style.borderLeft = `4px solid ${team ? team.color : '#666'}`;
+                
+                const icon = highlight.type === 'achievement' ? 'fa-trophy' : 
+                            highlight.type === 'performance' ? 'fa-star' : 'fa-basketball-ball';
+                
+                card.innerHTML = `
+                    <div class="mb-4">
+                        <img src="${highlight.image}" alt="${highlight.title}" class="highlight-image" onclick="openImageModal('${highlight.image}', '${highlight.title}')" onerror="this.src='https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=600&h=400&fit=crop'">
+                    </div>
+                    <div class="flex items-start justify-between mb-3">
+                        <i class="fas ${icon} text-2xl" style="color: ${team ? team.color : '#666'}"></i>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2">${highlight.title}</h3>
+                    <p class="text-gray-600 text-sm mb-1">${highlight.team}</p>
+                    <p class="text-gray-500 text-xs">${highlight.description}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            // Win Percentage Chart
+            const winCtx = document.getElementById('winChart').getContext('2d');
+            new Chart(winCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Win Percentage',
+                        data: teams.map(t => t.winPercentage),
+                        backgroundColor: teams.map(t => t.color),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: {
+                                callback: function(value) {
+                                    return value + '%';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Points Per Game Chart
+            const pointsCtx = document.getElementById('pointsChart').getContext('2d');
+            new Chart(pointsCtx, {
+                type: 'line',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Points Per Game',
+                        data: teams.map(t => t.pointsPerGame),
+                        borderColor: '#667eea',
+                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+
+            // Rebounds Per Game Chart
+            const reboundsCtx = document.getElementById('reboundsChart').getContext('2d');
+            new Chart(reboundsCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Rebounds Per Game',
+                        data: teams.map(t => t.reboundsPerGame),
+                        backgroundColor: teams.map(t => t.color + '80'),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Assists Per Game Chart
+            const assistsCtx = document.getElementById('assistsChart').getContext('2d');
+            new Chart(assistsCtx, {
+                type: 'bar',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Assists Per Game',
+                        data: teams.map(t => t.assistsPerGame),
+                        backgroundColor: teams.map(t => t.color + '80'),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+
+            // Field Goal Percentage Chart
+            const fgCtx = document.getElementById('fgChart').getContext('2d');
+            new Chart(fgCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: teams.map(t => t.name),
+                    datasets: [{
+                        label: 'Field Goal %',
+                        data: teams.map(t => t.fieldGoalPercentage),
+                        backgroundColor: teams.map(t => t.color),
+                        borderColor: teams.map(t => t.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+
+        // Render gallery
+        function renderGallery() {
+            const gallery = document.getElementById('galleryGrid');
+            const galleryImages = [
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Game Action" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Team Celebration" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Dunk Moment" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Three Pointer" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Defensive Play" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Arena Atmosphere" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Championship Moment" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Team Huddle" },
+                { src: "https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop", title: "Fast Break" }
+            ];
+            
+            galleryImages.forEach((item, index) => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                galleryItem.onclick = () => openImageModal(item.src, item.title);
+                galleryItem.innerHTML = `
+                    <img src="${item.src}" alt="${item.title}" onerror="this.src='https://images.unsplash.com/photo-1519869325934-21d2f0a0d0e2?w=400&h=300&fit=crop'">
+                    <div class="gallery-overlay">
+                        <p class="text-sm font-semibold">${item.title}</p>
+                    </div>
+                `;
+                gallery.appendChild(galleryItem);
+            });
+        }
+
+        // Image modal functions
+        function openImageModal(imageSrc, imageTitle) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            modalImg.src = imageSrc;
+            modalImg.alt = imageTitle;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Render FAQ Section
+        function renderFAQ() {
+            const faqContainer = document.getElementById('faqContainer');
+            const faqs = [
+                {
+                    question: "Which team has the best chance of winning the championship?",
+                    answer: `Based on current performance metrics, the ${teams[0].name} lead with a ${teams[0].winPercentage}% win rate and exceptional depth. However, the ${teams[1].name} bring championship experience and the ${teams[2].name} offer explosive offensive capabilities. The championship race is highly competitive among the top 3 teams.`,
+                    category: "Championship"
+                },
+                {
+                    question: "What makes these teams stand out from the rest of the league?",
+                    answer: `These elite teams excel in multiple areas: ${teams[0].name} (${teams[0].pointsPerGame} PPG, ${teams[0].winPercentage}% win rate), ${teams[1].name} (${teams[1].assistsPerGame} APG, championship pedigree), ${teams[2].name} (${teams[2].pointsPerGame} PPG, young talent), ${teams[3].name} (${teams[3].blocksPerGame} BPG, elite defense), and ${teams[4].name} (${teams[4].pointsPerGame} PPG, dominant star player). Their balanced offense, defense, and star power set them apart.`,
+                    category: "Analysis"
+                },
+                {
+                    question: "Which team has the best offensive performance?",
+                    answer: `The ${teams[2].name} lead in scoring with ${teams[2].pointsPerGame} points per game, followed closely by ${teams[0].name} at ${teams[0].pointsPerGame} PPG. ${teams[2].name} also excel in field goal percentage (${teams[2].fieldGoalPercentage}%) and three-point shooting (${teams[2].threePointPercentage}%), making them one of the most efficient offensive teams.`,
+                    category: "Offense"
+                },
+                {
+                    question: "Which team has the strongest defense?",
+                    answer: `The ${teams[3].name} showcase elite defensive capabilities with ${teams[3].blocksPerGame} blocks per game and ${teams[3].stealsPerGame} steals per game. Their defensive rating and ability to limit opponents' scoring opportunities make them a formidable defensive unit. Combined with their ${teams[3].winPercentage}% win rate, they're a complete team.`,
+                    category: "Defense"
+                },
+                {
+                    question: "How do these teams compare in terms of assists and ball movement?",
+                    answer: `The ${teams[1].name} lead in assists with ${teams[1].assistsPerGame} assists per game, demonstrating exceptional ball movement and team chemistry. ${teams[2].name} follow with ${teams[2].assistsPerGame} APG, while ${teams[0].name} average ${teams[0].assistsPerGame} APG. High assist numbers indicate strong team play and unselfish basketball.`,
+                    category: "Team Play"
+                },
+                {
+                    question: "What are the key factors that could determine the championship winner?",
+                    answer: `Several factors will be crucial: (1) Health and roster depth - ${teams[0].name} excel here, (2) Playoff experience - ${teams[1].name} have championship pedigree, (3) Star player performance - ${teams[4].name}'s ${teams[4].starPlayer} and ${teams[0].name}'s ${teams[0].starPlayer} are game-changers, (4) Defensive consistency - ${teams[3].name} lead here, and (5) Clutch performance in close games. The team that combines these elements best will likely prevail.`,
+                    category: "Championship"
+                },
+                {
+                    question: "Which team has the best shooting percentages?",
+                    answer: `The ${teams[2].name} lead in overall field goal percentage at ${teams[2].fieldGoalPercentage}%, while ${teams[1].name} are close behind at ${teams[1].fieldGoalPercentage}%. For three-point shooting, ${teams[0].name} excel at ${teams[0].threePointPercentage}%, and ${teams[2].name} follow at ${teams[2].threePointPercentage}%. Free throw shooting is led by ${teams[2].name} at ${teams[2].freeThrowPercentage}%.`,
+                    category: "Shooting"
+                },
+                {
+                    question: "How do the Eastern and Western Conferences compare?",
+                    answer: `The top 5 features ${teams.filter(t => t.conference === 'Eastern').length} Eastern Conference teams (${teams.filter(t => t.conference === 'Eastern').map(t => t.name).join(', ')}) and ${teams.filter(t => t.conference === 'Western').length} Western Conference teams (${teams.filter(t => t.conference === 'Western').map(t => t.name).join(', ')}). The ${teams[0].name} lead the East with ${teams[0].winPercentage}% win rate, while the West is more balanced with three strong contenders.`,
+                    category: "Conference"
+                },
+                {
+                    question: "What role do star players play in these teams' success?",
+                    answer: `Star players are crucial: ${teams[0].name}'s ${teams[0].starPlayer} provides scoring and leadership, ${teams[1].name}'s ${teams[1].starPlayer} offers unique playmaking and versatility, ${teams[2].name}'s ${teams[2].starPlayer} brings explosive scoring, ${teams[3].name}'s ${teams[3].starPlayer} adds dynamic two-way play, and ${teams[4].name}'s ${teams[4].starPlayer} dominates with physicality and skill. Each star elevates their team's performance significantly.`,
+                    category: "Players"
+                },
+                {
+                    question: "Which team is most likely to improve or decline in rankings?",
+                    answer: `The ${teams[2].name} have the highest potential for improvement given their young core and ${teams[2].pointsPerGame} PPG offensive output. The ${teams[0].name} appear most stable with their ${teams[0].winPercentage}% win rate and balanced roster. ${teams[4].name} could rise if their star player maintains peak performance. All teams have strong foundations, making significant declines unlikely.`,
+                    category: "Future"
+                }
+            ];
+            
+            faqs.forEach((faq, index) => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                faqItem.innerHTML = `
+                    <div class="faq-question" onclick="toggleFAQ(${index})">
+                        <div class="flex items-center">
+                            <span class="font-semibold text-lg text-gray-800">${faq.question}</span>
+                            <span class="prediction-badge prediction-${index % 3 === 0 ? 'high' : index % 3 === 1 ? 'medium' : 'low'} ml-3">${faq.category}</span>
+                        </div>
+                        <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p class="text-gray-600 leading-relaxed">${faq.answer}</p>
+                    </div>
+                `;
+                faqContainer.appendChild(faqItem);
+            });
+        }
+
+        // Toggle FAQ item
+        function toggleFAQ(index) {
+            const faqItems = document.querySelectorAll('.faq-item');
+            const clickedItem = faqItems[index];
+            const isActive = clickedItem.classList.contains('active');
+            
+            // Close all FAQ items
+            faqItems.forEach(item => item.classList.remove('active'));
+            
+            // Open clicked item if it wasn't active
+            if (!isActive) {
+                clickedItem.classList.add('active');
+            }
+        }
+
+        // Make toggleFAQ globally accessible
+        window.toggleFAQ = toggleFAQ;
+
+        // Render Predictions
+        function renderPredictions() {
+            const predictionsContainer = document.getElementById('predictionsContainer');
+            const predictions = [
+                {
+                    title: "Championship Favorite",
+                    team: teams[0].name,
+                    confidence: "High",
+                    icon: "fa-trophy",
+                    color: "text-yellow-500",
+                    bgColor: "bg-yellow-50",
+                    prediction: `${teams[0].name} are the clear favorites with a ${teams[0].winPercentage}% win rate and ${teams[0].pointsPerGame} PPG. Their depth and consistency make them the top championship contender.`,
+                    keyFactors: [`${teams[0].winPercentage}% win rate`, `${teams[0].pointsPerGame} PPG`, "Elite depth"]
+                },
+                {
+                    title: "Dark Horse Candidate",
+                    team: teams[2].name,
+                    confidence: "Medium-High",
+                    icon: "fa-bolt",
+                    color: "text-blue-500",
+                    bgColor: "bg-blue-50",
+                    prediction: `${teams[2].name} could surprise everyone with their ${teams[2].pointsPerGame} PPG offense and young, hungry roster. Their ${teams[2].fieldGoalPercentage}% field goal percentage shows efficiency.`,
+                    keyFactors: [`${teams[2].pointsPerGame} PPG`, `${teams[2].fieldGoalPercentage}% FG`, "Young talent"]
+                },
+                {
+                    title: "Best Defensive Team",
+                    team: teams[3].name,
+                    confidence: "High",
+                    icon: "fa-shield-alt",
+                    color: "text-green-500",
+                    bgColor: "bg-green-50",
+                    prediction: `${teams[3].name} lead defensively with ${teams[3].blocksPerGame} blocks and ${teams[3].stealsPerGame} steals per game. Defense wins championships, and they have it.`,
+                    keyFactors: [`${teams[3].blocksPerGame} BPG`, `${teams[3].stealsPerGame} SPG`, "Elite defense"]
+                },
+                {
+                    title: "Most Balanced Team",
+                    team: teams[1].name,
+                    confidence: "High",
+                    icon: "fa-balance-scale",
+                    color: "text-purple-500",
+                    bgColor: "bg-purple-50",
+                    prediction: `${teams[1].name} offer the best balance with ${teams[1].assistsPerGame} assists per game, championship experience, and ${teams[1].fieldGoalPercentage}% shooting. They're a complete team.`,
+                    keyFactors: [`${teams[1].assistsPerGame} APG`, "Championship experience", "Balanced play"]
+                },
+                {
+                    title: "Star Power Impact",
+                    team: teams[4].name,
+                    confidence: "Medium",
+                    icon: "fa-star",
+                    color: "text-red-500",
+                    bgColor: "bg-red-50",
+                    prediction: `${teams[4].name}'s ${teams[4].starPlayer} is one of the most dominant players. With ${teams[4].pointsPerGame} PPG, they can single-handedly change games.`,
+                    keyFactors: [`${teams[4].starPlayer}`, `${teams[4].pointsPerGame} PPG`, "MVP candidate"]
+                },
+                {
+                    title: "Best Shooting Team",
+                    team: teams[2].name,
+                    confidence: "High",
+                    icon: "fa-bullseye",
+                    color: "text-indigo-500",
+                    bgColor: "bg-indigo-50",
+                    prediction: `${teams[2].name} excel in shooting with ${teams[2].fieldGoalPercentage}% FG, ${teams[2].threePointPercentage}% 3P, and ${teams[2].freeThrowPercentage}% FT. Shooting efficiency is their strength.`,
+                    keyFactors: [`${teams[2].fieldGoalPercentage}% FG`, `${teams[2].threePointPercentage}% 3P`, "Efficient offense"]
+                }
+            ];
+            
+            predictions.forEach(pred => {
+                const card = document.createElement('div');
+                card.className = `${pred.bgColor} rounded-lg p-6 border-2 border-gray-200 hover:shadow-lg transition`;
+                card.innerHTML = `
+                    <div class="flex items-center mb-4">
+                        <i class="fas ${pred.icon} ${pred.color} text-3xl mr-3"></i>
+                        <div>
+                            <h4 class="font-bold text-xl text-gray-800">${pred.title}</h4>
+                            <p class="text-sm text-gray-600">${pred.team}</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4 leading-relaxed">${pred.prediction}</p>
+                    <div class="border-t pt-4">
+                        <p class="text-sm font-semibold text-gray-600 mb-2">Key Factors:</p>
+                        <div class="flex flex-wrap gap-2">
+                            ${pred.keyFactors.map(factor => `<span class="px-3 py-1 bg-white rounded-full text-xs font-semibold text-gray-700">${factor}</span>`).join('')}
+                        </div>
+                        <div class="mt-3">
+                            <span class="text-xs font-semibold text-gray-500">Confidence: </span>
+                            <span class="text-xs font-bold ${pred.confidence.includes('High') ? 'text-green-600' : 'text-yellow-600'}">${pred.confidence}</span>
+                        </div>
+                    </div>
+                `;
+                predictionsContainer.appendChild(card);
+            });
+        }
+
+        // Add data attributes to team cards for selection
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.team-card');
+                teams.forEach((team, index) => {
+                    if (cards[index]) {
+                        cards[index].dataset.teamId = team.id;
+                    }
+                });
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+
