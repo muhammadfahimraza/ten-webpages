@@ -26,15 +26,6 @@
             transition: all 0.3s ease;
         }
         
-        /* Disable card-hover transform on flip cards to avoid conflicts */
-        .flip-card .card-hover {
-            transition: none;
-        }
-        
-        .flip-card:hover .card-hover {
-            transform: none;
-        }
-        
         .stat-card {
             background: white;
             border-radius: 12px;
@@ -48,14 +39,24 @@
             box-shadow: 0 8px 16px rgba(0,0,0,0.2);
         }
         
-        /* Disable stat-card hover transform on flip cards */
+        /* Disable all hover transforms on flip cards to avoid conflicts */
+        .flip-card .stat-card {
+            transform: none !important;
+        }
+        
         .flip-card .stat-card:hover {
-            transform: none;
+            transform: none !important;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1) !important;
+        }
+        
+        .flip-card .card-hover {
+            transform: none !important;
         }
         
         /* Override stat-card white background on flip card back */
-        .flip-card-back.stat-card {
+        .flip-card-back .stat-card {
             background: transparent !important;
+            box-shadow: none !important;
         }
         
         .team-color-chiefs {
@@ -106,80 +107,89 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
         }
         
+        /* Team Card with Hover Overlay Effect */
         .flip-card {
-            perspective: 2000px;
+            position: relative;
+            width: 100%;
             height: 100%;
-            cursor: pointer;
+            overflow: hidden;
+            border-radius: 12px;
         }
         
         .flip-card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            text-align: center;
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            will-change: transform;
         }
         
-        .flip-card:hover .flip-card-inner {
-            transform: rotateY(180deg);
-        }
-        
-        /* Clean stat-card styling - no conflicting transforms */
-        .flip-card .stat-card {
-            transition: box-shadow 0.8s ease, border-left-width 0.8s ease;
+        .flip-card-front {
             position: relative;
-            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            transform: translateY(0);
+            transition: transform 0.4s ease, opacity 0.4s ease;
         }
         
-        /* Enhanced shadow on hover */
-        .flip-card:hover .stat-card {
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.4);
-        }
-        
-        /* Team-specific glow on hover */
-        .flip-card:hover .stat-card.team-color-chiefs {
-            box-shadow: 0 40px 80px -20px rgba(227, 24, 55, 0.4), 0 0 0 1px rgba(227, 24, 55, 0.2);
-            border-left-width: 6px;
-        }
-        
-        .flip-card:hover .stat-card.team-color-colts {
-            box-shadow: 0 40px 80px -20px rgba(0, 44, 95, 0.4), 0 0 0 1px rgba(0, 44, 95, 0.2);
-            border-left-width: 6px;
-        }
-        
-        /* Smooth border width transition */
-        .flip-card .stat-card.team-color-chiefs,
-        .flip-card .stat-card.team-color-colts {
-            border-left-width: 4px;
-        }
-        
-        .flip-card-front, .flip-card-back {
+        .flip-card-back {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            border-radius: 12px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .flip-card-front {
-            z-index: 2;
-            transform: rotateY(0deg);
+        .flip-card:hover .flip-card-front {
+            opacity: 0;
+            transform: translateY(-20px);
         }
         
-        .flip-card-front > *,
-        .flip-card-back > * {
-            position: relative;
-            z-index: 2;
+        .flip-card:hover .flip-card-back {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
         }
         
+        /* Prevent any animations on flip cards except hover */
+        .flip-card,
+        .flip-card-inner,
+        .flip-card-front,
         .flip-card-back {
-            transform: rotateY(180deg);
-            z-index: 1;
+            animation: none !important;
+        }
+        
+        .flip-card .fade-in-up {
+            animation: none !important;
+        }
+        
+        /* Ensure stat-card inside flip cards work properly */
+        .flip-card-front .stat-card,
+        .flip-card-back .stat-card {
+            height: 100%;
+            margin: 0;
+            transform: none !important;
+        }
+        
+        /* Mobile: Show both front and back stacked */
+        @media (max-width: 768px) {
+            .flip-card-front {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            
+            .flip-card-back {
+                position: relative;
+                opacity: 1;
+                transform: none;
+                margin-top: 1rem;
+            }
         }
         
         /* Ensure gradient backgrounds show on flip card back */
@@ -200,14 +210,6 @@
             color: white !important;
         }
         
-        /* Disable card-hover transform on flip cards */
-        .flip-card .card-hover {
-            transform: none;
-        }
-        
-        .flip-card:hover .card-hover {
-            transform: none;
-        }
         
         .hero-bg-overlay {
             background: linear-gradient(135deg, rgba(227, 24, 55, 0.1) 0%, rgba(0, 44, 95, 0.1) 100%);
@@ -309,6 +311,94 @@
         .nav-link:hover {
             color: #E31837;
         }
+        
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Enhanced animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        
+        /* Enhanced button styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #E31837 0%, #FFB612 100%);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-primary:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(227, 24, 55, 0.3);
+        }
+        
+        /* Enhanced responsive design */
+        @media (max-width: 768px) {
+            .stat-card {
+                padding: 1rem;
+            }
+            
+            .flip-card {
+                margin-bottom: 1rem;
+            }
+        }
+        
+        /* Accessibility improvements */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Focus states for accessibility */
+        *:focus-visible {
+            outline: 2px solid #E31837;
+            outline-offset: 2px;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -331,7 +421,7 @@
                     <a href="#head-to-head" class="nav-link text-gray-700 font-medium">Head-to-Head</a>
                     <a href="#legacy" class="nav-link text-gray-700 font-medium">Team Legacy</a>
                     <a href="#comparison" class="nav-link text-gray-700 font-medium">Compare</a>
-                    <a href="#predictor" class="nav-link text-gray-700 font-medium">Predictor</a>
+                    <a href="#stadiums" class="nav-link text-gray-700 font-medium">Stadiums</a>
                 </div>
                 <button class="md:hidden text-gray-700" id="mobileMenuBtn">
                     <i class="fas fa-bars text-xl"></i>
@@ -343,7 +433,7 @@
                     <a href="#head-to-head" class="nav-link text-gray-700 font-medium">Head-to-Head</a>
                     <a href="#legacy" class="nav-link text-gray-700 font-medium">Team Legacy</a>
                     <a href="#comparison" class="nav-link text-gray-700 font-medium">Compare</a>
-                    <a href="#predictor" class="nav-link text-gray-700 font-medium">Predictor</a>
+                    <a href="#stadiums" class="nav-link text-gray-700 font-medium">Stadiums</a>
                 </div>
             </div>
         </nav>
@@ -353,7 +443,7 @@
     <section class="relative overflow-hidden">
         <!-- Background Image Placeholder -->
         <div class="absolute inset-0 hero-bg-overlay">
-            <img src="images/hero-background.jpg" alt="NFL Stadium Background" class="w-full h-full object-cover opacity-20" 
+            <img src="images/hero-background.png" alt="NFL Stadium Background" class="w-full h-full object-cover opacity-20" 
                  onerror="this.style.display='none'">
             <div class="absolute inset-0 bg-gradient-to-br from-red-50 via-white to-blue-50"></div>
             <!-- Fallback gradient if image doesn't load -->
@@ -402,31 +492,27 @@
                                     <p class="text-sm text-gray-500 mb-6">Arrowhead Stadium, Kansas City, MO</p>
                                     
                                     <!-- Key Stats Grid -->
-                                    <div class="grid grid-cols-3 gap-3 mb-6">
-                                        <div class="bg-red-50 rounded-lg p-3">
-                                            <p class="text-2xl md:text-3xl font-bold text-red-600">3</p>
-                                            <p class="text-xs text-gray-600">Super Bowls</p>
-                                        </div>
-                                        <div class="bg-red-50 rounded-lg p-3">
-                                            <p class="text-2xl md:text-3xl font-bold text-red-600">15</p>
-                                            <p class="text-xs text-gray-600">Division Titles</p>
-                                        </div>
+                                    <div class="grid grid-cols-2 gap-3 mb-6">
                                         <div class="bg-red-50 rounded-lg p-3">
                                             <p class="text-2xl md:text-3xl font-bold text-red-600">1960</p>
                                             <p class="text-xs text-gray-600">Founded</p>
+                                        </div>
+                                        <div class="bg-red-50 rounded-lg p-3">
+                                            <p class="text-2xl md:text-3xl font-bold text-red-600">AFC</p>
+                                            <p class="text-xs text-gray-600">Conference</p>
                                         </div>
                                     </div>
                                     
                                     <!-- Stadium Image Placeholder -->
                                     <div class="mt-4 rounded-lg overflow-hidden relative">
-                                        <img src="images/arrowhead-stadium.jpg" alt="Arrowhead Stadium" 
+                                        <img src="images/arrowhead-stadium.png" alt="Arrowhead Stadium" 
                                              class="w-full h-32 object-cover"
                                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                         <div class="image-placeholder w-full h-32" style="display: none;">
                                             <div class="text-center w-full py-8">
                                                 <i class="fas fa-building text-4xl text-gray-400 mb-2"></i>
                                                 <p class="text-xs text-gray-500">Arrowhead Stadium</p>
-                                                <p class="text-xs text-gray-400 mt-1">images/arrowhead-stadium.jpg</p>
+                                                <p class="text-xs text-gray-400 mt-1">images/arrowhead-stadium.png</p>
                                             </div>
                                         </div>
                                     </div>
@@ -439,11 +525,11 @@
                                     <ul class="text-left space-y-3 text-sm md:text-base">
                                         <li class="flex items-start">
                                             <i class="fas fa-trophy mr-3 mt-1 text-yellow-300"></i>
-                                            <span>Super Bowl LIV, LVI, LVII Champions</span>
+                                            <span>Multiple Super Bowl championships</span>
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-star mr-3 mt-1 text-yellow-300"></i>
-                                            <span>15 AFC West Division Titles</span>
+                                            <span>Multiple AFC West Division Titles</span>
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-fire mr-3 mt-1 text-yellow-300"></i>
@@ -492,31 +578,27 @@
                                     <p class="text-sm text-gray-500 mb-6">Lucas Oil Stadium, Indianapolis, IN</p>
                                     
                                     <!-- Key Stats Grid -->
-                                    <div class="grid grid-cols-3 gap-3 mb-6">
-                                        <div class="bg-blue-50 rounded-lg p-3">
-                                            <p class="text-2xl md:text-3xl font-bold text-blue-600">2</p>
-                                            <p class="text-xs text-gray-600">Super Bowls</p>
-                                        </div>
-                                        <div class="bg-blue-50 rounded-lg p-3">
-                                            <p class="text-2xl md:text-3xl font-bold text-blue-600">16</p>
-                                            <p class="text-xs text-gray-600">Division Titles</p>
-                                        </div>
+                                    <div class="grid grid-cols-2 gap-3 mb-6">
                                         <div class="bg-blue-50 rounded-lg p-3">
                                             <p class="text-2xl md:text-3xl font-bold text-blue-600">1953</p>
                                             <p class="text-xs text-gray-600">Founded</p>
+                                        </div>
+                                        <div class="bg-blue-50 rounded-lg p-3">
+                                            <p class="text-2xl md:text-3xl font-bold text-blue-600">AFC</p>
+                                            <p class="text-xs text-gray-600">Conference</p>
                                         </div>
                                     </div>
                                     
                                     <!-- Stadium Image Placeholder -->
                                     <div class="mt-4 rounded-lg overflow-hidden relative">
-                                        <img src="images/lucas-oil-stadium.jpg" alt="Lucas Oil Stadium" 
+                                        <img src="images/lucas-oil-stadium.png" alt="Lucas Oil Stadium" 
                                              class="w-full h-32 object-cover"
                                              onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                         <div class="image-placeholder w-full h-32" style="display: none;">
                                             <div class="text-center w-full py-8">
                                                 <i class="fas fa-building text-4xl text-gray-400 mb-2"></i>
                                                 <p class="text-xs text-gray-500">Lucas Oil Stadium</p>
-                                                <p class="text-xs text-gray-400 mt-1">images/lucas-oil-stadium.jpg</p>
+                                                <p class="text-xs text-gray-400 mt-1">images/lucas-oil-stadium.png</p>
                                             </div>
                                         </div>
                                     </div>
@@ -529,11 +611,11 @@
                                     <ul class="text-left space-y-3 text-sm md:text-base">
                                         <li class="flex items-start">
                                             <i class="fas fa-trophy mr-3 mt-1 text-yellow-300"></i>
-                                            <span>Super Bowl V, XLI Champions</span>
+                                            <span>Multiple Super Bowl championships</span>
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-star mr-3 mt-1 text-yellow-300"></i>
-                                            <span>16 AFC South Division Titles</span>
+                                            <span>Multiple AFC South Division Titles</span>
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-fire mr-3 mt-1 text-yellow-300"></i>
@@ -541,7 +623,7 @@
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-chart-line mr-3 mt-1 text-yellow-300"></i>
-                                            <span>League-leading offense (2025)</span>
+                                            <span>Consistent playoff contender</span>
                                         </li>
                                         <li class="flex items-start">
                                             <i class="fas fa-bolt mr-3 mt-1 text-yellow-300"></i>
@@ -573,44 +655,26 @@
             <div class="max-w-4xl mx-auto">
                 <!-- Action Image Placeholder -->
                 <div class="mb-8 rounded-lg overflow-hidden relative">
-                    <img src="images/chiefs-colts-action.jpg" alt="Chiefs vs Colts Game Action" 
+                    <img src="images/chiefs-colts-action.png" alt="Chiefs vs Colts Game Action" 
                          class="w-full h-64 md:h-80 object-cover"
                          onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="image-placeholder w-full h-64 md:h-80" style="display: none;">
                         <div class="text-center w-full py-20">
                             <i class="fas fa-football-ball text-6xl text-gray-400 mb-2"></i>
                             <p class="text-sm text-gray-500">Replace with Chiefs vs Colts Game Action Photo</p>
-                            <p class="text-xs text-gray-400 mt-1">images/chiefs-colts-action.jpg</p>
+                            <p class="text-xs text-gray-400 mt-1">images/chiefs-colts-action.png</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="stat-card team-color-colts text-center">
-                        <p class="text-5xl font-bold text-blue-600 mb-2">18</p>
-                        <p class="text-gray-600">Colts Wins</p>
-                    </div>
-                    <div class="stat-card bg-gray-100 text-center">
-                        <p class="text-5xl font-bold text-gray-700 mb-2">29</p>
-                        <p class="text-gray-600">Total Games</p>
-                    </div>
-                    <div class="stat-card team-color-chiefs text-center">
-                        <p class="text-5xl font-bold text-red-600 mb-2">11</p>
-                        <p class="text-gray-600">Chiefs Wins</p>
-                    </div>
-                </div>
-                
-                <div class="interactive-chart-container">
-                    <canvas id="headToHeadChart"></canvas>
-                </div>
-                
-                <div class="mt-8 stat-card bg-gradient-to-r from-red-50 to-blue-50">
-                    <h3 class="text-2xl font-bold mb-4 text-center">Series Leader</h3>
+                <div class="stat-card bg-gradient-to-r from-red-50 to-blue-50">
+                    <h3 class="text-2xl font-bold mb-4 text-center">Head-to-Head History</h3>
                     <div class="flex items-center justify-center">
                         <div class="text-center">
                             <i class="fas fa-trophy trophy-icon text-5xl mb-2"></i>
-                            <p class="text-xl font-bold text-blue-600">Indianapolis Colts</p>
-                            <p class="text-gray-600">Lead the series 18-11</p>
+                            <p class="text-xl font-bold text-blue-600 mb-2">Indianapolis Colts</p>
+                            <p class="text-gray-600">Lead the all-time series</p>
+                            <p class="text-sm text-gray-500 mt-2">Two storied franchises with a rich competitive history</p>
                         </div>
                     </div>
                 </div>
@@ -631,19 +695,19 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Super Bowl Championships</span>
-                                <span class="text-2xl font-bold text-red-600">3</span>
+                                <span class="text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">AFC Championships</span>
-                                <span class="text-2xl font-bold text-red-600">5</span>
+                                <span class="text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Division Titles</span>
-                                <span class="text-2xl font-bold text-red-600">15</span>
+                                <span class="text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Playoff Appearances</span>
-                                <span class="text-2xl font-bold text-red-600">28</span>
+                                <span class="text-2xl font-bold text-red-600">Many</span>
                             </div>
                             <div class="mt-4 p-4 bg-gray-50 rounded-lg">
                                 <p class="text-sm text-gray-700">
@@ -660,19 +724,19 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Super Bowl Championships</span>
-                                <span class="text-2xl font-bold text-blue-600">2</span>
+                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">AFC Championships</span>
-                                <span class="text-2xl font-bold text-blue-600">4</span>
+                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Division Titles</span>
-                                <span class="text-2xl font-bold text-blue-600">16</span>
+                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Playoff Appearances</span>
-                                <span class="text-2xl font-bold text-blue-600">30</span>
+                                <span class="text-2xl font-bold text-blue-600">Many</span>
                             </div>
                             <div class="mt-4 p-4 bg-gray-50 rounded-lg">
                                 <p class="text-sm text-gray-700">
@@ -693,7 +757,7 @@
                             <ul class="space-y-2">
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
-                                    <span>Recent Super Bowl success (3 championships)</span>
+                                    <span>Recent Super Bowl success with multiple championships</span>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
@@ -714,11 +778,11 @@
                             <ul class="space-y-2">
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
-                                    <span>More division titles (16 vs 15)</span>
+                                    <span>Strong division title history</span>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
-                                    <span>More playoff appearances (30 vs 28)</span>
+                                    <span>Consistent playoff appearances</span>
                                 </li>
                                 <li class="flex items-start">
                                     <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
@@ -748,7 +812,7 @@
                         <div>
                             <label class="block text-gray-700 font-medium mb-2">Select Category:</label>
                             <select id="categorySelect" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
-                                <option value="offense">Offensive Performance</option>
+                                <option value="offense" selected>Offensive Performance</option>
                                 <option value="defense">Defensive Performance</option>
                                 <option value="special">Special Teams</option>
                                 <option value="history">Historical Success</option>
@@ -761,33 +825,129 @@
                     </div>
                 </div>
                 
-                <!-- Win Probability Calculator -->
-                <div id="predictor" class="stat-card mt-8">
-                    <h3 class="text-2xl font-bold mb-6 text-center">Next Matchup Predictor</h3>
-                    <div class="space-y-4">
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Home Field Advantage:</label>
-                                <select id="homeTeam" class="w-full p-3 border border-gray-300 rounded-lg">
-                                    <option value="chiefs">Kansas City Chiefs</option>
-                                    <option value="colts">Indianapolis Colts</option>
-                                    <option value="neutral">Neutral Field</option>
-                                </select>
+                <!-- Stadium & Fan Experience Section -->
+                <div id="stadiums" class="mt-8">
+                    <h3 class="text-2xl font-bold mb-6 text-center">Stadium & Fan Experience</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Arrowhead Stadium -->
+                        <div class="stat-card team-color-chiefs">
+                            <div class="mb-4 rounded-lg overflow-hidden">
+                                <img src="images/arrowhead-stadium.png" alt="Arrowhead Stadium" 
+                                     class="w-full h-48 object-cover"
+                                     onerror="this.style.display='none';">
                             </div>
-                            <div>
-                                <label class="block text-gray-700 font-medium mb-2">Key Player Status:</label>
-                                <select id="playerStatus" class="w-full p-3 border border-gray-300 rounded-lg">
-                                    <option value="full">All Key Players Available</option>
-                                    <option value="limited">Some Players Limited</option>
-                                    <option value="injured">Key Injuries</option>
-                                </select>
+                            <h4 class="text-xl font-bold text-red-600 mb-4">Arrowhead Stadium</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt text-red-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Location</p>
+                                        <p class="text-sm text-gray-600">Kansas City, Missouri</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-users text-red-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Capacity</p>
+                                        <p class="text-sm text-gray-600">One of the loudest stadiums in the NFL</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-fire text-red-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Fan Culture</p>
+                                        <p class="text-sm text-gray-600">Legendary home-field advantage with passionate "Chiefs Kingdom" fanbase</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-star text-red-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Notable Features</p>
+                                        <p class="text-sm text-gray-600">Iconic tailgating scene, Arrowhead Pride traditions, and electric game-day atmosphere</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <button onclick="calculateWinProbability()" class="w-full bg-gradient-to-r from-red-600 to-blue-600 text-white py-3 rounded-lg font-bold hover:opacity-90 transition">
-                            Calculate Win Probability
-                        </button>
-                        <div id="probabilityResult" class="mt-4 p-4 bg-gray-100 rounded-lg hidden">
-                            <!-- Results will appear here -->
+                        
+                        <!-- Lucas Oil Stadium -->
+                        <div class="stat-card team-color-colts">
+                            <div class="mb-4 rounded-lg overflow-hidden">
+                                <img src="images/lucas-oil-stadium.png" alt="Lucas Oil Stadium" 
+                                     class="w-full h-48 object-cover"
+                                     onerror="this.style.display='none';">
+                            </div>
+                            <h4 class="text-xl font-bold text-blue-600 mb-4">Lucas Oil Stadium</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt text-blue-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Location</p>
+                                        <p class="text-sm text-gray-600">Indianapolis, Indiana</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-building text-blue-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Stadium Type</p>
+                                        <p class="text-sm text-gray-600">Modern retractable-roof dome stadium</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-users text-blue-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Fan Culture</p>
+                                        <p class="text-sm text-gray-600">Dedicated "Colts Nation" with strong community support and traditions</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-star text-blue-600 mr-3 mt-1"></i>
+                                    <div>
+                                        <p class="font-semibold">Notable Features</p>
+                                        <p class="text-sm text-gray-600">State-of-the-art facilities, weather-controlled environment, and vibrant downtown location</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Comparison Highlights -->
+                    <div class="stat-card mt-6 bg-gradient-to-r from-red-50 to-blue-50">
+                        <h4 class="text-xl font-bold mb-4 text-center">Stadium Comparison Highlights</h4>
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <h5 class="font-bold text-red-600 mb-3">Arrowhead Stadium</h5>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Open-air stadium with natural grass field</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Renowned for creating one of the loudest environments in sports</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Historic venue with decades of memorable moments</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-blue-600 mb-3">Lucas Oil Stadium</h5>
+                                <ul class="space-y-2 text-sm">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Retractable roof allows for both indoor and outdoor experiences</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Modern amenities and premium fan experience</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                                        <span>Versatile venue hosting multiple major events</span>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -818,48 +978,7 @@
         
     </script>
     <script>
-        // Head-to-Head Chart
-        const ctx = document.getElementById('headToHeadChart').getContext('2d');
-        new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Colts Wins', 'Chiefs Wins'],
-                datasets: [{
-                    data: [18, 11],
-                    backgroundColor: ['#002C5F', '#E31837'],
-                    borderWidth: 0,
-                    hoverOffset: 10
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            padding: 20,
-                            font: {
-                                size: 14,
-                                weight: 'bold'
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                label += context.parsed + ' wins';
-                                return label;
-                            }
-                        }
-                    }
-                }
-            }
-        });
+        // Head-to-Head Chart removed - using static content instead
 
 
         // Category Comparison
@@ -903,19 +1022,19 @@
             history: {
                 title: 'Historical Success',
                 chiefs: {
-                    strengths: ['3 Super Bowl championships', 'Recent dynasty era', 'Hall of Fame players', 'Strong playoff tradition'],
+                    strengths: ['Multiple Super Bowl championships', 'Recent dynasty era', 'Hall of Fame players', 'Strong playoff tradition'],
                     rating: 9.0
                 },
                 colts: {
-                    strengths: ['2 Super Bowl championships', 'Longer franchise history', 'Legendary quarterback tradition', 'More playoff appearances'],
+                    strengths: ['Multiple Super Bowl championships', 'Longer franchise history', 'Legendary quarterback tradition', 'Consistent playoff appearances'],
                     rating: 8.5
                 },
                 winner: 'chiefs'
             }
         };
 
-        document.getElementById('categorySelect').addEventListener('change', function() {
-            const category = this.value;
+        // Function to update comparison result
+        function updateComparison(category) {
             const data = categoryData[category];
             const resultDiv = document.getElementById('comparisonResult');
             
@@ -946,69 +1065,18 @@
                     </div>
                 </div>
             `;
+        }
+
+        // Set default to offensive performance on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateComparison('offense');
         });
 
-        // Win Probability Calculator
-        function calculateWinProbability() {
-            const homeTeam = document.getElementById('homeTeam').value;
-            const playerStatus = document.getElementById('playerStatus').value;
-            const resultDiv = document.getElementById('probabilityResult');
-            
-            let chiefsProb = 50;
-            let coltsProb = 50;
-            
-            // Home field advantage
-            if (homeTeam === 'chiefs') {
-                chiefsProb += 5;
-                coltsProb -= 5;
-            } else if (homeTeam === 'colts') {
-                coltsProb += 5;
-                chiefsProb -= 5;
-            }
-            
-            // Player status
-            if (playerStatus === 'limited') {
-                chiefsProb -= 3;
-                coltsProb -= 3;
-            } else if (playerStatus === 'injured') {
-                chiefsProb -= 8;
-                coltsProb -= 8;
-            }
-            
-            // Historical team strength adjustment
-            chiefsProb += 2; // Strong defensive tradition
-            coltsProb += 2; // Strong offensive tradition
-            
-            // Normalize
-            const total = chiefsProb + coltsProb;
-            chiefsProb = Math.round((chiefsProb / total) * 100);
-            coltsProb = 100 - chiefsProb;
-            
-            resultDiv.classList.remove('hidden');
-            resultDiv.innerHTML = `
-                <h4 class="text-xl font-bold mb-4 text-center">Win Probability</h4>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div class="text-center p-4 bg-red-50 rounded-lg">
-                        <p class="text-sm text-gray-600 mb-2">Kansas City Chiefs</p>
-                        <p class="text-4xl font-bold text-red-600">${chiefsProb}%</p>
-                        <div class="mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
-                            <div class="h-full bg-red-600 rounded-full" style="width: ${chiefsProb}%"></div>
-                        </div>
-                    </div>
-                    <div class="text-center p-4 bg-blue-50 rounded-lg">
-                        <p class="text-sm text-gray-600 mb-2">Indianapolis Colts</p>
-                        <p class="text-4xl font-bold text-blue-600">${coltsProb}%</p>
-                        <div class="mt-2 h-4 bg-gray-200 rounded-full overflow-hidden">
-                            <div class="h-full bg-blue-600 rounded-full" style="width: ${coltsProb}%"></div>
-                        </div>
-                    </div>
-                </div>
-                <p class="text-sm text-gray-600 mt-4 text-center">
-                    <i class="fas fa-info-circle mr-2"></i>
-                    Based on home field advantage, player availability, and historical team strengths
-                </p>
-            `;
-        }
+        // Update on category change
+        document.getElementById('categorySelect').addEventListener('change', function() {
+            updateComparison(this.value);
+        });
+
 
         // Add smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1016,10 +1084,38 @@
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Close mobile menu if open
+                    if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
                 }
             });
         });
+        
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        // Observe stat cards and sections, but exclude flip cards from hero section
+        document.querySelectorAll('.stat-card, section').forEach(el => {
+            // Skip flip cards in hero section - they should only animate on hover
+            if (!el.closest('.flip-card')) {
+                observer.observe(el);
+            }
+        });
+        
     </script>
 </body>
 </html>

@@ -78,6 +78,13 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
         
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 1.5rem !important;
+                border-radius: 16px;
+            }
+        }
+        
         .glass-card:hover {
             transform: translateY(-8px) scale(1.02);
             box-shadow: 0 20px 60px rgba(99, 102, 241, 0.4);
@@ -92,116 +99,164 @@
             transition: all 0.4s ease;
         }
         
+        @media (max-width: 768px) {
+            .solid-card {
+                padding: 1.5rem !important;
+                border-radius: 16px;
+            }
+        }
+        
         .solid-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
         }
         
-        /* Word Cards with 3D Flip - Enhanced */
+        /* Word Cards - Elegant Modern Design */
         .word-card {
-            cursor: pointer;
-            perspective: 1200px;
-            height: 320px;
             position: relative;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        
-        .word-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #f5576c);
-            border-radius: 24px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .word-card:hover::before {
-            opacity: 1;
-            animation: gradient-rotate 3s ease infinite;
-        }
-        
-        @keyframes gradient-rotate {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
         }
         
         .word-card-inner {
             position: relative;
             width: 100%;
-            height: 100%;
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            transform: rotateY(0deg);
-            will-change: transform;
-        }
-        
-        .word-card.flipped .word-card-inner {
-            transform: rotateY(180deg) !important;
-        }
-        
-        .word-card:not(.flipped):hover .word-card-inner {
-            transform: scale(1.02) rotateY(0deg);
-        }
-        
-        .word-card.flipped:hover .word-card-inner {
-            transform: rotateY(180deg) scale(1.02) !important;
-        }
-        
-        .word-card-front,
-        .word-card-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            backface-visibility: hidden;
-            border-radius: 22px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 28px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            background: white;
+            border-radius: 16px;
             overflow: hidden;
-            pointer-events: auto;
-            z-index: 1;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(102, 126, 234, 0.1);
         }
         
-        .word-card-front::before,
-        .word-card-back::before {
-            content: '';
+        .word-card:hover .word-card-inner {
+            transform: translateY(-6px);
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+        
+        .word-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px 24px;
+            position: relative;
+        }
+        
+        @media (max-width: 768px) {
+            .word-header {
+                padding: 16px 18px;
+            }
+        }
+        
+        .word-header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .word-title-group {
+            flex: 1;
+        }
+        
+        .word-english {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .word-english {
+                font-size: 1.25rem;
+            }
+        }
+        
+        .word-french {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .word-french {
+                font-size: 1.1rem;
+            }
+        }
+        
+        .word-type-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .word-body {
+            padding: 24px;
+        }
+        
+        @media (max-width: 768px) {
+            .word-body {
+                padding: 16px;
+            }
+        }
+        
+        .word-explanation {
+            margin-bottom: 20px;
+        }
+        
+        .word-explanation:last-child {
+            margin-bottom: 0;
+        }
+        
+        .word-explanation-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #667eea;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 10px;
+        }
+        
+        .word-explanation-title i {
+            font-size: 0.9rem;
+        }
+        
+        .word-explanation-text {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #4a5568;
+        }
+        
+        .word-explanation-text strong {
+            color: #2d3748;
+            font-weight: 600;
+        }
+        
+        .word-number {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: shimmer 3s infinite;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        @keyframes shimmer {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        
-        .word-card-front {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #8b5cf6 100%);
+            top: 16px;
+            left: 20px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.95rem;
             color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .word-card-back {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ec4899 100%);
-            color: white;
-            transform: rotateY(180deg);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         .word-icon {
@@ -228,6 +283,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
         }
         
         .word-number {
@@ -245,24 +301,9 @@
             font-weight: 700;
             font-size: 0.9rem;
             border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
         }
         
-        .flip-hint {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.75rem;
-            opacity: 0.7;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            transition: opacity 0.3s ease;
-        }
-        
-        .word-card:hover .flip-hint {
-            opacity: 1;
-        }
         
         .word-translation {
             font-size: 2rem;
@@ -406,6 +447,13 @@
             cursor: pointer;
         }
         
+        @media (max-width: 768px) {
+            .btn-primary {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+        }
+        
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.05);
             box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
@@ -420,6 +468,12 @@
             border: 3px solid transparent;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .practice-card {
+                padding: 1rem !important;
+            }
         }
         
         .practice-card:hover {
@@ -497,30 +551,37 @@
             height: 100%;
             overflow: hidden;
             pointer-events: none;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
         
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.5);
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.6);
             border-radius: 50%;
-            animation: particle-float 15s infinite;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+            animation: particle-float linear infinite;
+            will-change: transform, opacity;
         }
         
         @keyframes particle-float {
             0% {
-                transform: translateY(100vh) translateX(0);
+                transform: translateY(100vh) translateX(0) scale(0);
                 opacity: 0;
             }
-            10% {
+            5% {
                 opacity: 1;
+                transform: translateY(95vh) translateX(0) scale(1);
             }
-            90% {
+            95% {
                 opacity: 1;
+                transform: translateY(5vh) translateX(var(--drift, 0px)) scale(1);
             }
             100% {
-                transform: translateY(-100vh) translateX(100px);
+                transform: translateY(-10vh) translateX(var(--drift, 0px)) scale(0);
                 opacity: 0;
             }
         }
@@ -528,7 +589,11 @@
         /* Responsive Typography */
         @media (max-width: 768px) {
             .text-hero {
-                font-size: 2.5rem;
+                font-size: 2rem;
+            }
+            
+            .word-explanation-text {
+                font-size: 0.85rem;
             }
         }
         
@@ -554,6 +619,12 @@
             overflow: hidden;
         }
         
+        @media (max-width: 768px) {
+            .quote-box {
+                padding: 20px;
+            }
+        }
+        
         .quote-box::before {
             content: '"';
             position: absolute;
@@ -562,6 +633,14 @@
             font-size: 120px;
             color: rgba(102, 126, 234, 0.2);
             font-family: 'Cormorant Garamond', serif;
+        }
+        
+        @media (max-width: 768px) {
+            .quote-box::before {
+                font-size: 60px;
+                top: -10px;
+                left: 10px;
+            }
         }
     </style>
 </head>
@@ -574,10 +653,7 @@
         
         <div class="max-w-7xl w-full z-10">
             <div class="text-center mb-12 fade-in-up" style="animation-delay: 0.2s;">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text-white text-hero">
-                    <i class="fas fa-language mr-4 float"></i>
-                    Feynman's Wisdom
-                </h1>
+              
                 <p class="text-xl md:text-2xl text-white/80 mb-2">
                     Master the French Translation
                 </p>
@@ -591,7 +667,7 @@
                 <div class="quote-box mb-8 slide-in-left" style="animation-delay: 0.6s;">
                     <div class="flex items-start gap-4 mb-6">
                         <div class="img-placeholder w-24 h-24 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 96px; min-height: 96px;">
-                            <img src="images/feynman-portrait.jpg" alt="Richard Feynman" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="images/feynman-portrait.png" alt="Richard Feynman" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <i class="fas fa-user-tie z-10" style="display: none;"></i>
                         </div>
                         <div class="flex-1">
@@ -609,7 +685,7 @@
                 <div id="frenchTranslation" class="quote-box slide-in-right" style="animation-delay: 0.8s; background: linear-gradient(135deg, rgba(240, 147, 251, 0.2) 0%, rgba(245, 87, 108, 0.2) 100%);">
                     <div class="flex items-start gap-4">
                         <div class="img-placeholder w-24 h-24 flex-shrink-0" style="min-width: 96px; min-height: 96px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <img src="images/french-flag.png" alt="French Flag" class="w-full h-full object-cover rounded-lg z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <img src="images/france-flag.avif" alt="French Flag" class="w-full h-full object-cover rounded-lg z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                             <i class="fas fa-flag z-10" style="display: none;"></i>
                         </div>
                         <div class="flex-1">
@@ -636,324 +712,146 @@
         </div>
     </section>
 
-    <!-- Visual Comparison Section -->
-    <section class="py-16 px-4 relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="glass-card p-8 md:p-12 scroll-reveal">
-                <div class="grid md:grid-cols-2 gap-8 items-center">
-                    <div class="text-center">
-                        <div class="img-placeholder w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <img src="images/english-flag.png" alt="English" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <i class="fas fa-flag-usa z-10 text-white text-4xl" style="display: none;"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">English</h3>
-                        <p class="text-white/80 text-lg">Original Quote</p>
-                    </div>
-                    <div class="text-center">
-                        <div class="img-placeholder w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                            <img src="images/french-flag.png" alt="French" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <i class="fas fa-flag z-10 text-white text-4xl" style="display: none;"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold text-white mb-4">Français</h3>
-                        <p class="text-white/80 text-lg">French Translation</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Word-by-Word Breakdown Section -->
     <section class="py-24 px-4 relative">
         <div class="max-w-7xl mx-auto">
             <div class="text-center mb-16 scroll-reveal">
-                <div class="inline-block mb-6">
-                    <div class="glass-card p-6 inline-block">
-                        <i class="fas fa-book-open text-5xl text-white mb-4 block"></i>
-                    </div>
-                </div>
                 <h2 class="text-4xl md:text-6xl font-bold mb-6 gradient-text-white">
+                    <i class="fas fa-book-open mr-4"></i>
                     Word-by-Word Breakdown
                 </h2>
-                <p class="text-xl text-white/80 max-w-2xl mx-auto mb-4">
-                    Click on each card to flip and discover the French translation, meaning, and grammatical insights
+                <p class="text-xl text-white/80 max-w-3xl mx-auto">
+                    Explore each word with detailed explanations of translation, grammar, and usage
                 </p>
-                <div class="flex items-center justify-center gap-2 mt-6">
-                    <div class="w-12 h-px bg-gradient-to-r from-transparent to-white/50"></div>
-                    <i class="fas fa-arrow-down text-white/60 animate-bounce"></i>
-                    <div class="w-12 h-px bg-gradient-to-l from-transparent to-white/50"></div>
-                </div>
             </div>
             
-            <!-- First Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
-                <div class="word-card scroll-reveal" style="animation-delay: 0.1s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">1</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">📝</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">What</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">1</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Relative Pronoun</div>
-                            <div class="word-translation">Ce que</div>
-                            <p class="word-meaning">
-                                "That which" or "What" - a relative pronoun used to refer to something in French
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Word 1: What -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.1s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white font-bold text-lg flex items-center justify-center mb-3">1</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">What</h3>
+                        <h4 class="text-xl font-bold text-purple-600 mb-3">Ce que</h4>
+                        <span class="inline-block px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold">Relative Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "That which" or "what" - a relative pronoun referring to something previously mentioned.</p>
+                        <p><strong>Grammar:</strong> Combines "ce" (this/that) with "que" (which/that) to create a compound relative pronoun.</p>
                     </div>
                 </div>
                 
-                <div class="word-card scroll-reveal" style="animation-delay: 0.2s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">2</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">👤</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">I</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">2</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Pronoun</div>
-                            <div class="word-translation">Je</div>
-                            <p class="word-meaning">
-                                First person singular pronoun - "I" in French
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
+                <!-- Word 2: I -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.2s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-500 text-white font-bold text-lg flex items-center justify-center mb-3">2</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">I</h3>
+                        <h4 class="text-xl font-bold text-blue-600 mb-3">Je</h4>
+                        <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> First person singular pronoun meaning "I" in French.</p>
+                        <p><strong>Grammar:</strong> Used as the subject. Contracts to "j'" before vowels (e.g., "j'aime").</p>
                     </div>
                 </div>
                 
-                <div class="word-card scroll-reveal" style="animation-delay: 0.3s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">3</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">❌</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">cannot</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">3</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Negation</div>
-                            <div class="word-translation">ne peux pas</div>
-                            <p class="word-meaning">
-                                "Cannot" - negative form of "pouvoir" (to be able). "Ne...pas" is the French negation structure
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
+                <!-- Word 3: cannot -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.3s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-red-500 to-orange-500 text-white font-bold text-lg flex items-center justify-center mb-3">3</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">cannot</h3>
+                        <h4 class="text-xl font-bold text-red-600 mb-3">ne peux pas</h4>
+                        <span class="inline-block px-3 py-1 bg-red-100 text-red-700 rounded-full text-xs font-semibold">Negation + Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Cannot" - combines negation "ne...pas" with "pouvoir" (to be able).</p>
+                        <p><strong>Grammar:</strong> French negation requires "ne" before and "pas" after the verb. "Pouvoir" is irregular.</p>
                     </div>
                 </div>
                 
-                <div class="word-card scroll-reveal" style="animation-delay: 0.4s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">4</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">🔨</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">create</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">4</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Verb</div>
-                            <div class="word-translation">créer</div>
-                            <p class="word-meaning">
-                                "To create" - verb meaning to bring something into existence
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
+                <!-- Word 4: create -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.4s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 text-white font-bold text-lg flex items-center justify-center mb-3">4</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">create</h3>
+                        <h4 class="text-xl font-bold text-green-600 mb-3">créer</h4>
+                        <span class="inline-block px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "To create" - to bring something into existence.</p>
+                        <p><strong>Grammar:</strong> Regular -er verb in infinitive form (follows "peux").</p>
+                    </div>
+                </div>
+                
+                <!-- Word 5: I (second) -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.5s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-white font-bold text-lg flex items-center justify-center mb-3">5</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">I</h3>
+                        <h4 class="text-xl font-bold text-indigo-600 mb-3">je</h4>
+                        <span class="inline-block px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-semibold">Pronoun</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "I" - repeated in the second part of the sentence.</p>
+                        <p><strong>Grammar:</strong> Maintains parallel structure with English version.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 6: le -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.6s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-500 text-white font-bold text-lg flex items-center justify-center mb-3">6</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">—</h3>
+                        <h4 class="text-xl font-bold text-pink-600 mb-3">le</h4>
+                        <span class="inline-block px-3 py-1 bg-pink-100 text-pink-700 rounded-full text-xs font-semibold">Direct Object</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "It" - refers back to "ce que" (what/that which).</p>
+                        <p><strong>Grammar:</strong> <strong>CRUCIAL:</strong> French requires this direct object pronoun before the verb.</p>
+                    </div>
+                </div>
+                
+                <!-- Word 7: understand -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.7s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-teal-500 to-cyan-500 text-white font-bold text-lg flex items-center justify-center mb-3">7</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">understand</h3>
+                        <h4 class="text-xl font-bold text-teal-600 mb-3">comprends</h4>
+                        <span class="inline-block px-3 py-1 bg-teal-100 text-teal-700 rounded-full text-xs font-semibold">Verb</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Understand" - first person singular of "comprendre".</p>
+                        <p><strong>Grammar:</strong> Regular -re verb. With "le" it becomes "je ne le comprends pas".</p>
+                    </div>
+                </div>
+                
+                <!-- Word 8: do not -->
+                <div class="solid-card p-6 scroll-reveal" style="animation-delay: 0.8s;">
+                    <div class="text-center mb-4">
+                        <div class="inline-block w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-yellow-500 text-white font-bold text-lg flex items-center justify-center mb-3">8</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">do not</h3>
+                        <h4 class="text-xl font-bold text-amber-600 mb-3">ne...pas</h4>
+                        <span class="inline-block px-3 py-1 bg-amber-100 text-amber-700 rounded-full text-xs font-semibold">Negation</span>
+                    </div>
+                    <div class="mt-4 space-y-2 text-sm text-gray-600">
+                        <p><strong>Translation:</strong> "Not" or "do not" - standard French negation structure.</p>
+                        <p><strong>Grammar:</strong> Requires "ne" before and "pas" after the verb. With object pronouns: "ne + pronoun + verb + pas".</p>
                     </div>
                 </div>
             </div>
             
-            <!-- Second Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div class="word-card scroll-reveal" style="animation-delay: 0.5s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">5</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">👤</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">I</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">5</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Pronoun</div>
-                            <div class="word-translation">je</div>
-                            <p class="word-meaning">
-                                "I" - repeated for emphasis in the French sentence structure
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="word-card scroll-reveal" style="animation-delay: 0.6s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">6</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">📌</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">le</h3>
-                            <p class="text-lg opacity-90 font-medium">French Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">6</div>
-                            <div class="word-badge">Grammar</div>
-                            <div class="word-icon">💡</div>
-                            <div class="word-type">Direct Object</div>
-                            <div class="word-translation">le</div>
-                            <p class="word-meaning">
-                                "It" - refers back to "ce que". Required in French before the verb
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="word-card scroll-reveal" style="animation-delay: 0.7s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">7</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">🧠</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">understand</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">7</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Verb</div>
-                            <div class="word-translation">comprends</div>
-                            <p class="word-meaning">
-                                "Understand" - first person singular of "comprendre" (to understand)
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="word-card scroll-reveal" style="animation-delay: 0.8s;">
-                    <div class="word-card-inner">
-                        <div class="word-card-front text-center relative">
-                            <div class="word-number">8</div>
-                            <div class="word-badge">EN</div>
-                            <div class="word-icon">❌</div>
-                            <h3 class="text-4xl font-bold mb-3" style="text-shadow: 0 2px 10px rgba(0,0,0,0.3);">do not</h3>
-                            <p class="text-lg opacity-90 font-medium">English Word</p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip</span>
-                            </div>
-                        </div>
-                        <div class="word-card-back text-center relative">
-                            <div class="word-number">8</div>
-                            <div class="word-badge">FR</div>
-                            <div class="word-icon">🇫🇷</div>
-                            <div class="word-type">Negation</div>
-                            <div class="word-translation">ne...pas</div>
-                            <p class="word-meaning">
-                                "Do not" - French negation structure (appears as "ne le...pas" in the sentence)
-                            </p>
-                            <div class="flip-hint">
-                                <i class="fas fa-hand-pointer"></i>
-                                <span>Click to flip back</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Visual Connector -->
-            <div class="flex items-center justify-center my-12 scroll-reveal">
-                <div class="flex items-center gap-4">
-                    <div class="w-20 h-px bg-gradient-to-r from-transparent via-white/30 to-white/30"></div>
-                    <div class="glass-card p-4">
-                        <i class="fas fa-arrow-down text-white/60 text-2xl"></i>
-                    </div>
-                    <div class="w-20 h-px bg-gradient-to-l from-transparent via-white/30 to-white/30"></div>
-                </div>
-            </div>
-            
-            <div class="mt-12 text-center scroll-reveal">
-                <div class="glass-card p-8 max-w-3xl mx-auto relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-400 via-pink-400 to-purple-400"></div>
-                    <div class="flex items-start gap-4">
+            <!-- Grammar Insight -->
+            <div class="mt-12 scroll-reveal">
+                <div class="glass-card p-8 max-w-4xl mx-auto">
+                    <div class="flex items-start gap-6">
                         <div class="flex-shrink-0">
                             <div class="w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
                                 <i class="fas fa-info-circle text-white text-2xl"></i>
                             </div>
                         </div>
-                        <div class="text-left">
-                            <h3 class="text-2xl font-bold text-white mb-3">Grammar Insight</h3>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-white mb-3">Key Grammar Insight</h3>
                             <p class="text-white/90 text-lg leading-relaxed">
-                                <strong>Important:</strong> French uses <span class="font-bold text-yellow-300">"le"</span> as a direct object pronoun referring back to <span class="font-bold text-yellow-300">"ce que"</span>. This is a key grammatical structure in French that differs from English, where the direct object pronoun placement is different.
+                                <strong>Important:</strong> French uses <span class="font-bold text-yellow-300">"le"</span> as a direct object pronoun referring back to <span class="font-bold text-yellow-300">"ce que"</span>. This is a fundamental grammatical structure in French that differs from English. The direct object pronoun placement is mandatory and creates the structure "je ne le comprends pas" rather than just "je ne comprends pas".
                             </p>
                         </div>
                     </div>
@@ -980,7 +878,7 @@
                     <div class="bg-gradient-to-br from-purple-50 via-blue-50 to-pink-50 p-8 rounded-2xl scroll-reveal" style="animation-delay: 0.2s;">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="img-placeholder w-20 h-20 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 80px; min-height: 80px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                                <img src="images/feynman-scientist.jpg" alt="Feynman Scientist" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <img src="images/feynman-scientist.png" alt="Feynman Scientist" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <i class="fas fa-user-graduate z-10" style="display: none;"></i>
                             </div>
                             <h3 class="text-3xl font-bold text-gray-800">About Richard Feynman</h3>
@@ -996,7 +894,7 @@
                     <div class="bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 p-8 rounded-2xl scroll-reveal" style="animation-delay: 0.4s;">
                         <div class="flex items-center gap-4 mb-6">
                             <div class="img-placeholder w-20 h-20 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 80px; min-height: 80px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                                <img src="images/brain-concept.jpg" alt="Brain Concept" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                <img src="images/brain-concept.png" alt="Brain Concept" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                                 <i class="fas fa-brain z-10" style="display: none;"></i>
                             </div>
                             <h3 class="text-3xl font-bold text-gray-800">The Meaning</h3>
@@ -1023,10 +921,6 @@
                 
                 <div class="bg-gradient-to-r from-purple-100 via-blue-100 to-pink-100 p-10 rounded-2xl scroll-reveal" style="animation-delay: 0.6s;">
                     <div class="flex items-center justify-center gap-4 mb-6">
-                        <div class="img-placeholder w-16 h-16 flex-shrink-0 rounded-full overflow-hidden" style="min-width: 64px; min-height: 64px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                            <img src="images/language-translation.jpg" alt="Language Translation" class="w-full h-full object-cover z-10" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                            <i class="fas fa-quote-left z-10" style="display: none;"></i>
-                        </div>
                         <h3 class="text-3xl font-bold text-gray-800 text-center">Why This Translation Matters</h3>
                     </div>
                     <p class="text-gray-700 text-xl leading-relaxed text-center max-w-4xl mx-auto">
@@ -1039,77 +933,62 @@
 
     <!-- Interactive Practice Section -->
     <section class="py-24 px-4">
-        <div class="max-w-6xl mx-auto">
+        <div class="max-w-4xl mx-auto">
             <div class="solid-card p-8 md:p-12 scroll-reveal">
                 <div class="text-center mb-12">
                     <h2 class="text-4xl md:text-6xl font-bold mb-6 gradient-text">
-                        <i class="fas fa-gamepad mr-4"></i>
-                        Practice Your Translation
+                        <i class="fas fa-question-circle mr-4"></i>
+                        Translation Quiz
                     </h2>
                     <p class="text-xl text-gray-600">
-                        Test your knowledge by clicking on the correct translations
+                        Test your knowledge with multiple-choice questions
                     </p>
                 </div>
                 
-                <div id="practiceArea" class="space-y-6">
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="practice-card solid-card p-8 cursor-pointer scroll-reveal" style="animation-delay: 0.1s;" onclick="selectAnswer(this, 'correct')">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <p class="text-2xl font-bold text-gray-800 mb-2">What</p>
-                                    <p class="text-gray-600">English word</p>
-                                </div>
-                                <i class="fas fa-arrow-right text-3xl text-gray-400"></i>
-                            </div>
-                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
-                                <p class="text-3xl font-bold text-purple-600 text-center">Ce que</p>
-                            </div>
+                <!-- Quiz Progress -->
+                <div id="quizProgress" class="mb-8">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-semibold text-gray-600">Question <span id="currentQuestion">1</span> of <span id="totalQuestions">8</span></span>
+                        <span class="text-sm font-semibold text-gray-600">Score: <span id="quizScore">0</span>/<span id="totalQuestions2">8</span></span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5">
+                        <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-pink-500 h-2.5 rounded-full transition-all duration-300" style="width: 12.5%"></div>
+                    </div>
+                </div>
+                
+                <!-- Quiz Question Area -->
+                <div id="quizArea">
+                    <div id="questionContainer" class="mb-8">
+                        <div class="text-center mb-8">
+                            <h3 id="questionText" class="text-3xl md:text-4xl font-bold text-gray-800 mb-4"></h3>
+                            <p class="text-lg text-gray-600">Select the correct French translation:</p>
                         </div>
                         
-                        <div class="practice-card solid-card p-8 cursor-pointer scroll-reveal" style="animation-delay: 0.2s;" onclick="selectAnswer(this, 'incorrect')">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <p class="text-2xl font-bold text-gray-800 mb-2">create</p>
-                                    <p class="text-gray-600">English word</p>
-                                </div>
-                                <i class="fas fa-arrow-right text-3xl text-gray-400"></i>
-                            </div>
-                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
-                                <p class="text-3xl font-bold text-purple-600 text-center">créer</p>
-                            </div>
-                        </div>
-                        
-                        <div class="practice-card solid-card p-8 cursor-pointer scroll-reveal" style="animation-delay: 0.3s;" onclick="selectAnswer(this, 'incorrect')">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <p class="text-2xl font-bold text-gray-800 mb-2">understand</p>
-                                    <p class="text-gray-600">English word</p>
-                                </div>
-                                <i class="fas fa-arrow-right text-3xl text-gray-400"></i>
-                            </div>
-                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
-                                <p class="text-3xl font-bold text-purple-600 text-center">comprends</p>
-                            </div>
-                        </div>
-                        
-                        <div class="practice-card solid-card p-8 cursor-pointer scroll-reveal" style="animation-delay: 0.4s;" onclick="selectAnswer(this, 'incorrect')">
-                            <div class="flex items-center justify-between mb-4">
-                                <div>
-                                    <p class="text-2xl font-bold text-gray-800 mb-2">cannot</p>
-                                    <p class="text-gray-600">English word</p>
-                                </div>
-                                <i class="fas fa-arrow-right text-3xl text-gray-400"></i>
-                            </div>
-                            <div class="mt-6 p-4 bg-gradient-to-r from-purple-100 to-blue-100 rounded-xl">
-                                <p class="text-3xl font-bold text-purple-600 text-center">ne peux pas</p>
-                            </div>
+                        <div id="optionsContainer" class="space-y-4">
+                            <!-- Options will be dynamically generated -->
                         </div>
                     </div>
                     
-                    <div class="text-center mt-10 scroll-reveal">
-                        <button onclick="resetPractice()" class="btn-primary text-lg">
+                    <!-- Next Button (hidden initially) -->
+                    <div id="nextButtonContainer" class="text-center hidden">
+                        <button id="nextButton" onclick="nextQuestion()" class="btn-primary text-lg">
+                            Next Question <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Results Screen (hidden initially) -->
+                    <div id="resultsScreen" class="hidden text-center">
+                        <div class="mb-8">
+                            <div class="inline-block w-24 h-24 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center mb-6">
+                                <i class="fas fa-trophy text-white text-5xl"></i>
+                            </div>
+                            <h3 class="text-4xl font-bold text-gray-800 mb-4">Quiz Complete!</h3>
+                            <p class="text-2xl font-bold text-purple-600 mb-2">Your Score: <span id="finalScore">0</span>/<span id="finalTotal">8</span></p>
+                            <p id="scoreMessage" class="text-lg text-gray-600"></p>
+                        </div>
+                        <button onclick="restartQuiz()" class="btn-primary text-lg">
                             <i class="fas fa-redo mr-2"></i>
-                            Reset Practice
+                            Take Quiz Again
                         </button>
                     </div>
                 </div>
@@ -1117,109 +996,190 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-16 px-4 text-center relative">
-        <div class="max-w-7xl mx-auto">
-            <div class="glass-card p-8 inline-block">
-                <p class="text-white text-xl mb-4">
-                    <i class="fas fa-heart text-red-400 mr-2 float"></i>
-                    Explore the beauty of language and understanding
-                </p>
-                <p class="text-white/70 text-lg">
-                    Created with ❤️ for language learners and curious minds
-                </p>
-            </div>
-        </div>
-    </footer>
-
     <script>
-        // Flip Word Cards - Global function for onclick handlers
-        window.flipCard = function(card) {
-            if (card && card.classList) {
-                card.classList.toggle('flipped');
-            }
-        };
+        // Word cards now use pure CSS hover - no JavaScript needed!
+        // The tooltips appear automatically on hover for a smooth, instant experience
         
-        // Initialize word cards when DOM is ready
-        function initWordCards() {
-            const wordCards = document.querySelectorAll('.word-card');
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: "What is the French translation of 'What'?",
+                options: ["Ce que", "Qu'est-ce que", "Quoi", "Que"],
+                correct: 0
+            },
+            {
+                question: "How do you say 'I' in French?",
+                options: ["Je", "J'ai", "Moi", "Mon"],
+                correct: 0
+            },
+            {
+                question: "What is the French translation of 'cannot'?",
+                options: ["ne peux pas", "ne peut pas", "ne peux", "peux pas"],
+                correct: 0
+            },
+            {
+                question: "How do you say 'create' in French?",
+                options: ["créer", "créé", "création", "créant"],
+                correct: 0
+            },
+            {
+                question: "What does 'le' mean in the sentence 'je ne le comprends pas'?",
+                options: ["it (referring to 'ce que')", "the", "him", "this"],
+                correct: 0
+            },
+            {
+                question: "What is the French translation of 'understand'?",
+                options: ["comprends", "comprendre", "compris", "comprend"],
+                correct: 0
+            },
+            {
+                question: "What is the French negation structure for 'do not'?",
+                options: ["ne...pas", "pas...ne", "ne pas", "non"],
+                correct: 0
+            },
+            {
+                question: "What is the complete French translation of 'What I cannot create, I do not understand'?",
+                options: [
+                    "Ce que je ne peux pas créer, je ne le comprends pas",
+                    "Ce que je ne peux pas créer, je ne comprends pas",
+                    "Qu'est-ce que je ne peux pas créer, je ne le comprends pas",
+                    "Ce que je ne peux créer, je ne le comprends pas"
+                ],
+                correct: 0
+            }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+        
+        // Initialize Quiz
+        function initQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            document.getElementById('quizScore').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '1';
+            document.getElementById('totalQuestions').textContent = quizQuestions.length;
+            document.getElementById('totalQuestions2').textContent = quizQuestions.length;
+            document.getElementById('finalTotal').textContent = quizQuestions.length;
+            document.getElementById('questionContainer').classList.remove('hidden');
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            loadQuestion();
+        }
+        
+        // Load Question
+        function loadQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.question;
             
-            wordCards.forEach((card) => {
-                // Add click event listener
-                card.addEventListener('click', function handleClick(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.classList.toggle('flipped');
-                }, false);
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionDiv = document.createElement('div');
+                optionDiv.className = 'practice-card solid-card p-6 cursor-pointer transition-all hover:scale-105';
+                optionDiv.onclick = () => selectAnswer(index);
+                optionDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="text-xl font-semibold text-gray-800">${option}</span>
+                        <i class="fas fa-circle text-gray-300 text-xl"></i>
+                    </div>
+                `;
+                optionsContainer.appendChild(optionDiv);
+            });
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            
+            selectedAnswer = null;
+        }
+        
+        // Select Answer
+        function selectAnswer(answerIndex) {
+            if (selectedAnswer !== null) return; // Prevent multiple selections
+            
+            selectedAnswer = answerIndex;
+            const question = quizQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('#optionsContainer .practice-card');
+            
+            options.forEach((option, index) => {
+                const icon = option.querySelector('i');
+                option.classList.remove('correct', 'incorrect');
+                option.style.pointerEvents = 'none';
                 
-                // Add touch support for mobile
-                card.addEventListener('touchend', function handleTouch(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    this.classList.toggle('flipped');
-                }, false);
-            });
-        }
-        
-        // Run initialization
-        function runInit() {
-            try {
-                initWordCards();
-            } catch (error) {
-                console.error('Error initializing word cards:', error);
-            }
-        }
-        
-        // Multiple initialization attempts to ensure it works
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', runInit);
-        } else {
-            runInit();
-        }
-        
-        // Backup initialization
-        window.addEventListener('load', runInit);
-        setTimeout(runInit, 100);
-        setTimeout(runInit, 500);
-        
-        // Practice Answer Selection
-        function selectAnswer(card, type) {
-            // Remove previous selections
-            document.querySelectorAll('.practice-card').forEach(c => {
-                c.classList.remove('correct', 'incorrect');
-                const icon = c.querySelector('.fa-arrow-right, .fa-check-circle, .fa-times-circle');
-                if (icon) {
-                    icon.className = 'fas fa-arrow-right text-3xl text-gray-400';
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                    icon.className = 'fas fa-check-circle text-green-500 text-xl';
+                } else if (index === answerIndex) {
+                    option.classList.add('incorrect');
+                    icon.className = 'fas fa-times-circle text-red-500 text-xl';
                 }
             });
             
-            // Add appropriate class
-            card.classList.add(type);
-            
-            // Add feedback
-            const icon = card.querySelector('.fa-arrow-right');
-            if (type === 'correct') {
-                icon.className = 'fas fa-check-circle text-green-500 text-3xl';
-                setTimeout(() => {
-                    showNotification('Correct! 🎉 Great job!', 'success');
-                }, 300);
+            // Update score
+            if (answerIndex === question.correct) {
+                score++;
+                document.getElementById('quizScore').textContent = score;
+                showNotification('Correct! 🎉', 'success');
             } else {
-                icon.className = 'fas fa-times-circle text-red-500 text-3xl';
-                setTimeout(() => {
-                    showNotification('Not quite right. Try again! 💪', 'error');
-                }, 300);
+                showNotification('Incorrect. The correct answer is: ' + question.options[question.correct], 'error');
+            }
+            
+            // Show next button
+            setTimeout(() => {
+                document.getElementById('nextButtonContainer').classList.remove('hidden');
+            }, 1000);
+        }
+        
+        // Next Question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < quizQuestions.length) {
+                document.getElementById('nextButtonContainer').classList.add('hidden');
+                loadQuestion();
+            } else {
+                showResults();
             }
         }
         
-        // Reset Practice
-        function resetPractice() {
-            document.querySelectorAll('.practice-card').forEach(card => {
-                card.classList.remove('correct', 'incorrect');
-                const icon = card.querySelector('.fa-check-circle, .fa-times-circle, .fa-arrow-right');
-                if (icon) {
-                    icon.className = 'fas fa-arrow-right text-3xl text-gray-400';
-                }
-            });
+        // Show Results
+        function showResults() {
+            document.getElementById('questionContainer').classList.add('hidden');
+            document.getElementById('nextButtonContainer').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            
+            document.getElementById('finalScore').textContent = score;
+            
+            const percentage = (score / quizQuestions.length) * 100;
+            let message = '';
+            if (percentage === 100) {
+                message = 'Perfect! You\'re a French translation master! 🌟';
+            } else if (percentage >= 75) {
+                message = 'Excellent work! You have a strong understanding! 👏';
+            } else if (percentage >= 50) {
+                message = 'Good job! Keep practicing to improve! 💪';
+            } else {
+                message = 'Keep learning! Review the words and try again! 📚';
+            }
+            
+            document.getElementById('scoreMessage').textContent = message;
+        }
+        
+        // Restart Quiz
+        function restartQuiz() {
+            initQuiz();
+        }
+        
+        // Initialize quiz on page load
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initQuiz);
+        } else {
+            initQuiz();
         }
         
         // Notification System
@@ -1267,20 +1227,65 @@
         // Create Particle Effect
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 30;
+            if (!particlesContainer) return;
+            
+            // Clear existing particles
+            particlesContainer.innerHTML = '';
+            
+            const particleCount = 40;
+            const screenWidth = window.innerWidth;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                
+                // Random horizontal position
+                const leftPosition = Math.random() * 100;
+                particle.style.left = leftPosition + '%';
+                
+                // Random drift (horizontal movement)
+                const drift = (Math.random() - 0.5) * 200; // -100px to 100px
+                particle.style.setProperty('--drift', drift + 'px');
+                
+                // Random animation delay (stagger particles)
+                const delay = Math.random() * 20;
+                particle.style.animationDelay = delay + 's';
+                
+                // Random animation duration (8-15 seconds for variety)
+                const duration = 8 + Math.random() * 7;
+                particle.style.animationDuration = duration + 's';
+                
+                // Random size variation
+                const size = 4 + Math.random() * 4; // 4px to 8px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Random opacity for depth
+                const opacity = 0.3 + Math.random() * 0.5;
+                particle.style.background = `rgba(255, 255, 255, ${opacity})`;
+                
                 particlesContainer.appendChild(particle);
             }
         }
         
+        // Initialize particles when DOM is ready
+        function initParticles() {
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', createParticles);
+            } else {
+                createParticles();
+            }
+        }
+        
+        // Recreate particles on window resize for better distribution
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(createParticles, 250);
+        });
+        
         // Initialize particles
-        createParticles();
+        initParticles();
         
         // Smooth scroll behavior
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

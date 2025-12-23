@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover if 897 is a prime number. Learn about prime factorization, divisors, and mathematical properties of 897. Interactive prime number checker included.">
+    <meta name="keywords" content="897, prime number, composite number, prime factorization, mathematics, number theory">
     <title>Is 897 Prime? | Prime Number Explorer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -11,6 +13,62 @@
         
         * {
             font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Scroll Progress Indicator */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            z-index: 9999;
+            transition: width 0.1s ease;
+            box-shadow: 0 2px 10px rgba(102, 126, 234, 0.5);
+        }
+        
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        .back-to-top.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        
+        .back-to-top:active {
+            transform: translateY(-2px);
         }
         
         .gradient-bg {
@@ -299,13 +357,418 @@
         .faq-item.active .faq-question i.fa-question {
             color: white !important;
         }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid white;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Copy Button */
+        .copy-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .copy-btn.copied {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        }
+        
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            max-width: 300px;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Animated Counter */
+        .counter {
+            display: inline-block;
+        }
+        
+        /* Enhanced Button States */
+        .btn-check:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #1f2937;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.875rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #1f2937 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        /* Enhanced Section Transitions */
+        section {
+            position: relative;
+        }
+        
+        /* Ripple Effect */
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .ripple:active::after {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Enhanced Input Focus */
+        .input-enhanced:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.2);
+        }
+        
+        /* Number Highlight Animation */
+        @keyframes highlight {
+            0%, 100% {
+                background-color: transparent;
+            }
+            50% {
+                background-color: rgba(102, 126, 234, 0.2);
+            }
+        }
+        
+        .highlight-animation {
+            animation: highlight 2s ease-in-out;
+        }
+        
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .animate-fadeIn {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        /* Parallax Effect */
+        .parallax {
+            transition: transform 0.3s ease-out;
+        }
+        
+        /* Enhanced Section Spacing */
+        section {
+            scroll-margin-top: 20px;
+        }
+        
+        /* Smooth Number Animation */
+        @keyframes numberPop {
+            0% {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .number-pop {
+            animation: numberPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        /* Enhanced Card Glow */
+        .glow-on-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .glow-on-hover:hover {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        /* Pulse Border */
+        @keyframes pulseBorder {
+            0%, 100% {
+            border-color: rgba(102, 126, 234, 0.3);
+            }
+            50% {
+            border-color: rgba(102, 126, 234, 0.8);
+            }
+        }
+        
+        .pulse-border {
+            animation: pulseBorder 2s ease-in-out infinite;
+        }
+        
+        /* Gradient Text Animation */
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        .gradient-text-animated {
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s linear infinite;
+        }
+        
+        /* Hero Heading - Visible on Dark Background */
+        .hero-heading {
+            color: white;
+            text-shadow: 
+                0 4px 20px rgba(0,0,0,0.4),
+                0 2px 10px rgba(255,255,255,0.15),
+                0 0 30px rgba(255,255,255,0.1);
+            letter-spacing: -0.02em;
+        }
+        
+        .hero-heading:hover {
+            text-shadow: 
+                0 4px 25px rgba(0,0,0,0.5),
+                0 2px 15px rgba(255,255,255,0.2),
+                0 0 40px rgba(255,255,255,0.15);
+            transition: text-shadow 0.3s ease;
+        }
+        
+        /* Enhanced Button Hover */
+        .btn-enhanced {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-enhanced::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn-enhanced:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        /* Smooth Section Transitions */
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Enhanced Factor Cards */
+        .factor-card-enhanced {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .factor-card-enhanced::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        
+        .factor-card-enhanced:hover::after {
+            opacity: 1;
+        }
+        
+        /* Keyboard Shortcut Styling */
+        kbd {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            border: 1px solid #d1d5db;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        /* Enhanced Focus States for Accessibility */
+        *:focus-visible {
+            outline: 2px solid #667eea;
+            outline-offset: 2px;
+        }
+        
+        /* Smooth Page Load */
+        body {
+            opacity: 0;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        
+        /* Mobile Responsive Enhancements */
+        @media (max-width: 768px) {
+            .back-to-top {
+                bottom: 20px;
+                right: 20px;
+                width: 45px;
+                height: 45px;
+            }
+            
+            .toast {
+                bottom: 80px;
+                right: 20px;
+                left: 20px;
+                max-width: none;
+            }
+            
+            .gradient-text-animated {
+                font-size: 2.5rem;
+            }
+        }
+        
+        /* Print Styles */
+        @media print {
+            .back-to-top,
+            .scroll-progress,
+            .toast {
+                display: none !important;
+            }
+        }
+        
+        /* Reduced Motion Support */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()" aria-label="Back to top" title="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
     <!-- Hero Section -->
     <section class="gradient-bg text-white py-20 px-4">
         <div class="container mx-auto max-w-6xl text-center">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 animate-pulse">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 hero-heading">
                 Is 897 Prime?
             </h1>
             <div class="mt-8 mb-6">
@@ -372,7 +835,7 @@
             <div class="mb-12">
                 <div class="rounded-2xl overflow-hidden shadow-2xl border-4 border-purple-100">
                     <img 
-                        src="banner-image.jpeg" 
+                        src="images/banner-image.jpeg" 
                         alt="Prime Factorization of 897 - Mathematical Visualization"
                         class="w-full h-auto object-cover"
                         loading="eager"
@@ -409,9 +872,9 @@
                 <!-- Factor Cards -->
                 <div class="flex flex-wrap justify-center items-center gap-6 md:gap-8 mb-8">
                     <!-- Factor 3 -->
-                    <div class="factor-card bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                    <div class="factor-card factor-card-enhanced bg-gradient-to-br from-purple-100 to-purple-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px] glow-on-hover">
                         <div class="text-center">
-                            <div class="text-6xl md:text-7xl font-black text-purple-700 mb-3">3</div>
+                            <div class="text-6xl md:text-7xl font-black text-purple-700 mb-3 number-pop">3</div>
                             <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
                                 <span class="text-sm font-semibold text-purple-600 uppercase tracking-wide">Prime Factor</span>
                             </div>
@@ -426,9 +889,9 @@
                     </div>
                     
                     <!-- Factor 13 -->
-                    <div class="factor-card bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                    <div class="factor-card factor-card-enhanced bg-gradient-to-br from-blue-100 to-blue-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px] glow-on-hover">
                         <div class="text-center">
-                            <div class="text-6xl md:text-7xl font-black text-blue-700 mb-3">13</div>
+                            <div class="text-6xl md:text-7xl font-black text-blue-700 mb-3 number-pop">13</div>
                             <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
                                 <span class="text-sm font-semibold text-blue-600 uppercase tracking-wide">Prime Factor</span>
                             </div>
@@ -443,9 +906,9 @@
                     </div>
                     
                     <!-- Factor 23 -->
-                    <div class="factor-card bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px]">
+                    <div class="factor-card factor-card-enhanced bg-gradient-to-br from-indigo-100 to-indigo-200 rounded-2xl p-8 md:p-10 shadow-xl min-w-[140px] glow-on-hover">
                         <div class="text-center">
-                            <div class="text-6xl md:text-7xl font-black text-indigo-700 mb-3">23</div>
+                            <div class="text-6xl md:text-7xl font-black text-indigo-700 mb-3 number-pop">23</div>
                             <div class="bg-white/80 rounded-lg px-4 py-2 inline-block">
                                 <span class="text-sm font-semibold text-indigo-600 uppercase tracking-wide">Prime Factor</span>
                             </div>
@@ -458,7 +921,7 @@
 
                 <!-- Formula Display -->
                 <div class="text-center mt-10">
-                    <div class="inline-block bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200">
+                    <div class="inline-block bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-6 border-2 border-purple-200 pulse-border glow-on-hover">
                         <div class="math-formula text-2xl md:text-3xl font-bold text-gray-800">
                             897 = 3 × 13 × 23
                         </div>
@@ -472,7 +935,7 @@
                     <div class="text-5xl mb-4">
                         <i class="fas fa-layer-group text-purple-600"></i>
                     </div>
-                    <div class="text-5xl font-black text-purple-600 mb-3">3</div>
+                    <div class="text-5xl font-black text-purple-600 mb-3 counter" data-target="3">0</div>
                     <div class="text-gray-600 font-semibold mb-2">Prime Factors</div>
                     <div class="text-sm text-gray-500">Unique prime numbers</div>
                 </div>
@@ -481,7 +944,7 @@
                     <div class="text-5xl mb-4">
                         <i class="fas fa-divide text-blue-600"></i>
                     </div>
-                    <div class="text-5xl font-black text-blue-600 mb-3">8</div>
+                    <div class="text-5xl font-black text-blue-600 mb-3 counter" data-target="8">0</div>
                     <div class="text-gray-600 font-semibold mb-2">Total Divisors</div>
                     <div class="text-sm text-gray-500">All positive divisors</div>
                 </div>
@@ -539,6 +1002,10 @@
                 </h2>
                 <p class="text-center text-gray-600 mb-8">
                     Check if any number is prime or composite
+                    <br>
+                    <span class="text-sm text-gray-500 mt-2 inline-block">
+                        <i class="fas fa-keyboard mr-1"></i>Press <kbd class="px-2 py-1 bg-gray-200 rounded text-xs">Ctrl+K</kbd> to focus input
+                    </span>
                 </p>
                 <div class="max-w-md mx-auto">
                     <div class="flex flex-col md:flex-row gap-4 mb-6">
@@ -546,14 +1013,17 @@
                             type="number" 
                             id="prime-input" 
                             placeholder="Enter a number..."
-                            class="flex-1 px-6 py-4 text-xl border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 input-glow transition-all"
+                            class="flex-1 px-6 py-4 text-xl border-2 border-gray-300 rounded-lg focus:outline-none focus:border-purple-500 input-glow input-enhanced transition-all"
                             min="1"
+                            aria-label="Enter a number to check if it's prime"
                         >
                         <button 
+                            id="check-btn"
                             onclick="checkPrime()" 
-                            class="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xl font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg"
+                            class="btn-check btn-enhanced px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white text-xl font-semibold rounded-lg hover:from-purple-700 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg ripple relative overflow-hidden"
                         >
-                            <i class="fas fa-check mr-2"></i>Check
+                            <span id="check-icon" class="relative z-10"><i class="fas fa-check mr-2"></i></span>
+                            <span id="check-text" class="relative z-10">Check</span>
                         </button>
                     </div>
                     <div id="prime-result" class="mt-6"></div>
@@ -823,6 +1293,101 @@
     </footer>
 
     <script>
+        // Scroll Progress Indicator
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+            
+            // Show/hide back to top button
+            const backToTop = document.getElementById('backToTop');
+            if (scrollTop > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        // Back to Top Function
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Animated Counter
+        function animateCounter(element) {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    element.textContent = target;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current);
+                }
+            }, 16);
+        }
+        
+        // Observe counters for animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.target.textContent === '0') {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        document.querySelectorAll('.counter').forEach(counter => {
+            counterObserver.observe(counter);
+        });
+        
+        // Copy to Clipboard Function
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(() => {
+                const originalHTML = button.innerHTML;
+                button.classList.add('copied');
+                button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                // Show toast
+                showToast('Copied to clipboard!');
+                
+                setTimeout(() => {
+                    button.classList.remove('copied');
+                    button.innerHTML = originalHTML;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                showToast('Failed to copy', 'error');
+            });
+        }
+        
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type === 'error' ? 'bg-red-500' : ''}`;
+            toast.innerHTML = `
+                <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+        
         // Prime checking function
         function isPrime(n) {
             if (n < 2) return false;
@@ -869,11 +1434,14 @@
         function checkPrime() {
             const input = document.getElementById('prime-input');
             const resultDiv = document.getElementById('prime-result');
+            const checkBtn = document.getElementById('check-btn');
+            const checkIcon = document.getElementById('check-icon');
+            const checkText = document.getElementById('check-text');
             const num = parseInt(input.value);
 
             if (!num || num < 1) {
                 resultDiv.innerHTML = `
-                    <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-center">
+                    <div class="bg-red-50 border-2 border-red-300 rounded-lg p-6 text-center animate-pulse">
                         <i class="fas fa-exclamation-triangle text-red-600 text-3xl mb-3"></i>
                         <p class="text-red-700 font-semibold">Please enter a valid positive number</p>
                     </div>
@@ -881,15 +1449,34 @@
                 return;
             }
 
-            const prime = isPrime(num);
-            const factors = getPrimeFactors(num);
-            const divisors = getDivisors(num);
+            // Show loading state
+            checkBtn.disabled = true;
+            checkIcon.innerHTML = '<div class="spinner"></div>';
+            checkText.textContent = 'Checking...';
+            
+            // Simulate a small delay for better UX (remove if you want instant results)
+            setTimeout(() => {
+                const prime = isPrime(num);
+                const factors = getPrimeFactors(num);
+                const divisors = getDivisors(num);
+                
+                // Reset button
+                checkBtn.disabled = false;
+                checkIcon.innerHTML = '<i class="fas fa-check mr-2"></i>';
+                checkText.textContent = 'Check';
+                
+                displayResult(num, prime, factors, divisors, resultDiv);
+            }, 300);
+        }
+        
+        // Display result function
+        function displayResult(num, prime, factors, divisors, resultDiv) {
 
             let resultHTML = '';
             
             if (prime) {
                 resultHTML = `
-                    <div class="bg-gradient-to-r from-pink-50 to-red-50 border-2 border-pink-300 rounded-lg p-8">
+                    <div class="bg-gradient-to-r from-pink-50 to-red-50 border-2 border-pink-300 rounded-lg p-8 animate-fadeIn">
                         <div class="text-center mb-4">
                             <span class="result-badge prime-badge text-xl">
                                 <i class="fas fa-check-circle mr-2"></i>${num} IS PRIME
@@ -904,11 +1491,11 @@
                     </div>
                 `;
             } else {
-                const factorsDisplay = factors.map(f => `<span class="bg-white px-4 py-2 rounded-lg shadow-md font-bold text-purple-600">${f}</span>`).join(' × ');
+                const factorsDisplay = factors.map(f => `<span class="bg-white px-4 py-2 rounded-lg shadow-md font-bold text-purple-600 highlight-animation">${f}</span>`).join(' × ');
                 const divisorsDisplay = divisors.join(', ');
                 
                 resultHTML = `
-                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-lg p-8">
+                    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-lg p-8 animate-fadeIn">
                         <div class="text-center mb-4">
                             <span class="result-badge composite-badge text-xl">
                                 <i class="fas fa-times-circle mr-2"></i>${num} is NOT PRIME (Composite)
@@ -916,18 +1503,30 @@
                         </div>
                         <div class="mt-6 space-y-4">
                             <div>
-                                <h4 class="font-bold text-gray-800 mb-2">
-                                    <i class="fas fa-calculator text-blue-600 mr-2"></i>Prime Factorization:
-                                </h4>
-                                <div class="flex flex-wrap items-center justify-center gap-2 text-xl">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-gray-800">
+                                        <i class="fas fa-calculator text-blue-600 mr-2"></i>Prime Factorization:
+                                    </h4>
+                                    <button onclick="copyToClipboard('${factors.join(' × ')}', this)" class="copy-btn tooltip">
+                                        <i class="fas fa-copy"></i>
+                                        <span class="tooltiptext">Copy factorization</span>
+                                    </button>
+                                </div>
+                                <div class="flex flex-wrap items-center justify-center gap-2 text-xl" id="factors-display">
                                     ${factorsDisplay}
                                 </div>
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 mb-2">
-                                    <i class="fas fa-list text-indigo-600 mr-2"></i>All Divisors (${divisors.length}):
-                                </h4>
-                                <p class="text-gray-700 text-sm break-words">${divisorsDisplay}</p>
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-bold text-gray-800">
+                                        <i class="fas fa-list text-indigo-600 mr-2"></i>All Divisors (<span id="divisor-count">${divisors.length}</span>):
+                                    </h4>
+                                    <button onclick="copyToClipboard('${divisorsDisplay}', this)" class="copy-btn tooltip">
+                                        <i class="fas fa-copy"></i>
+                                        <span class="tooltiptext">Copy divisors</span>
+                                    </button>
+                                </div>
+                                <p class="text-gray-700 text-sm break-words" id="divisors-display">${divisorsDisplay}</p>
                             </div>
                         </div>
                     </div>
@@ -935,16 +1534,39 @@
             }
 
             resultDiv.innerHTML = resultHTML;
+            
+            // Scroll to result smoothly
+            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
 
         // Allow Enter key to trigger check
         document.getElementById('prime-input').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 checkPrime();
             }
         });
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + K to focus input
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('prime-input').focus();
+            }
+            // Escape to clear input
+            if (e.key === 'Escape' && document.activeElement === document.getElementById('prime-input')) {
+                document.getElementById('prime-input').value = '';
+                document.getElementById('prime-result').innerHTML = '';
+            }
+        });
+        
+        // Add focus trap for better accessibility
+        document.getElementById('prime-input').addEventListener('focus', function() {
+            this.select();
+        });
 
-        // Animate on scroll
+        // Enhanced Animate on scroll
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -955,6 +1577,7 @@
                 if (entry.isIntersecting) {
                     entry.target.style.opacity = '1';
                     entry.target.style.transform = 'translateY(0)';
+                    entry.target.classList.add('animate-fadeIn');
                 }
             });
         }, observerOptions);
@@ -964,6 +1587,40 @@
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
             observer.observe(card);
+        });
+        
+        // Animate stat cards on scroll
+        document.querySelectorAll('.stat-card').forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+            observer.observe(card);
+        });
+        
+        // Parallax effect for hero section
+        let lastScroll = 0;
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            const hero = document.querySelector('.gradient-bg');
+            if (hero && currentScroll < window.innerHeight) {
+                const parallax = currentScroll * 0.5;
+                hero.style.transform = `translateY(${parallax}px)`;
+            }
+            lastScroll = currentScroll;
+        });
+        
+        // Add section fade animations
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        document.querySelectorAll('section').forEach(section => {
+            section.classList.add('section-fade');
+            sectionObserver.observe(section);
         });
 
         // FAQ Accordion functionality
