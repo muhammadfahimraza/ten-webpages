@@ -378,6 +378,118 @@
             
             .flip-card {
                 margin-bottom: 1rem;
+                height: auto !important;
+            }
+            
+            .flip-card-inner {
+                height: auto !important;
+            }
+            
+            .flip-card-front,
+            .flip-card-back {
+                position: relative !important;
+                height: auto !important;
+            }
+            
+            /* Reduce font sizes on mobile */
+            h1 {
+                font-size: 1.75rem !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+            }
+            
+            h4 {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-4xl {
+                font-size: 1.5rem !important;
+            }
+            
+            .text-3xl {
+                font-size: 1.375rem !important;
+            }
+            
+            .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .text-xl {
+                font-size: 1.125rem !important;
+            }
+            
+            .text-lg {
+                font-size: 1rem !important;
+            }
+            
+            /* Hero section mobile adjustments */
+            .hero-team-card h2 {
+                font-size: 1.5rem !important;
+            }
+            
+            .hero-team-card p {
+                font-size: 0.875rem !important;
+            }
+            
+            .hero-team-card .text-2xl {
+                font-size: 1.25rem !important;
+            }
+            
+            .hero-team-card .text-3xl {
+                font-size: 1.375rem !important;
+            }
+            
+            /* Reduce logo size on mobile */
+            .team-logo-container {
+                height: 8rem !important;
+            }
+            
+            .team-logo-container img {
+                height: 8rem !important;
+            }
+            
+            /* Reduce stadium image height */
+            .hero-team-card img[alt*="Stadium"] {
+                height: 6rem !important;
+            }
+            
+            /* Section headings */
+            section h2 {
+                font-size: 1.75rem !important;
+            }
+            
+            /* Stat card content */
+            .stat-card p {
+                font-size: 0.875rem !important;
+            }
+            
+            .stat-card .font-bold {
+                font-size: 1rem !important;
+            }
+            
+            /* Legacy section adjustments */
+            .stat-card .text-2xl {
+                font-size: 1.125rem !important;
+            }
+            
+            /* Comparison section */
+            .stat-card table {
+                font-size: 0.875rem !important;
+            }
+            
+            /* Stadium section */
+            .stat-card h4 {
+                font-size: 1.125rem !important;
+            }
+            
+            .stat-card .font-semibold {
+                font-size: 0.875rem !important;
             }
         }
         
@@ -467,11 +579,11 @@
             
             <!-- Team Cards with VS Badge -->
             <div class="relative max-w-7xl mx-auto">
-                <div class="grid md:grid-cols-2 gap-6 md:gap-8 items-center">
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 md:items-center">
                     <!-- Chiefs Card -->
-                    <div class="flip-card h-full">
-                        <div class="flip-card-inner h-full">
-                            <div class="flip-card-front hero-team-card stat-card team-color-chiefs card-hover h-full">
+                    <div class="flip-card md:h-full">
+                        <div class="flip-card-inner md:h-full">
+                            <div class="flip-card-front hero-team-card stat-card team-color-chiefs card-hover md:h-full">
                                 <!-- Team Logo Image Placeholder -->
                                 <div class="team-logo-container mb-6 relative">
                                     <img src="images/chiefs-logo.png" alt="Kansas City Chiefs Logo" 
@@ -519,7 +631,7 @@
                                 </div>
                             </div>
                             
-                            <div class="flip-card-back stat-card gradient-chiefs text-white h-full">
+                            <div class="flip-card-back stat-card gradient-chiefs text-white md:h-full">
                                 <div class="text-center h-full flex flex-col justify-center p-6">
                                     <h3 class="text-2xl font-bold mb-6">Key Achievements</h3>
                                     <ul class="text-left space-y-3 text-sm md:text-base">
@@ -555,9 +667,9 @@
                     </div>
                     
                     <!-- Colts Card -->
-                    <div class="flip-card h-full">
-                        <div class="flip-card-inner h-full">
-                            <div class="flip-card-front hero-team-card stat-card team-color-colts card-hover h-full">
+                    <div class="flip-card md:h-full">
+                        <div class="flip-card-inner md:h-full">
+                            <div class="flip-card-front hero-team-card stat-card team-color-colts card-hover md:h-full">
                                 <!-- Team Logo Image Placeholder -->
                                 <div class="team-logo-container mb-6 relative">
                                     <img src="images/colts-logo.png" alt="Indianapolis Colts Logo" 
@@ -605,7 +717,7 @@
                                 </div>
                             </div>
                             
-                            <div class="flip-card-back stat-card gradient-colts text-white h-full">
+                            <div class="flip-card-back stat-card gradient-colts text-white md:h-full">
                                 <div class="text-center h-full flex flex-col justify-center p-6">
                                     <h3 class="text-2xl font-bold mb-6">Key Achievements</h3>
                                     <ul class="text-left space-y-3 text-sm md:text-base">
@@ -695,19 +807,19 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Super Bowl Championships</span>
-                                <span class="text-2xl font-bold text-red-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">AFC Championships</span>
-                                <span class="text-2xl font-bold text-red-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Division Titles</span>
-                                <span class="text-2xl font-bold text-red-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-red-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
                                 <span class="font-medium">Playoff Appearances</span>
-                                <span class="text-2xl font-bold text-red-600">Many</span>
+                                <span class="text-base md:text-2xl font-bold text-red-600">Many</span>
                             </div>
                             <div class="mt-4 p-4 bg-gray-50 rounded-lg">
                                 <p class="text-sm text-gray-700">
@@ -724,19 +836,19 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Super Bowl Championships</span>
-                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">AFC Championships</span>
-                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Division Titles</span>
-                                <span class="text-2xl font-bold text-blue-600">Multiple</span>
+                                <span class="text-base md:text-2xl font-bold text-blue-600">Multiple</span>
                             </div>
                             <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
                                 <span class="font-medium">Playoff Appearances</span>
-                                <span class="text-2xl font-bold text-blue-600">Many</span>
+                                <span class="text-base md:text-2xl font-bold text-blue-600">Many</span>
                             </div>
                             <div class="mt-4 p-4 bg-gray-50 rounded-lg">
                                 <p class="text-sm text-gray-700">

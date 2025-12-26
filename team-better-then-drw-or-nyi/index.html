@@ -126,17 +126,81 @@
         }
         
         @media (max-width: 768px) {
+            /* Hero and main headings - reduced 30% more */
             .text-6xl {
-                font-size: 2.5rem;
+                font-size: 1.4rem;
             }
             .text-8xl {
-                font-size: 3.5rem;
+                font-size: 1.75rem;
             }
             .text-5xl {
-                font-size: 2rem;
+                font-size: 1.2rem;
+            }
+            .text-4xl {
+                font-size: 1rem;
             }
             .text-3xl {
-                font-size: 1.5rem;
+                font-size: 0.875rem;
+            }
+            .text-2xl {
+                font-size: 0.8rem;
+            }
+            .text-xl {
+                font-size: 0.7rem;
+            }
+            .text-lg {
+                font-size: 0.65rem;
+            }
+            .text-base {
+                font-size: 0.6rem;
+            }
+            .text-sm {
+                font-size: 0.57rem;
+            }
+            
+            /* Body text adjustments */
+            body {
+                font-size: 10px;
+            }
+            
+            /* Paragraph spacing */
+            p {
+                line-height: 1.5;
+            }
+            
+            /* Card padding reduction */
+            .stat-card {
+                padding: 1rem;
+            }
+            
+            /* Section padding reduction */
+            section {
+                padding-top: 3rem;
+                padding-bottom: 3rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .text-6xl {
+                font-size: 1.2rem;
+            }
+            .text-8xl {
+                font-size: 1.4rem;
+            }
+            .text-5xl {
+                font-size: 1rem;
+            }
+            .text-4xl {
+                font-size: 0.875rem;
+            }
+            .text-3xl {
+                font-size: 0.8rem;
+            }
+            .text-2xl {
+                font-size: 0.7rem;
+            }
+            body {
+                font-size: 9px;
             }
         }
         
@@ -202,7 +266,7 @@
         </div>
         
         <div class="relative z-10 container mx-auto px-4 py-20 text-center">
-            <h1 class="text-6xl md:text-8xl font-black mb-8 bg-gradient-to-r from-red-500 via-red-400 to-blue-500 bg-clip-text text-transparent drop-shadow-2xl">
+            <h1 class="text-6xl md:text-8xl max-md:text-5xl font-black mb-8 bg-gradient-to-r from-red-500 via-red-400 to-blue-500 bg-clip-text text-transparent drop-shadow-2xl">
                 THE ULTIMATE SHOWDOWN
             </h1>
             <p class="text-2xl md:text-3xl mb-12 text-slate-200 font-medium">Detroit Red Wings vs New York Islanders</p>
@@ -330,7 +394,7 @@
                                     <span class="text-sm text-slate-500 font-medium">Red Wings</span>
                                 </div>
                                 <h4 class="text-xl font-bold mb-2 text-slate-800">Red Wings Modern Dynasty</h4>
-                                <p class="text-slate-600">Detroit won four Stanley Cups in 12 years, including back-to-back championships in 1997 and 1998.</p>
+                                <p class="text-slate-600">Detroit won four Stanley Cups from 1997-2008, including back-to-back championships in 1997 and 1998, establishing one of the most successful eras in franchise history.</p>
                                 <img src="images/1997-2008-red-wings-dynasty.png" alt="1997-2008 Red Wings Dynasty" class="mt-4 rounded-lg w-full shadow-md">
                             </div>
                         </div>
@@ -367,7 +431,7 @@
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
                             <span class="text-slate-600 font-medium">Hall of Famers</span>
-                            <span class="font-bold text-slate-800">60+ Inductees</span>
+                            <span class="font-bold text-slate-800">50+ Inductees</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-slate-600 font-medium">Retired Numbers</span>
@@ -378,9 +442,9 @@
                             <div class="text-sm text-slate-600 space-y-1">
                                 <div>• Gordie Howe - "Mr. Hockey"</div>
                                 <div>• Steve Yzerman - Captain for 20 seasons</div>
-                                <div>• Nicklas Lidström - 7 Norris Trophies</div>
-                                <div>• Sergei Fedorov - Hart Trophy Winner</div>
-                                <div>• Dominik Hašek - Hall of Fame Goalie, 2-time Stanley Cup Champion</div>
+                                <div>• Nicklas Lidström - 7 Norris Trophies, 4 Cups</div>
+                                <div>• Sergei Fedorov - Hart Trophy Winner (1994), 3 Cups</div>
+                                <div>• Dominik Hašek - Hall of Fame Goalie, 2-time Stanley Cup Champion with Red Wings</div>
                             </div>
                         </div>
                     </div>
@@ -404,11 +468,11 @@
                         <div class="mt-6 space-y-3">
                             <div class="text-slate-800 font-semibold">Iconic Players:</div>
                             <div class="text-sm text-slate-600 space-y-1">
-                                <div>• Mike Bossy - 4 Stanley Cups, 573 Goals</div>
-                                <div>• Denis Potvin - Captain of Dynasty Teams</div>
-                                <div>• Bryan Trottier - 4 Cups, Conn Smythe Winner</div>
-                                <div>• Billy Smith - Hall of Fame Goalie</div>
-                                <div>• Clark Gillies - Physical Power Forward</div>
+                                <div>• Mike Bossy - 4 Stanley Cups, 573 Career Goals</div>
+                                <div>• Denis Potvin - Captain of Dynasty Teams, 4 Cups</div>
+                                <div>• Bryan Trottier - 4 Cups, Conn Smythe Trophy Winner (1980)</div>
+                                <div>• Billy Smith - Hall of Fame Goalie, 4 Cups</div>
+                                <div>• Clark Gillies - Hall of Fame Power Forward, 4 Cups</div>
                             </div>
                         </div>
                     </div>
@@ -445,10 +509,10 @@
                         <div class="mt-4">
                             <h4 class="font-bold text-slate-800 mb-2">Notable Achievements:</h4>
                             <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
-                                <li>Longest playoff streak in NHL history (25 seasons)</li>
-                                <li>11 Stanley Cup Championships</li>
-                                <li>Home to "The Production Line" - legendary forward line</li>
-                                <li>Joe Louis Arena - "The Joe" - historic home for 38 years</li>
+                                <li>Longest playoff streak in NHL history (25 consecutive seasons, 1991-2016)</li>
+                                <li>11 Stanley Cup Championships (most by any U.S.-based NHL team)</li>
+                                <li>Home to "The Production Line" - legendary forward line of the 1950s</li>
+                                <li>Joe Louis Arena - "The Joe" - historic home from 1979-2017</li>
                             </ul>
                         </div>
                     </div>
@@ -478,10 +542,10 @@
                         <div class="mt-4">
                             <h4 class="font-bold text-slate-800 mb-2">Notable Achievements:</h4>
                             <ul class="text-sm text-slate-600 space-y-1 list-disc list-inside">
-                                <li>4 consecutive Stanley Cups (1980-1983)</li>
-                                <li>19 consecutive playoff series wins (NHL record)</li>
-                                <li>Nassau Coliseum - "Fort Neverlose" - historic home</li>
-                                <li>Strong defensive tradition and goaltending excellence</li>
+                                <li>4 consecutive Stanley Cups (1980-1983) - one of sports' greatest dynasties</li>
+                                <li>19 consecutive playoff series wins (1980-1984) - NHL record</li>
+                                <li>Nassau Coliseum - "Fort Neverlose" - historic home from 1972-2015</li>
+                                <li>Strong defensive tradition and goaltending excellence throughout franchise history</li>
                             </ul>
                         </div>
                     </div>
@@ -504,7 +568,7 @@
                 <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-red-500">
                     <div class="text-red-600 text-4xl mb-4"><i class="fas fa-star"></i></div>
                     <h4 class="text-xl font-bold text-slate-800 mb-2">The Production Line</h4>
-                    <p class="text-slate-600 text-sm">Gordie Howe, Sid Abel, and Ted Lindsay formed one of hockey's most legendary forward lines in the 1950s.</p>
+                    <p class="text-slate-600 text-sm">Gordie Howe, Sid Abel, and Ted Lindsay formed "The Production Line" - one of hockey's most legendary forward lines in the 1950s.</p>
                     <img src="images/production-line-red-wings.png" alt="Production Line" class="mt-4 rounded-lg w-full shadow-md">
                 </div>
                 
@@ -525,7 +589,7 @@
                 <div class="stat-card rounded-xl p-6 card-hover border-l-4 border-blue-500">
                     <div class="text-blue-600 text-4xl mb-4"><i class="fas fa-shield-alt"></i></div>
                     <h4 class="text-xl font-bold text-slate-800 mb-2">19 Series Wins</h4>
-                    <p class="text-slate-600 text-sm">Islanders won 19 consecutive playoff series from 1980-1984, an NHL record that still stands today.</p>
+                    <p class="text-slate-600 text-sm">Islanders won 19 consecutive playoff series from 1980-1984, an NHL record that stands today.</p>
                     <img src="images/islanders-series-wins.png" alt="Series Wins" class="mt-4 rounded-lg w-full shadow-md">
                 </div>
                 

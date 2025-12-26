@@ -218,6 +218,213 @@
                 max-width: calc(100% - 2rem);
             }
         }
+        
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            /* Reduce section padding */
+            section {
+                padding-top: 2rem !important;
+                padding-bottom: 2rem !important;
+            }
+            
+            /* Reduce heading sizes */
+            h1 {
+                font-size: 1.75rem !important;
+                line-height: 1.2 !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            h2 {
+                font-size: 1.5rem !important;
+                margin-bottom: 1.5rem !important;
+            }
+            
+            h3 {
+                font-size: 1.25rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            h4 {
+                font-size: 1rem !important;
+                margin-bottom: 0.5rem !important;
+            }
+            
+            /* Reduce spacing in cards */
+            .team-card, .bg-white.rounded-xl, .bg-gradient-to-r.rounded-xl {
+                padding: 1rem !important;
+            }
+            
+            /* Reduce grid gaps */
+            .grid {
+                gap: 1rem !important;
+            }
+            
+            /* Reduce icon sizes */
+            .fa-trophy, .fa-medal, .fa-star, .fa-basketball-ball {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Reduce text sizes */
+            p, span, div {
+                font-size: 0.875rem !important;
+            }
+            
+            /* Reduce padding in navigation */
+            nav {
+                padding: 0.5rem 0 !important;
+            }
+            
+            nav .h-16 {
+                height: 3.5rem !important;
+            }
+            
+            /* Reduce hero section padding */
+            #overview {
+                padding-top: 3rem !important;
+                padding-bottom: 3rem !important;
+            }
+            
+            /* Reduce space-y values */
+            .space-y-3 > * + * {
+                margin-top: 0.5rem !important;
+            }
+            
+            .space-y-4 > * + * {
+                margin-top: 0.75rem !important;
+            }
+            
+            /* Reduce mb values */
+            .mb-12 {
+                margin-bottom: 2rem !important;
+            }
+            
+            .mb-6 {
+                margin-bottom: 1rem !important;
+            }
+            
+            .mb-4 {
+                margin-bottom: 0.75rem !important;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            /* Further reduce for small mobile */
+            section {
+                padding-top: 1.5rem !important;
+                padding-bottom: 1.5rem !important;
+            }
+            
+            h1 {
+                font-size: 1.5rem !important;
+                margin-bottom: 0.75rem !important;
+            }
+            
+            h2 {
+                font-size: 1.25rem !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            h3 {
+                font-size: 1.125rem !important;
+            }
+            
+            .team-card, .bg-white.rounded-xl {
+                padding: 0.75rem !important;
+            }
+            
+            .grid {
+                gap: 0.75rem !important;
+            }
+            
+            p, span, div, li {
+                font-size: 0.8125rem !important;
+            }
+            
+            .mb-12 {
+                margin-bottom: 1.5rem !important;
+            }
+            
+            .mb-6 {
+                margin-bottom: 0.75rem !important;
+            }
+            
+            /* Reduce icon box sizes */
+            .icon-box {
+                width: 3rem !important;
+                height: 3rem !important;
+            }
+            
+            .icon-box i {
+                font-size: 1.5rem !important;
+            }
+            
+            /* Reduce logo sizes */
+            .w-20.h-20 {
+                width: 3rem !important;
+                height: 3rem !important;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            /* Extra small mobile devices */
+            section {
+                padding-top: 1rem !important;
+                padding-bottom: 1rem !important;
+            }
+            
+            h1 {
+                font-size: 1.25rem !important;
+            }
+            
+            h2 {
+                font-size: 1.125rem !important;
+            }
+            
+            h3 {
+                font-size: 1rem !important;
+            }
+            
+            .team-card, .bg-white.rounded-xl {
+                padding: 0.5rem !important;
+            }
+            
+            .grid {
+                gap: 0.5rem !important;
+            }
+            
+            p, span, div, li {
+                font-size: 0.75rem !important;
+            }
+            
+            .mb-12 {
+                margin-bottom: 1rem !important;
+            }
+            
+            .icon-box {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+            }
+            
+            .icon-box i {
+                font-size: 1.25rem !important;
+            }
+            
+            .w-20.h-20 {
+                width: 2.5rem !important;
+                height: 2.5rem !important;
+            }
+            
+            /* Ensure no overflow */
+            * {
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .container, .max-w-7xl {
+                padding-left: 0.75rem !important;
+                padding-right: 0.75rem !important;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -225,11 +432,11 @@
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-basketball-ball text-2xl text-orange-500"></i>
-                    <span class="text-xl font-bold text-gray-800">NBA Team Comparison</span>
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <i class="fas fa-basketball-ball text-lg sm:text-xl md:text-2xl text-orange-500"></i>
+                    <span class="text-base sm:text-lg md:text-xl font-bold text-gray-800">NBA Team Comparison</span>
                 </div>
-                <div class="hidden md:flex space-x-6">
+                <div class="hidden md:flex space-x-6 flex-shrink-0">
                     <a href="#overview" class="text-gray-600 hover:text-red-600 transition">Overview</a>
                     <a href="#stats" class="text-gray-600 hover:text-red-600 transition">Statistics</a>
                     <a href="#history" class="text-gray-600 hover:text-red-600 transition">History</a>
@@ -238,20 +445,20 @@
                     <a href="#arenas" class="text-gray-600 hover:text-red-600 transition">Arenas</a>
                     <a href="#head-to-head" class="text-gray-600 hover:text-red-600 transition">Head-to-Head</a>
                 </div>
-                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-red-600 focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
+                <button id="mobile-menu-button" class="md:hidden text-gray-600 hover:text-red-600 focus:outline-none flex-shrink-0 ml-2">
+                    <i class="fas fa-bars text-xl sm:text-2xl"></i>
                 </button>
             </div>
             <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <div class="flex flex-col space-y-2">
-                    <a href="#overview" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Overview</a>
-                    <a href="#stats" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Statistics</a>
-                    <a href="#history" class="text-gray-600 hover:text-red-600 transition px-2 py-1">History</a>
-                    <a href="#legends" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Legends</a>
-                    <a href="#championships" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Championships</a>
-                    <a href="#arenas" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Arenas</a>
-                    <a href="#head-to-head" class="text-gray-600 hover:text-red-600 transition px-2 py-1">Head-to-Head</a>
+            <div id="mobile-menu" class="hidden md:hidden pb-4 border-t border-gray-200 mt-2">
+                <div class="flex flex-col space-y-1 pt-2">
+                    <a href="#overview" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Overview</a>
+                    <a href="#stats" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Statistics</a>
+                    <a href="#history" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">History</a>
+                    <a href="#legends" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Legends</a>
+                    <a href="#championships" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Championships</a>
+                    <a href="#arenas" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Arenas</a>
+                    <a href="#head-to-head" class="text-gray-600 hover:text-red-600 hover:bg-gray-50 transition px-3 py-2 rounded">Head-to-Head</a>
                 </div>
             </div>
         </div>
@@ -263,77 +470,77 @@
             <img src="images/backgrounds/hero-background.png" alt="Basketball Court" class="w-full h-full object-cover" onerror="this.style.display='none';">
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-12 fade-in">
-                <h1 class="text-5xl md:text-6xl font-bold mb-4">Chicago Bulls vs Orlando Magic</h1>
-                <p class="text-xl text-gray-300">A Comprehensive NBA Team Comparison</p>
+            <div class="text-center mb-8 md:mb-12 fade-in">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 md:mb-4">Chicago Bulls vs Orlando Magic</h1>
+                <p class="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300">A Comprehensive NBA Team Comparison</p>
             </div>
             
-            <div class="grid md:grid-cols-2 gap-8 mt-12">
+            <div class="grid md:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mt-6 sm:mt-8 md:mt-12">
                 <!-- Chicago Bulls Card -->
-                <div class="team-card bg-gradient-to-br from-red-600 to-red-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                <div class="team-card bg-gradient-to-br from-red-600 to-red-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
                     <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-3xl font-bold">Chicago Bulls</h2>
-                            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg p-2 overflow-hidden">
+                        <div class="flex items-center justify-between mb-4 md:mb-6">
+                            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold">Chicago Bulls</h2>
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg p-2 overflow-hidden">
                                 <img src="images/logos/chicago-bulls-logo.png" alt="Bulls Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/CE1141/FFFFFF?text=CHI';">
                             </div>
                         </div>
-                        <div class="space-y-3">
+                        <div class="space-y-2 sm:space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Conference</span>
-                                <span class="font-bold">Eastern</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Conference</span>
+                                <span class="text-xs sm:text-sm font-bold">Eastern</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Division</span>
-                                <span class="font-bold">Central</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Division</span>
+                                <span class="text-xs sm:text-sm font-bold">Central</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Championships</span>
-                                <span class="font-bold text-yellow-300">Multiple NBA Championships</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Championships</span>
+                                <span class="text-xs sm:text-sm font-bold text-yellow-300">Multiple NBA Championships</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Home Arena</span>
-                                <span class="font-bold">United Center</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Home Arena</span>
+                                <span class="text-xs sm:text-sm font-bold">United Center</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Legacy</span>
-                                <span class="font-bold">Historic Success</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Legacy</span>
+                                <span class="text-xs sm:text-sm font-bold">Historic Success</span>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <!-- Orlando Magic Card -->
-                <div class="team-card card-hover-effect bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-8 shadow-2xl relative overflow-hidden">
+                <div class="team-card card-hover-effect bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-10 rounded-full -mr-16 -mt-16"></div>
                     <div class="relative z-10">
-                        <div class="flex items-center justify-between mb-6">
-                            <h2 class="text-3xl font-bold">Orlando Magic</h2>
-                            <div class="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg p-2 overflow-hidden">
+                        <div class="flex items-center justify-between mb-4 md:mb-6">
+                            <h2 class="text-xl sm:text-2xl md:text-3xl font-bold">Orlando Magic</h2>
+                            <div class="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center shadow-lg p-2 overflow-hidden">
                                 <img src="images/logos/orlando-magic-logo.png" alt="Magic Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://via.placeholder.com/80x80/0077C0/FFFFFF?text=ORL';">
                             </div>
                         </div>
-                        <div class="space-y-3">
+                        <div class="space-y-2 sm:space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Conference</span>
-                                <span class="font-bold">Eastern</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Conference</span>
+                                <span class="text-xs sm:text-sm font-bold">Eastern</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Division</span>
-                                <span class="font-bold">Southeast</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Division</span>
+                                <span class="text-xs sm:text-sm font-bold">Southeast</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Finals Appearances</span>
-                                <span class="font-bold text-yellow-300">Multiple NBA Finals</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Finals Appearances</span>
+                                <span class="text-xs sm:text-sm font-bold text-yellow-300">Multiple NBA Finals</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Home Arena</span>
-                                <span class="font-bold">Amway Center</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Home Arena</span>
+                                <span class="text-xs sm:text-sm font-bold">Amway Center</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-200">Legacy</span>
-                                <span class="font-bold">Rising Powerhouse</span>
+                                <span class="text-xs sm:text-sm text-gray-200">Legacy</span>
+                                <span class="text-xs sm:text-sm font-bold">Rising Powerhouse</span>
                             </div>
                         </div>
                     </div>
@@ -345,7 +552,7 @@
     <!-- Team Achievements Section -->
     <section id="stats" class="py-16 bg-white relative">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Team Achievements & Legacy</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Team Achievements & Legacy</h2>
             
             <div class="grid md:grid-cols-2 gap-8 mb-12">
                 <div class="bg-gradient-to-r from-red-50 to-red-100 rounded-xl p-8 shadow-lg relative overflow-hidden">
@@ -446,7 +653,7 @@
     <!-- History Timeline Section -->
     <section id="history" class="py-16 bg-gradient-to-br from-gray-100 to-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Team History & Milestones</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Team History & Milestones</h2>
             
             <!-- Chicago Bulls History -->
             <div class="mb-12">
@@ -462,7 +669,7 @@
                                 <i class="fas fa-calendar text-red-400"></i>
                             </div>
                             <h4 class="font-bold text-lg mb-2 text-red-800">Team Founded</h4>
-                            <p class="text-sm text-gray-700">Established as an expansion team, joining the NBA's Western Division.</p>
+                            <p class="text-sm text-gray-700">Established in 1966 as an expansion team, joining the NBA's Eastern Division.</p>
                         </div>
                         <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-4 border-l-4 border-red-600 hover:shadow-md transition timeline-card">
                             <div class="flex items-start justify-between mb-2">
@@ -546,7 +753,7 @@
                                 <i class="fas fa-calendar text-blue-400"></i>
                             </div>
                             <h4 class="font-bold text-lg mb-2 text-blue-800">Team Founded</h4>
-                            <p class="text-sm text-gray-700">Entered the NBA as an expansion team alongside Minnesota Timberwolves.</p>
+                            <p class="text-sm text-gray-700">Established in 1989 as an expansion team, entering the NBA alongside the Minnesota Timberwolves.</p>
                         </div>
                         <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border-l-4 border-blue-600 hover:shadow-md transition timeline-card">
                             <div class="flex items-start justify-between mb-2">
@@ -621,7 +828,7 @@
     <!-- Legendary Players Section -->
     <section id="legends" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Legendary Players & Hall of Famers</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Legendary Players & Hall of Famers</h2>
             
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Chicago Bulls Legends -->
@@ -754,7 +961,7 @@
     <!-- Championships Section -->
     <section id="championships" class="py-16 bg-gradient-to-br from-yellow-50 to-orange-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Championship History</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Championship History</h2>
             
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Bulls Championships -->
@@ -768,34 +975,34 @@
                     </div>
                     <div class="space-y-4">
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">First Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Los Angeles Lakers to win first NBA championship</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan with exceptional Finals performance</p>
+                            <h4 class="font-bold text-lg mb-2">1991 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Los Angeles Lakers 4-1 to win first NBA championship</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan with exceptional Finals performance</p>
                         </div>
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">Second Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Portland Trail Blazers to secure back-to-back titles</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan with dominant scoring performance</p>
+                            <h4 class="font-bold text-lg mb-2">1992 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Portland Trail Blazers 4-2 to secure back-to-back titles</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan with dominant scoring performance</p>
                         </div>
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">Third Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Phoenix Suns to complete first three-peat</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan with record-breaking Finals scoring</p>
+                            <h4 class="font-bold text-lg mb-2">1993 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Phoenix Suns 4-2 to complete first three-peat</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan with record-breaking Finals scoring</p>
                         </div>
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">Fourth Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Seattle SuperSonics during historic season</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan leading championship run</p>
+                            <h4 class="font-bold text-lg mb-2">1996 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Seattle SuperSonics 4-2 during historic 72-10 season</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan leading championship run</p>
                         </div>
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">Fifth Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz in memorable Finals series</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan with "Flu Game" performance</p>
+                            <h4 class="font-bold text-lg mb-2">1997 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz 4-2 in memorable Finals series</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan with legendary "Flu Game" performance</p>
                         </div>
                         <div class="bg-red-50 rounded-lg p-4 border-l-4 border-red-600">
-                            <h4 class="font-bold text-lg mb-2">Sixth Championship</h4>
-                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz with "The Last Shot"</p>
-                            <p class="text-xs text-gray-600">MVP: Michael Jordan completing second three-peat</p>
+                            <h4 class="font-bold text-lg mb-2">1998 Championship</h4>
+                            <p class="text-sm text-gray-700 mb-2">Defeated Utah Jazz 4-2 with "The Last Shot"</p>
+                            <p class="text-xs text-gray-600">Finals MVP: Michael Jordan completing second three-peat</p>
                         </div>
                     </div>
                 </div>
@@ -811,16 +1018,16 @@
                     </div>
                     <div class="space-y-4">
                         <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-600">
-                            <h4 class="font-bold text-lg mb-2">First NBA Finals</h4>
-                            <p class="text-sm text-gray-700 mb-2">Reached Finals against Houston Rockets</p>
-                            <p class="text-xs text-gray-600">Led by Shaq and Penny with exceptional performances throughout the playoffs.</p>
-                            <p class="text-xs text-gray-500 mt-2">Achievement: Reached Finals in record time for a new franchise</p>
+                            <h4 class="font-bold text-lg mb-2">1995 NBA Finals</h4>
+                            <p class="text-sm text-gray-700 mb-2">Reached Finals against Houston Rockets (lost 4-0)</p>
+                            <p class="text-xs text-gray-600">Led by Shaquille O'Neal and Penny Hardaway with exceptional performances throughout the playoffs.</p>
+                            <p class="text-xs text-gray-500 mt-2">Achievement: Reached Finals in just 6 years, fastest in NBA history for a new franchise</p>
                         </div>
                         <div class="bg-blue-50 rounded-lg p-4 border-l-4 border-blue-600">
-                            <h4 class="font-bold text-lg mb-2">Second NBA Finals</h4>
-                            <p class="text-sm text-gray-700 mb-2">Reached Finals against Los Angeles Lakers</p>
-                            <p class="text-xs text-gray-600">Led by franchise star with dominant defensive presence. Won memorable game in series.</p>
-                            <p class="text-xs text-gray-500 mt-2">Achievement: Defeated top-seeded team in Conference Finals</p>
+                            <h4 class="font-bold text-lg mb-2">2009 NBA Finals</h4>
+                            <p class="text-sm text-gray-700 mb-2">Reached Finals against Los Angeles Lakers (lost 4-1)</p>
+                            <p class="text-xs text-gray-600">Led by Dwight Howard with dominant defensive presence. Won Game 3 in memorable fashion.</p>
+                            <p class="text-xs text-gray-500 mt-2">Achievement: Defeated top-seeded Cleveland Cavaliers in Conference Finals</p>
                         </div>
                         <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-400">
                             <h4 class="font-bold text-lg mb-2 text-gray-700">Notable Playoff Runs</h4>
@@ -840,7 +1047,7 @@
     <!-- Arenas Section -->
     <section id="arenas" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Home Arenas</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Home Arenas</h2>
             
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- United Center -->
@@ -899,7 +1106,7 @@
     <!-- Head-to-Head Section -->
     <section id="head-to-head" class="py-16 bg-gradient-to-br from-purple-50 to-indigo-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Head-to-Head Matchups</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12 text-gray-800">Head-to-Head Matchups</h2>
             
             <div class="bg-white rounded-xl p-8 shadow-xl">
                 <div class="text-center mb-8">
@@ -975,7 +1182,7 @@
     <!-- Iconic Moments Section -->
     <section id="moments" class="py-16 bg-gradient-to-br from-gray-900 to-gray-800 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-4xl font-bold text-center mb-12">Iconic Moments & Records</h2>
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6 sm:mb-8 md:mb-12">Iconic Moments & Records</h2>
             
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Bulls Iconic Moments -->
