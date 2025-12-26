@@ -200,6 +200,79 @@
         }
         
         @media (max-width: 768px) {
+            /* Base font size reduction for mobile */
+            body {
+                font-size: 14px;
+            }
+            
+            /* Hero Section - Mobile */
+            .hero-title {
+                font-size: 2rem !important; /* Reduced from 5xl/7xl */
+            }
+            
+            #hero p {
+                font-size: 1rem !important; /* Reduced from 2xl/3xl and lg */
+            }
+            
+            /* Section Headings - Mobile */
+            h2 {
+                font-size: 1.75rem !important; /* Reduced from 4xl/5xl */
+            }
+            
+            /* Timeline Section - Mobile */
+            .timeline-item h3 {
+                font-size: 1.25rem !important; /* Reduced from 2xl */
+            }
+            
+            .timeline-item p {
+                font-size: 0.875rem !important; /* Reduced from base */
+            }
+            
+            .timeline-item span {
+                font-size: 0.75rem !important; /* Reduced from sm */
+            }
+            
+            /* Event Cards - Mobile */
+            .event-card h3 {
+                font-size: 1rem !important; /* Reduced from xl */
+            }
+            
+            .event-card p {
+                font-size: 0.8125rem !important; /* Reduced from sm */
+            }
+            
+            /* Statistics - Mobile */
+            .stat-card .text-4xl {
+                font-size: 1.75rem !important; /* Reduced from 4xl */
+            }
+            
+            .stat-card .text-sm {
+                font-size: 0.75rem !important; /* Reduced from sm */
+            }
+            
+            /* Weather Widget - Mobile */
+            .weather-widget .text-5xl {
+                font-size: 2rem !important; /* Reduced from 5xl */
+            }
+            
+            .weather-widget .text-3xl {
+                font-size: 1.5rem !important; /* Reduced from 3xl */
+            }
+            
+            .weather-widget h3 {
+                font-size: 1.125rem !important; /* Reduced from xl */
+            }
+            
+            .weather-widget p {
+                font-size: 0.875rem !important; /* Reduced from base */
+            }
+            
+            /* Navigation - Mobile */
+            nav .text-2xl {
+                font-size: 1.125rem !important; /* Reduced from 2xl */
+            }
+            
+            /* Map Section - Mobile */
             .map-container {
                 height: 400px;
             }
@@ -210,6 +283,18 @@
             
             .stat-card {
                 animation: none;
+            }
+            
+            /* Button text - Mobile */
+            button, a.button {
+                font-size: 0.875rem !important;
+                padding: 0.5rem 1rem !important;
+            }
+            
+            /* Filter buttons - Mobile */
+            .filter-btn {
+                font-size: 0.75rem !important;
+                padding: 0.5rem 0.75rem !important;
             }
         }
         
@@ -319,7 +404,7 @@
                     <div class="event-card rounded-lg p-6 shadow-lg">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="text-purple-600 font-semibold text-sm">MAY 26, 2012</span>
+                                <span class="text-purple-600 font-semibold text-sm">MAY 27, 2012</span>
                                 <h3 class="text-2xl font-bold text-gray-800 mt-2">Golden Gate Bridge 75th Anniversary</h3>
                             </div>
                             <div class="text-4xl text-purple-600">
@@ -327,7 +412,7 @@
                             </div>
                         </div>
                         <p class="text-gray-600 mb-4">
-                            A spectacular celebration marking 75 years of the iconic Golden Gate Bridge. The event featured music, dancing, arts exhibitions, classic car and boat displays, and a breathtaking fireworks display from the bridge itself.
+                            A spectacular celebration marking 75 years since the Golden Gate Bridge opened on May 27, 1937. The anniversary event featured music, dancing, arts exhibitions, classic car and boat displays, and a breathtaking fireworks display from the bridge itself.
                         </p>
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-map-marker-alt mr-2"></i>
@@ -445,7 +530,7 @@
                     <div class="event-card rounded-lg p-6 shadow-lg">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="text-purple-600 font-semibold text-sm">SUMMER 2012</span>
+                                <span class="text-purple-600 font-semibold text-sm">AUGUST & OCTOBER 2012</span>
                                 <h3 class="text-2xl font-bold text-gray-800 mt-2">America's Cup World Series</h3>
                             </div>
                             <div class="text-4xl text-purple-600">
@@ -453,7 +538,7 @@
                             </div>
                         </div>
                         <p class="text-gray-600 mb-4">
-                            San Francisco hosted two exhibition America's Cup World Series races, drawing over 150,000 spectators to the waterfront. These races were a prelude to the main America's Cup races scheduled for 2013.
+                            San Francisco hosted America's Cup World Series races in August and October 2012, drawing over 150,000 spectators to the waterfront. These exhibition races were a prelude to the main America's Cup races scheduled for 2013.
                         </p>
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-map-marker-alt mr-2"></i>
@@ -487,7 +572,7 @@
                     <div class="event-card rounded-lg p-6 shadow-lg">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="text-purple-600 font-semibold text-sm">AUGUST 2012</span>
+                                <span class="text-purple-600 font-semibold text-sm">JULY 27 - AUGUST 12, 2012</span>
                                 <h3 class="text-2xl font-bold text-gray-800 mt-2">Olympic Viewing Parties</h3>
                             </div>
                             <div class="text-4xl text-purple-600">
@@ -495,7 +580,7 @@
                             </div>
                         </div>
                         <p class="text-gray-600 mb-4">
-                            The San Francisco Recreation and Park Department hosted free outdoor Olympic viewing parties at Civic Center, featuring Olympic skills games, gourmet food, arts and crafts, and community activities.
+                            The San Francisco Recreation and Park Department hosted free outdoor Olympic viewing parties at Civic Center during the 2012 London Olympics (July 27 - August 12, 2012), featuring Olympic skills games, gourmet food, arts and crafts, and community activities.
                         </p>
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-map-marker-alt mr-2"></i>
@@ -545,7 +630,7 @@
                             </div>
                         </div>
                         <p class="text-gray-600 mb-4">
-                            A biennial sound, art, and music festival featuring diverse local and international multimedia artists working with sound, including experimental musicians, composers, and avant-garde performers across various venues.
+                            A biennial sound, art, and music festival featuring diverse local and international multimedia artists working with sound, including experimental musicians, composers, and avant-garde performers across various venues throughout San Francisco.
                         </p>
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-map-marker-alt mr-2"></i>
@@ -576,7 +661,7 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-orange-100 text-orange-600 px-3 py-1 rounded-full text-xs font-semibold">Anniversary</span>
-                            <span class="text-gray-500 text-sm">May 26</span>
+                            <span class="text-gray-500 text-sm">May 27</span>
                         </div>
                         <h3 class="text-xl font-bold text-gray-800 mb-2">Golden Gate Bridge 75th</h3>
                         <p class="text-gray-600 text-sm mb-4">
@@ -639,11 +724,11 @@
                     <div class="p-6">
                         <div class="flex items-center justify-between mb-3">
                             <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-xs font-semibold">Sailing</span>
-                            <span class="text-gray-500 text-sm">Summer</span>
+                            <span class="text-gray-500 text-sm">Aug & Oct</span>
                         </div>
                         <h3 class="text-xl font-bold text-gray-800 mb-2">America's Cup World Series</h3>
                         <p class="text-gray-600 text-sm mb-4">
-                            Exhibition races on San Francisco Bay drawing over 150,000 spectators to the waterfront.
+                            Exhibition sailing races on San Francisco Bay drawing over 150,000 spectators to the waterfront.
                         </p>
                         <div class="flex items-center text-sm text-gray-500">
                             <i class="fas fa-users mr-2"></i>
@@ -893,7 +978,7 @@
                 name: 'Golden Gate Bridge 75th Anniversary',
                 lat: 37.8199,
                 lng: -122.4783,
-                date: 'May 26, 2012',
+                date: 'May 27, 2012',
                 type: 'arts',
                 icon: '🌉',
                 description: '75th anniversary celebration with fireworks and festivities'
@@ -947,7 +1032,7 @@
                 name: 'America\'s Cup World Series',
                 lat: 37.8024,
                 lng: -122.4058,
-                date: 'Summer 2012',
+                date: 'August & October 2012',
                 type: 'sports',
                 icon: '⛵',
                 description: 'Exhibition sailing races on San Francisco Bay'
@@ -965,10 +1050,10 @@
                 name: 'Olympic Viewing Parties',
                 lat: 37.7799,
                 lng: -122.4194,
-                date: 'August 2012',
+                date: 'July 27 - August 12, 2012',
                 type: 'arts',
                 icon: '📺',
-                description: 'Free outdoor Olympic viewing at Civic Center'
+                description: 'Free outdoor 2012 London Olympics viewing at Civic Center'
             },
             {
                 name: 'Outside Lands Music & Arts Festival',
